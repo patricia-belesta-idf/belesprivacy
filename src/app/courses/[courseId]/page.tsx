@@ -123,12 +123,19 @@ export default function CourseDetailPage() {
   }
 
   const isUnitCompleted = (unitId: string) => {
-    return enrollment?.completed_units.includes(unitId) || false
+    if (!enrollment?.completed_units) return false
+    return enrollment.completed_units.includes(unitId)
   }
 
   const isUnitAccessible = (unitOrder: number) => {
     if (!enrollment) return false
     return unitOrder <= enrollment.current_unit
+  }
+
+  const getCurrentUnitId = () => {
+    if (!enrollment || !units.length) return ''
+    const currentUnit = units.find(unit => unit.order === enrollment.current_unit)
+    return currentUnit?.id || units[0]?.id || ''
   }
 
   if (loading) {
@@ -205,7 +212,7 @@ export default function CourseDetailPage() {
                   )}
                 </Button>
               ) : (
-                <Link href={`/courses/${course.id}/units/${enrollment.current_unit}`}>
+                <Link href={`/courses/${course.id}/units/${getCurrentUnitId()}`}>
                   <Button size="lg">
                     <Play className="h-4 w-4 mr-2" />
                     Continuar Aprendiendo
