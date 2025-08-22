@@ -2,70 +2,27 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
-import { BookOpen, Play, Award, Clock, CheckCircle, TrendingUp } from 'lucide-react'
+import { BookOpen, Play, Clock, CheckCircle, TrendingUp } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
-import { Course, Enrollment, Unit } from '@/types'
+import { Course, Enrollment } from '@/types'
+import { toast } from 'sonner'
 
 const supabase = createClient()
 
-// Mock data for demonstration
-const mockEnrolledCourses = [
-  {
-    id: '1',
-    course: {
-      id: '1',
-      title: 'Fundamentos de Protección de Datos',
-      description: 'Aprende los conceptos básicos de la protección de datos personales.',
-      image_url: '/api/placeholder/400/250',
-      duration: 120,
-      total_units: 8,
-      created_at: '2024-01-01',
-      updated_at: '2024-01-01'
-    },
-    enrollment: {
-      id: '1',
-      user_id: 'user1',
-      course_id: '1',
-      progress: 45,
-      current_unit: 4,
-      completed_units: ['1', '2', '3'],
-      created_at: '2024-01-01',
-      updated_at: '2024-01-01'
-    }
-  },
-  {
-    id: '2',
-    course: {
-      id: '2',
-      title: 'GDPR y Regulaciones Europeas',
-      description: 'Domina el Reglamento General de Protección de Datos (GDPR).',
-      image_url: '/api/placeholder/400/250',
-      duration: 180,
-      total_units: 12,
-      created_at: '2024-01-01',
-      updated_at: '2024-01-01'
-    },
-    enrollment: {
-      id: '2',
-      user_id: 'user1',
-      course_id: '2',
-      progress: 25,
-      current_unit: 3,
-      completed_units: ['1', '2'],
-      created_at: '2024-01-01',
-      updated_at: '2024-01-01'
-    }
-  }
-]
+interface EnrolledCourse {
+  id: string
+  course: Course
+  enrollment: Enrollment
+}
 
 export default function DashboardPage() {
   const { user } = useAuth()
-  const [enrolledCourses, setEnrolledCourses] = useState(mockEnrolledCourses)
+  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([])
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({
     totalCourses: 0,
@@ -84,16 +41,77 @@ export default function DashboardPage() {
 
   const fetchDashboardData = async () => {
     try {
-      // In production, this would fetch real data from Supabase
-      // For now, we'll use mock data
-      setStats({
-        totalCourses: enrolledCourses.length,
-        totalProgress: Math.round(enrolledCourses.reduce((acc, item) => acc + item.enrollment.progress, 0) / enrolledCourses.length),
-        completedUnits: enrolledCourses.reduce((acc, item) => acc + item.enrollment.completed_units.length, 0),
-        totalUnits: enrolledCourses.reduce((acc, item) => acc + item.course.total_units, 0)
-      })
+      // Fetch enrollments with course details
+      const { data: enrollmentsData, error: enrollmentsError } = await supabase
+        .from('enrollments')
+        .select('*')
+        .eq('user_id', user?.id)
+
+      if (enrollmentsError) {
+        console.error('Error fetching enrollments:', enrollmentsError)
+        toast.error('Error al cargar inscripciones')
+        return
+      }
+
+      if (enrollmentsData && enrollmentsData.length > 0) {
+        // Fetch course details for each enrollment
+        const courseIds = enrollmentsData.map(e => e.course_id)
+        const { data: coursesData, error: coursesError } = await supabase
+          .from('courses')
+          .select('*')
+          .in('id', courseIds)
+
+        if (coursesError) {
+          console.error('Error fetching courses:', coursesError)
+          toast.error('Error al cargar cursos')
+          return
+        }
+
+        // Combine enrollments with course data
+        const enrolledCoursesData: EnrolledCourse[] = enrollmentsData.map(enrollment => {
+          const course = coursesData?.find(c => c.id === enrollment.course_id)
+          return {
+            id: enrollment.id,
+            course: course || {
+              id: enrollment.course_id,
+              title: 'Curso no encontrado',
+              description: '',
+              image_url: '',
+              duration: 0,
+              total_units: 0,
+              created_at: '',
+              updated_at: ''
+            },
+            enrollment
+          }
+        })
+
+        setEnrolledCourses(enrolledCoursesData)
+
+        // Calculate stats
+        const totalProgress = enrolledCoursesData.reduce((acc, item) => acc + item.enrollment.progress, 0)
+        const avgProgress = enrolledCoursesData.length > 0 ? Math.round(totalProgress / enrolledCoursesData.length) : 0
+        const totalUnits = enrolledCoursesData.reduce((acc, item) => acc + item.course.total_units, 0)
+        const completedUnits = enrolledCoursesData.reduce((acc, item) => acc + item.enrollment.completed_units.length, 0)
+
+        setStats({
+          totalCourses: enrolledCoursesData.length,
+          totalProgress: avgProgress,
+          completedUnits,
+          totalUnits
+        })
+      } else {
+        setEnrolledCourses([])
+        setStats({
+          totalCourses: 0,
+          totalProgress: 0,
+          completedUnits: 0,
+          totalUnits: 0
+        })
+      }
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
+      toast.error('Error al cargar datos del dashboard')
     } finally {
       setLoading(false)
     }

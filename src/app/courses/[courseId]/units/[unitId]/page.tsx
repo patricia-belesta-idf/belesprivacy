@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -11,66 +11,9 @@ import { BookOpen, ArrowLeft, ArrowRight, Check, Video } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Unit, Quiz } from '@/types'
+import { toast } from 'sonner'
 
 const supabase = createClient()
-
-// Mock data for demonstration
-const mockUnit: Unit = {
-  id: '1',
-  course_id: '1',
-  title: 'Introducción a la Protección de Datos',
-  description: 'En esta unidad aprenderás los conceptos básicos y fundamentos de la privacidad y protección de datos personales. Comprenderás por qué es importante proteger la información personal y cómo las organizaciones deben manejar estos datos de manera responsable.',
-  order: 1,
-  video_url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Example video URL
-  duration: 15,
-  created_at: '2024-01-01'
-}
-
-const mockQuiz: Quiz = {
-  id: '1',
-  unit_id: '1',
-  title: 'Test: Introducción a la Protección de Datos',
-  questions: [
-    {
-      id: '1',
-      question: '¿Qué es la protección de datos personales?',
-      options: [
-        'Un proceso para almacenar información de manera segura',
-        'Un conjunto de medidas para proteger la privacidad y los derechos de las personas sobre su información personal',
-        'Una técnica de encriptación de datos',
-        'Un protocolo de seguridad informática'
-      ],
-      correct_answer: 1,
-      explanation: 'La protección de datos personales se refiere al conjunto de medidas, garantías y derechos que protegen la privacidad y los derechos de las personas sobre su información personal.'
-    },
-    {
-      id: '2',
-      question: '¿Cuál de los siguientes NO es un principio de la protección de datos?',
-      options: [
-        'Licitud, lealtad y transparencia',
-        'Limitación de la finalidad',
-        'Minimización de datos',
-        'Maximización del almacenamiento'
-      ],
-      correct_answer: 3,
-      explanation: 'La maximización del almacenamiento NO es un principio de la protección de datos. Los principios incluyen la minimización de datos, no su maximización.'
-    },
-    {
-      id: '3',
-      question: '¿Qué derecho tiene una persona sobre sus datos personales?',
-      options: [
-        'Solo el derecho de acceso',
-        'Solo el derecho de rectificación',
-        'Múltiples derechos incluyendo acceso, rectificación, cancelación y oposición',
-        'Ningún derecho específico'
-      ],
-      correct_answer: 2,
-      explanation: 'Las personas tienen múltiples derechos sobre sus datos personales, incluyendo el acceso, rectificación, cancelación y oposición (derechos ARCO).'
-    }
-  ],
-  passing_score: 70,
-  created_at: '2024-01-01'
-}
 
 export default function UnitPage() {
   const params = useParams()
@@ -84,6 +27,7 @@ export default function UnitPage() {
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [quizScore, setQuizScore] = useState<number | null>(null)
   const [videoWatched, setVideoWatched] = useState(false)
+  const [submittingQuiz, setSubmittingQuiz] = useState(false)
 
   useEffect(() => {
     if (params.courseId && params.unitId) {
@@ -93,31 +37,104 @@ export default function UnitPage() {
 
   const fetchUnitData = async () => {
     try {
-      // In production, this would fetch real data from Supabase
-      setUnit(mockUnit)
-      setQuiz(mockQuiz)
-      
-      // Mock course data
-      setCourse({
-        id: '1',
-        title: 'Fundamentos de Protección de Datos',
-        description: 'Curso de protección de datos',
-        image_url: '',
-        duration: 120,
-        total_units: 8,
-        created_at: '2024-01-01',
-        updated_at: '2024-01-01'
-      })
+      // Fetch unit data
+      const { data: unitData, error: unitError } = await supabase
+        .from('units')
+        .select('*')
+        .eq('id', params.unitId)
+        .single()
+
+      if (unitError) {
+        console.error('Error fetching unit:', unitError)
+        toast.error('Error al cargar la unidad')
+        return
+      }
+
+      setUnit(unitData)
+
+      // Fetch course data
+      const { data: courseData, error: courseError } = await supabase
+        .from('courses')
+        .select('*')
+        .eq('id', params.courseId)
+        .single()
+
+      if (courseError) {
+        console.error('Error fetching course:', courseError)
+        toast.error('Error al cargar el curso')
+        return
+      }
+
+      setCourse(courseData)
+
+      // Fetch quiz data
+      const { data: quizData, error: quizError } = await supabase
+        .from('quizzes')
+        .select(`
+          *,
+          quiz_questions (
+            *,
+            order
+          )
+        `)
+        .eq('unit_id', params.unitId)
+        .single()
+
+      if (quizError) {
+        console.error('Error fetching quiz:', quizError)
+        // Quiz might not exist yet, that's okay
+      } else {
+        // Sort questions by order
+        const sortedQuiz = {
+          ...quizData,
+          questions: quizData.quiz_questions?.sort((a: { order: number }, b: { order: number }) => a.order - b.order) || []
+        }
+        setQuiz(sortedQuiz)
+      }
+
+      // Check if user has watched this video
+      if (user) {
+        const { data: progressData } = await supabase
+          .from('user_progress')
+          .select('video_watched')
+          .eq('user_id', user.id)
+          .eq('unit_id', params.unitId)
+          .single()
+
+        if (progressData?.video_watched) {
+          setVideoWatched(true)
+        }
+      }
     } catch (error) {
       console.error('Error fetching unit data:', error)
+      toast.error('Error al cargar datos de la unidad')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleVideoEnd = () => {
+  const handleVideoEnd = async () => {
     setVideoWatched(true)
-    // In production, this would update the user's progress in Supabase
+    
+    if (user && unit) {
+      try {
+        // Update user progress in Supabase
+        const { error } = await supabase
+          .from('user_progress')
+          .upsert({
+            user_id: user.id,
+            unit_id: unit.id,
+            video_watched: true,
+            video_watched_at: new Date().toISOString()
+          })
+
+        if (error) {
+          console.error('Error updating progress:', error)
+        }
+      } catch (error) {
+        console.error('Error:', error)
+      }
+    }
   }
 
   const handleQuizAnswer = (questionId: string, answerIndex: number) => {
@@ -127,49 +144,135 @@ export default function UnitPage() {
     }))
   }
 
-  const submitQuiz = () => {
-    if (!quiz) return
+  const submitQuiz = async () => {
+    if (!quiz || !user || !unit) return
 
-    let correctAnswers = 0
-    quiz.questions.forEach(question => {
-      if (quizAnswers[question.id] === question.correct_answer) {
-        correctAnswers++
+    setSubmittingQuiz(true)
+
+    try {
+      let correctAnswers = 0
+      quiz.questions.forEach(question => {
+        if (quizAnswers[question.id] === question.correct_answer) {
+          correctAnswers++
+        }
+      })
+
+      const score = Math.round((correctAnswers / quiz.questions.length) * 100)
+      setQuizScore(score)
+      setQuizSubmitted(true)
+
+      // Save quiz attempt to Supabase
+      const { error: attemptError } = await supabase
+        .from('quiz_attempts')
+        .insert({
+          user_id: user.id,
+          quiz_id: quiz.id,
+          score: score,
+          answers: quizAnswers,
+          passed: score >= quiz.passing_score,
+          completed_at: new Date().toISOString()
+        })
+
+      if (attemptError) {
+        console.error('Error saving quiz attempt:', attemptError)
       }
-    })
 
-    const score = Math.round((correctAnswers / quiz.questions.length) * 100)
-    setQuizScore(score)
-    setQuizSubmitted(true)
-
-    // In production, this would save the quiz attempt to Supabase
-    if (score >= quiz.passing_score) {
-      // Mark unit as completed
-      markUnitAsCompleted()
+      // If passed, mark unit as completed
+      if (score >= quiz.passing_score) {
+        await markUnitAsCompleted()
+      }
+    } catch (error) {
+      console.error('Error submitting quiz:', error)
+      toast.error('Error al enviar el test')
+    } finally {
+      setSubmittingQuiz(false)
     }
   }
 
   const markUnitAsCompleted = async () => {
-    if (!user || !unit) return
+    if (!user || !unit || !course) return
 
     try {
-      // In production, this would update the enrollment in Supabase
-      console.log('Unit completed:', unit.id)
+      // Update user progress
+      const { error: progressError } = await supabase
+        .from('user_progress')
+        .upsert({
+          user_id: user.id,
+          unit_id: unit.id,
+          quiz_passed: true,
+          quiz_passed_at: new Date().toISOString()
+        })
+
+      if (progressError) {
+        console.error('Error updating progress:', progressError)
+      }
+
+      // Update enrollment progress
+      const { data: enrollmentData } = await supabase
+        .from('enrollments')
+        .select('completed_units, current_unit')
+        .eq('user_id', user.id)
+        .eq('course_id', course.id)
+        .single()
+
+      if (enrollmentData) {
+        const completedUnits = [...(enrollmentData.completed_units || []), unit.id]
+        const currentUnit = Math.max(enrollmentData.current_unit, unit.order + 1)
+        const progress = Math.round((completedUnits.length / course.total_units) * 100)
+
+        const { error: enrollmentError } = await supabase
+          .from('enrollments')
+          .update({
+            completed_units: completedUnits,
+            current_unit: currentUnit,
+            progress: progress
+          })
+          .eq('user_id', user.id)
+          .eq('course_id', course.id)
+
+        if (enrollmentError) {
+          console.error('Error updating enrollment:', enrollmentError)
+        }
+      }
     } catch (error) {
       console.error('Error marking unit as completed:', error)
     }
   }
 
-  const getNextUnit = (): { id: string; title: string } | null => {
+  const getNextUnit = async (): Promise<{ id: string; title: string } | null> => {
     if (!unit || !course) return null
-    // In production, this would fetch the next unit from Supabase
-    return { id: '2', title: 'Principios de la Protección de Datos' }
+
+    try {
+      const { data: nextUnitData } = await supabase
+        .from('units')
+        .select('id, title')
+        .eq('course_id', course.id)
+        .eq('order', unit.order + 1)
+        .single()
+
+      return nextUnitData || null
+    } catch (error) {
+      return null
+    }
   }
 
-  const getPreviousUnit = (): { id: string; title: string } | null => {
-    if (!unit || !course) return null
-    // In production, this would fetch the previous unit from Supabase
-    return null // First unit has no previous
-  }
+  // Function to get previous unit (unused for now)
+  // const getPreviousUnit = async (): Promise<{ id: string; title: string } | null> => {
+  //   if (!unit || !course) return null
+
+  //   try {
+  //     const { data: prevUnitData } = await supabase
+  //       .from('units')
+  //       .select('id, title')
+  //       .eq('course_id', course.id)
+  //       .eq('order', unit.order - 1)
+  //       .single()
+
+  //     return prevUnitData || null
+  //   } catch (error) {
+  //     return null
+  //   }
+  // }
 
   if (loading) {
     return (
@@ -194,9 +297,6 @@ export default function UnitPage() {
       </div>
     )
   }
-
-  const nextUnit = getNextUnit()
-  const previousUnit = getPreviousUnit()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -290,10 +390,12 @@ export default function UnitPage() {
           <TabsContent value="quiz" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>{quiz?.title}</CardTitle>
+                <CardTitle>{quiz?.title || 'Test de la Unidad'}</CardTitle>
                 <CardDescription>
-                  Responde las siguientes preguntas para evaluar tu comprensión de la unidad.
-                  Necesitas obtener al menos {quiz?.passing_score}% para aprobar.
+                  {quiz ? 
+                    `Responde las siguientes preguntas para evaluar tu comprensión de la unidad. Necesitas obtener al menos ${quiz.passing_score}% para aprobar.` :
+                    'Esta unidad no tiene test disponible aún.'
+                  }
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -311,9 +413,19 @@ export default function UnitPage() {
                   </div>
                 )}
 
-                {videoWatched && !quizSubmitted && (
+                {!quiz && (
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <div className="text-center">
+                      <p className="text-blue-800">
+                        Esta unidad no tiene test disponible aún. Pronto se agregará contenido de evaluación.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {videoWatched && quiz && !quizSubmitted && (
                   <div className="space-y-6">
-                    {quiz?.questions.map((question, index) => (
+                    {quiz.questions.map((question, index) => (
                       <div key={question.id} className="space-y-3">
                         <h4 className="font-medium text-gray-900">
                           {index + 1}. {question.question}
@@ -342,42 +454,49 @@ export default function UnitPage() {
                     <Button 
                       onClick={submitQuiz}
                       className="w-full"
-                      disabled={Object.keys(quizAnswers).length < (quiz?.questions.length || 0)}
+                      disabled={Object.keys(quizAnswers).length < quiz.questions.length || submittingQuiz}
                     >
-                      Enviar Test
+                      {submittingQuiz ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Enviando...
+                        </>
+                      ) : (
+                        'Enviar Test'
+                      )}
                     </Button>
                   </div>
                 )}
 
-                {quizSubmitted && (
+                {quizSubmitted && quiz && (
                   <div className="space-y-6">
                     <div className={`p-4 rounded-lg border ${
-                      quizScore && quizScore >= (quiz?.passing_score || 0)
+                      quizScore && quizScore >= quiz.passing_score
                         ? 'bg-green-50 border-green-200'
                         : 'bg-red-50 border-red-200'
                     }`}>
                       <div className="text-center">
                         <h3 className={`text-lg font-semibold ${
-                          quizScore && quizScore >= (quiz?.passing_score || 0)
+                          quizScore && quizScore >= quiz.passing_score
                             ? 'text-green-800'
                             : 'text-red-800'
                         }`}>
-                          {quizScore && quizScore >= (quiz?.passing_score || 0)
+                          {quizScore && quizScore >= quiz.passing_score
                             ? '¡Felicitaciones! Has aprobado el test'
                             : 'No has alcanzado la puntuación mínima'
                           }
                         </h3>
                         <p className={`text-sm mt-1 ${
-                          quizScore && quizScore >= (quiz?.passing_score || 0)
+                          quizScore && quizScore >= quiz.passing_score
                             ? 'text-green-700'
                             : 'text-red-700'
                         }`}>
-                          Tu puntuación: {quizScore}% (Puntuación mínima: {quiz?.passing_score}%)
+                          Tu puntuación: {quizScore}% (Puntuación mínima: {quiz.passing_score}%)
                         </p>
                       </div>
                     </div>
 
-                    {quiz?.questions.map((question, index) => (
+                    {quiz.questions.map((question, index) => (
                       <div key={question.id} className="space-y-3">
                         <h4 className="font-medium text-gray-900">
                           {index + 1}. {question.question}
@@ -433,30 +552,24 @@ export default function UnitPage() {
 
                     <div className="flex items-center justify-between pt-4 border-t">
                       <div className="flex space-x-2">
-                        {previousUnit && (
-                          <Link href={`/courses/${course.id}/units/${previousUnit.id}`}>
-                            <Button variant="outline">
-                              <ArrowLeft className="h-4 w-4 mr-2" />
-                              Unidad Anterior
-                            </Button>
-                          </Link>
-                        )}
-                      </div>
-                      
-                      <div className="flex space-x-2">
                         <Link href={`/courses/${course.id}`}>
                           <Button variant="outline">
                             Ver Curso
                           </Button>
                         </Link>
-                        
-                        {nextUnit && quizScore && quizScore >= (quiz?.passing_score || 0) && (
-                          <Link href={`/courses/${course.id}/units/${nextUnit.id}`}>
-                            <Button>
-                              Siguiente Unidad
-                              <ArrowRight className="h-4 w-4 ml-2" />
-                            </Button>
-                          </Link>
+                      </div>
+                      
+                      <div className="flex space-x-2">
+                        {quizScore && quizScore >= quiz.passing_score && (
+                          <Button onClick={async () => {
+                            const nextUnit = await getNextUnit()
+                            if (nextUnit) {
+                              window.location.href = `/courses/${course.id}/units/${nextUnit.id}`
+                            }
+                          }}>
+                            Siguiente Unidad
+                            <ArrowRight className="h-4 w-4 ml-2" />
+                          </Button>
                         )}
                       </div>
                     </div>

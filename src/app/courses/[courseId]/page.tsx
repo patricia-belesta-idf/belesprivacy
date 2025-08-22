@@ -12,103 +12,9 @@ import { BookOpen, Play, Lock, CheckCircle, Clock, FileText, Video } from 'lucid
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Unit, Enrollment } from '@/types'
+import { toast } from 'sonner'
 
 const supabase = createClient()
-
-// Mock data for demonstration
-const mockCourse: Course = {
-  id: '1',
-  title: 'Fundamentos de Protección de Datos',
-  description: 'Aprende los conceptos básicos de la protección de datos personales, incluyendo principios fundamentales, derechos de los usuarios y obligaciones de las organizaciones. Este curso te proporcionará una base sólida para entender y aplicar las mejores prácticas en el manejo de información personal.',
-  image_url: '/api/placeholder/400/250',
-  duration: 120,
-  total_units: 8,
-  created_at: '2024-01-01',
-  updated_at: '2024-01-01'
-}
-
-const mockUnits: Unit[] = [
-  {
-    id: '1',
-    course_id: '1',
-    title: 'Introducción a la Protección de Datos',
-    description: 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.',
-    order: 1,
-    video_url: 'https://example.com/video1.mp4',
-    duration: 15,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '2',
-    course_id: '1',
-    title: 'Principios de la Protección de Datos',
-    description: 'Los siete principios fundamentales que rigen el tratamiento de datos personales.',
-    order: 2,
-    video_url: 'https://example.com/video2.mp4',
-    duration: 20,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '3',
-    course_id: '1',
-    title: 'Derechos de los Usuarios',
-    description: 'Conoce los derechos que tienen las personas sobre sus datos personales.',
-    order: 3,
-    video_url: 'https://example.com/video3.mp4',
-    duration: 18,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '4',
-    course_id: '1',
-    title: 'Obligaciones de las Organizaciones',
-    description: 'Responsabilidades y deberes que tienen las empresas al manejar datos personales.',
-    order: 4,
-    video_url: 'https://example.com/video4.mp4',
-    duration: 22,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '5',
-    course_id: '1',
-    title: 'Medidas de Seguridad',
-    description: 'Implementación de controles técnicos y organizativos para proteger datos.',
-    order: 5,
-    video_url: 'https://example.com/video5.mp4',
-    duration: 25,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '6',
-    course_id: '1',
-    title: 'Transferencias Internacionales',
-    description: 'Consideraciones especiales para el envío de datos fuera del país.',
-    order: 6,
-    video_url: 'https://example.com/video6.mp4',
-    duration: 20,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '7',
-    course_id: '1',
-    title: 'Incidentes de Seguridad',
-    description: 'Cómo manejar y reportar violaciones de datos personales.',
-    order: 7,
-    video_url: 'https://example.com/video7.mp4',
-    duration: 18,
-    created_at: '2024-01-01'
-  },
-  {
-    id: '8',
-    course_id: '1',
-    title: 'Evaluación Final',
-    description: 'Test final para evaluar tu comprensión del curso completo.',
-    order: 8,
-    video_url: 'https://example.com/video8.mp4',
-    duration: 30,
-    created_at: '2024-01-01'
-  }
-]
 
 export default function CourseDetailPage() {
   const params = useParams()
@@ -118,6 +24,7 @@ export default function CourseDetailPage() {
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
+  const [enrolling, setEnrolling] = useState(false)
 
   useEffect(() => {
     if (params.courseId) {
@@ -127,25 +34,51 @@ export default function CourseDetailPage() {
 
   const fetchCourseData = async () => {
     try {
-      // In production, this would fetch real data from Supabase
-      setCourse(mockCourse)
-      setUnits(mockUnits)
+      // Fetch course data
+      const { data: courseData, error: courseError } = await supabase
+        .from('courses')
+        .select('*')
+        .eq('id', params.courseId)
+        .single()
+
+      if (courseError) {
+        console.error('Error fetching course:', courseError)
+        toast.error('Error al cargar el curso')
+        return
+      }
+
+      setCourse(courseData)
+
+      // Fetch units for this course
+      const { data: unitsData, error: unitsError } = await supabase
+        .from('units')
+        .select('*')
+        .eq('course_id', params.courseId)
+        .order('order')
+
+      if (unitsError) {
+        console.error('Error fetching units:', unitsError)
+        toast.error('Error al cargar las unidades')
+      } else {
+        setUnits(unitsData || [])
+      }
       
       if (user) {
         // Fetch enrollment data
-        const { data, error } = await supabase
+        const { data: enrollmentData, error: enrollmentError } = await supabase
           .from('enrollments')
           .select('*')
           .eq('user_id', user.id)
           .eq('course_id', params.courseId)
           .single()
 
-        if (!error && data) {
-          setEnrollment(data)
+        if (!enrollmentError && enrollmentData) {
+          setEnrollment(enrollmentData)
         }
       }
     } catch (error) {
       console.error('Error fetching course data:', error)
+      toast.error('Error al cargar datos del curso')
     } finally {
       setLoading(false)
     }
@@ -154,25 +87,38 @@ export default function CourseDetailPage() {
   const enrollInCourse = async () => {
     if (!user || !course) return
 
+    setEnrolling(true)
+
     try {
+      // Check if already enrolled
+      if (enrollment) {
+        toast.info('Ya estás inscrito en este curso')
+        return
+      }
+
       const { error } = await supabase
         .from('enrollments')
         .insert({
           user_id: user.id,
           course_id: course.id,
           progress: 0,
-          current_unit: 1,
-          completed_units: []
+          current_unit: 1
+          // completed_units will use its default value '{}'
         })
 
       if (error) {
         console.error('Error enrolling in course:', error)
+        toast.error('Error al inscribirse en el curso')
       } else {
+        toast.success('¡Te has inscrito exitosamente en el curso!')
         // Refresh enrollment data
         fetchCourseData()
       }
     } catch (error) {
       console.error('Error:', error)
+      toast.error('Error al inscribirse en el curso')
+    } finally {
+      setEnrolling(false)
     }
   }
 
@@ -244,8 +190,19 @@ export default function CourseDetailPage() {
 
             <div className="ml-8">
               {!enrollment ? (
-                <Button onClick={enrollInCourse} size="lg">
-                  Inscribirse en el Curso
+                <Button 
+                  onClick={enrollInCourse} 
+                  size="lg"
+                  disabled={enrolling}
+                >
+                  {enrolling ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Inscribiendo...
+                    </>
+                  ) : (
+                    'Inscribirse en el Curso'
+                  )}
                 </Button>
               ) : (
                 <Link href={`/courses/${course.id}/units/${enrollment.current_unit}`}>
@@ -328,7 +285,7 @@ export default function CourseDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {units.map((unit, index) => (
+                  {units.map((unit) => (
                     <div
                       key={unit.id}
                       className={`flex items-center space-x-4 p-4 rounded-lg border ${
@@ -363,7 +320,7 @@ export default function CourseDetailPage() {
                             <Video className="h-3 w-3" />
                             <span>{unit.duration} min</span>
                           </span>
-                          {unit.order === 8 && (
+                          {unit.order === course.total_units && (
                             <span className="flex items-center space-x-1">
                               <FileText className="h-3 w-3" />
                               <span>Test Final</span>

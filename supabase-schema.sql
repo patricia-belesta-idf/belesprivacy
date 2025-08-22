@@ -309,18 +309,18 @@ INSERT INTO public.course_categories (name, description, color) VALUES
 ('Compliance', 'Cumplimiento normativo y auditoría', '#8B5CF6')
 ON CONFLICT (name) DO NOTHING;
 
--- Sample courses
-INSERT INTO public.courses (title, description, duration, total_units, is_published) VALUES
-('Fundamentos de Protección de Datos', 'Aprende los conceptos básicos de la protección de datos personales, incluyendo principios fundamentales, derechos de los usuarios y obligaciones de las organizaciones.', 120, 8, true),
-('GDPR y Regulaciones Europeas', 'Domina el Reglamento General de Protección de Datos (GDPR) y otras regulaciones europeas relacionadas con la privacidad y protección de datos.', 180, 12, true),
-('Implementación de Políticas de Privacidad', 'Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales.', 150, 10, true)
-ON CONFLICT DO NOTHING;
+-- Sample courses with specific UUIDs
+INSERT INTO public.courses (id, title, description, duration, total_units, is_published) VALUES
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Fundamentos de Protección de Datos', 'Aprende los conceptos básicos de la protección de datos personales, incluyendo principios fundamentales, derechos de los usuarios y obligaciones de las organizaciones.', 120, 8, true),
+('c9d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f', 'GDPR y Regulaciones Europeas', 'Domina el Reglamento General de Protección de Datos (GDPR) y otras regulaciones europeas relacionadas con la privacidad y protección de datos.', 180, 12, true),
+('d0e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a', 'Implementación de Políticas de Privacidad', 'Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales.', 150, 10, true)
+ON CONFLICT (id) DO NOTHING;
 
 -- Sample units for the first course
 INSERT INTO public.units (course_id, title, description, "order", video_url, duration) VALUES
-((SELECT id FROM public.courses WHERE title = 'Fundamentos de Protección de Datos' LIMIT 1), 'Introducción a la Protección de Datos', 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.', 1, 'https://example.com/video1.mp4', 15),
-((SELECT id FROM public.courses WHERE title = 'Fundamentos de Protección de Datos' LIMIT 1), 'Principios de la Protección de Datos', 'Los siete principios fundamentales que rigen el tratamiento de datos personales.', 2, 'https://example.com/video2.mp4', 20),
-((SELECT id FROM public.courses WHERE title = 'Fundamentos de Protección de Datos' LIMIT 1), 'Derechos de los Usuarios', 'Conoce los derechos que tienen las personas sobre sus datos personales.', 3, 'https://example.com/video3.mp4', 18)
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Introducción a la Protección de Datos', 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.', 1, 'https://example.com/video1.mp4', 15),
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Principios de la Protección de Datos', 'Los siete principios fundamentales que rigen el tratamiento de datos personales.', 2, 'https://example.com/video2.mp4', 20),
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Derechos de los Usuarios', 'Conoce los derechos que tienen las personas sobre sus datos personales.', 3, 'https://example.com/video3.mp4', 18)
 ON CONFLICT DO NOTHING;
 
 -- Sample quiz for the first unit

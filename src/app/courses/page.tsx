@@ -1,22 +1,22 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { BookOpen, Clock, Users, Play, CheckCircle } from 'lucide-react'
+import { BookOpen, Clock, Play, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Enrollment } from '@/types'
+import { toast } from 'sonner'
 
 const supabase = createClient()
 
-// Mock data for demonstration - in production this would come from Supabase
+// Course data that matches the database UUIDs
 const mockCourses: Course[] = [
   {
-    id: '1',
+    id: 'b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
     title: 'Fundamentos de Protección de Datos',
     description: 'Aprende los conceptos básicos de la protección de datos personales, incluyendo principios fundamentales, derechos de los usuarios y obligaciones de las organizaciones.',
     image_url: '/api/placeholder/400/250',
@@ -26,7 +26,7 @@ const mockCourses: Course[] = [
     updated_at: '2024-01-01'
   },
   {
-    id: '2',
+    id: 'c9d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f',
     title: 'GDPR y Regulaciones Europeas',
     description: 'Domina el Reglamento General de Protección de Datos (GDPR) y otras regulaciones europeas relacionadas con la privacidad y protección de datos.',
     image_url: '/api/placeholder/400/250',
@@ -36,7 +36,7 @@ const mockCourses: Course[] = [
     updated_at: '2024-01-01'
   },
   {
-    id: '3',
+    id: 'd0e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a',
     title: 'Implementación de Políticas de Privacidad',
     description: 'Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales.',
     image_url: '/api/placeholder/400/250',
@@ -49,17 +49,42 @@ const mockCourses: Course[] = [
 
 export default function CoursesPage() {
   const { user } = useAuth()
-  const [courses, setCourses] = useState<Course[]>(mockCourses)
+  const [courses, setCourses] = useState<Course[]>([])
   const [enrollments, setEnrollments] = useState<Enrollment[]>([])
   const [loading, setLoading] = useState(true)
+  const [enrolling, setEnrolling] = useState<string | null>(null)
+
+  const fetchCoursesData = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('courses')
+        .select('*')
+        .order('created_at', { ascending: true })
+
+      if (error) {
+        console.error('Error fetching courses:', error)
+        toast.error('Error al cargar cursos')
+        // Fallback to mock data if database fails
+        setCourses(mockCourses)
+      } else {
+        setCourses(data || mockCourses)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      toast.error('Error al cargar cursos')
+      // Fallback to mock data if database fails
+      setCourses(mockCourses)
+    }
+  }, [])
 
   useEffect(() => {
+    fetchCoursesData()
     if (user) {
       fetchEnrollments()
     } else {
       setLoading(false)
     }
-  }, [user])
+  }, [user, fetchCoursesData])
 
   const fetchEnrollments = async () => {
     try {
@@ -70,38 +95,57 @@ export default function CoursesPage() {
 
       if (error) {
         console.error('Error fetching enrollments:', error)
+        toast.error('Error al cargar inscripciones')
       } else {
         setEnrollments(data || [])
       }
     } catch (error) {
       console.error('Error:', error)
+      toast.error('Error al cargar inscripciones')
     } finally {
       setLoading(false)
     }
   }
 
   const enrollInCourse = async (courseId: string) => {
-    if (!user) return
+    if (!user) {
+      toast.error('Debes iniciar sesión para inscribirte en un curso')
+      return
+    }
+
+    setEnrolling(courseId)
 
     try {
+      // Check if already enrolled
+      const existingEnrollment = enrollments.find(e => e.course_id === courseId)
+      if (existingEnrollment) {
+        toast.info('Ya estás inscrito en este curso')
+        return
+      }
+
       const { error } = await supabase
         .from('enrollments')
         .insert({
           user_id: user.id,
           course_id: courseId,
           progress: 0,
-          current_unit: 1,
-          completed_units: []
+          current_unit: 1
+          // completed_units will use its default value '{}'
         })
 
       if (error) {
         console.error('Error enrolling in course:', error)
+        toast.error('Error al inscribirse en el curso')
       } else {
+        toast.success('¡Te has inscrito exitosamente en el curso!')
         // Refresh enrollments
         fetchEnrollments()
       }
     } catch (error) {
       console.error('Error:', error)
+      toast.error('Error al inscribirse en el curso')
+    } finally {
+      setEnrolling(null)
     }
   }
 
@@ -203,8 +247,16 @@ export default function CoursesPage() {
                     <Button 
                       className="w-full" 
                       onClick={() => enrollInCourse(course.id)}
+                      disabled={enrolling === course.id}
                     >
-                      Inscribirse
+                      {enrolling === course.id ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Inscribiendo...
+                        </>
+                      ) : (
+                        'Inscribirse'
+                      )}
                     </Button>
                   )}
                 </CardContent>
