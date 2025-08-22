@@ -316,11 +316,11 @@ INSERT INTO public.courses (id, title, description, duration, total_units, is_pu
 ('d0e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a', 'Implementación de Políticas de Privacidad', 'Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales.', 150, 10, true)
 ON CONFLICT (id) DO NOTHING;
 
--- Sample units for the first course
+-- Sample units for the first course with YouTube videos
 INSERT INTO public.units (course_id, title, description, "order", video_url, duration) VALUES
-('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Introducción a la Protección de Datos', 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.', 1, 'https://example.com/video1.mp4', 15),
-('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Principios de la Protección de Datos', 'Los siete principios fundamentales que rigen el tratamiento de datos personales.', 2, 'https://example.com/video2.mp4', 20),
-('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Derechos de los Usuarios', 'Conoce los derechos que tienen las personas sobre sus datos personales.', 3, 'https://example.com/video3.mp4', 18)
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Introducción a la Protección de Datos', 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.', 1, 'https://www.youtube.com/embed/dQw4w9WgXcQ', 15),
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Principios de la Protección de Datos', 'Los siete principios fundamentales que rigen el tratamiento de datos personales.', 2, 'https://www.youtube.com/embed/dQw4w9WgXcQ', 20),
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Derechos de los Usuarios', 'Conoce los derechos que tienen las personas sobre sus datos personales.', 3, 'https://www.youtube.com/embed/dQw4w9WgXcQ', 18)
 ON CONFLICT DO NOTHING;
 
 -- Sample quiz for the first unit
@@ -339,3 +339,143 @@ GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated;
 GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO anon, authenticated;
+
+-- ===================================================================
+-- ADVANCED VIDEO ANALYTICS TABLES
+-- ===================================================================
+
+-- Table for detailed video analytics
+CREATE TABLE IF NOT EXISTS public.video_analytics (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    unit_id UUID REFERENCES public.units(id) ON DELETE CASCADE,
+    session_id UUID DEFAULT gen_random_uuid(), -- Para agrupar sesiones de visualización
+    
+    -- Basic metrics
+    total_watch_time DECIMAL(10,2) DEFAULT 0, -- En segundos
+    pause_count INTEGER DEFAULT 0,
+    seek_count INTEGER DEFAULT 0,
+    rewind_count INTEGER DEFAULT 0,
+    max_progress_reached DECIMAL(5,2) DEFAULT 0, -- Porcentaje máximo alcanzado
+    completion_threshold DECIMAL(5,2) DEFAULT 95, -- Umbral requerido para completar
+    
+    -- Session info
+    start_time TIMESTAMP DEFAULT NOW(),
+    end_time TIMESTAMP,
+    completed_at TIMESTAMP,
+    is_completed BOOLEAN DEFAULT FALSE,
+    
+    -- Advanced analytics
+    watch_segments JSONB DEFAULT '[]', -- Segmentos de tiempo visto: [{"start": 0, "end": 30}, ...]
+    playback_rates JSONB DEFAULT '[]', -- Velocidades usadas: [{"rate": 1.5, "duration": 120}, ...]
+    browser_info JSONB DEFAULT '{}', -- Info del navegador/dispositivo
+    
+    -- Engagement metrics
+    full_screen_time DECIMAL(10,2) DEFAULT 0, -- Tiempo en pantalla completa
+    volume_changes INTEGER DEFAULT 0,
+    quality_changes INTEGER DEFAULT 0,
+    
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    
+    UNIQUE(user_id, unit_id, session_id)
+);
+
+-- Table for video quality metrics (buffering, loading times, etc.)
+CREATE TABLE IF NOT EXISTS public.video_quality_metrics (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    analytics_id UUID REFERENCES public.video_analytics(id) ON DELETE CASCADE,
+    
+    -- Performance metrics
+    initial_load_time DECIMAL(10,3), -- Tiempo de carga inicial en segundos
+    buffer_events INTEGER DEFAULT 0, -- Número de eventos de buffering
+    total_buffer_time DECIMAL(10,2) DEFAULT 0, -- Tiempo total de buffering
+    
+    -- Quality metrics
+    video_resolution TEXT, -- e.g., "1920x1080"
+    video_bitrate INTEGER, -- En kbps
+    dropped_frames INTEGER DEFAULT 0,
+    
+    -- Network info
+    connection_type TEXT, -- e.g., "wifi", "cellular"
+    estimated_bandwidth INTEGER, -- En kbps
+    
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- RLS Policies for video analytics
+ALTER TABLE public.video_analytics ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.video_quality_metrics ENABLE ROW LEVEL SECURITY;
+
+-- Users can only see their own analytics
+CREATE POLICY "Users can view own video analytics" ON public.video_analytics
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own video analytics" ON public.video_analytics
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own video analytics" ON public.video_analytics
+    FOR UPDATE USING (auth.uid() = user_id);
+
+-- Quality metrics policies
+CREATE POLICY "Users can view related quality metrics" ON public.video_quality_metrics
+    FOR SELECT USING (
+        analytics_id IN (
+            SELECT id FROM public.video_analytics WHERE user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Users can insert quality metrics" ON public.video_quality_metrics
+    FOR INSERT WITH CHECK (
+        analytics_id IN (
+            SELECT id FROM public.video_analytics WHERE user_id = auth.uid()
+        )
+    );
+
+-- Indexes for performance
+CREATE INDEX IF NOT EXISTS idx_video_analytics_user_unit ON public.video_analytics(user_id, unit_id);
+CREATE INDEX IF NOT EXISTS idx_video_analytics_session ON public.video_analytics(session_id);
+CREATE INDEX IF NOT EXISTS idx_video_analytics_completed ON public.video_analytics(is_completed, completed_at);
+CREATE INDEX IF NOT EXISTS idx_video_quality_analytics ON public.video_quality_metrics(analytics_id);
+
+-- Triggers for updated_at
+CREATE OR REPLACE FUNCTION update_video_analytics_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_video_analytics_updated_at
+    BEFORE UPDATE ON public.video_analytics
+    FOR EACH ROW
+    EXECUTE FUNCTION update_video_analytics_updated_at();
+
+-- Function to calculate engagement score
+CREATE OR REPLACE FUNCTION calculate_engagement_score(
+    watch_time DECIMAL,
+    total_duration DECIMAL,
+    pause_count INTEGER,
+    seek_count INTEGER,
+    rewind_count INTEGER
+) RETURNS DECIMAL AS $$
+BEGIN
+    -- Simple engagement score algorithm
+    -- Base score from watch time percentage
+    DECLARE
+        base_score DECIMAL := (watch_time / total_duration) * 100;
+        penalty DECIMAL := 0;
+        engagement_score DECIMAL;
+    BEGIN
+        -- Penalize excessive pausing/seeking (indicates confusion or disengagement)
+        penalty := (pause_count * 2) + (seek_count * 1) + (rewind_count * 3);
+        
+        engagement_score := GREATEST(0, base_score - penalty);
+        
+        -- Cap at 100
+        RETURN LEAST(100, engagement_score);
+    END;
+END;
+$$ LANGUAGE plpgsql;
+
