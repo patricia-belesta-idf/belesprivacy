@@ -30,7 +30,7 @@ export function VideoPlayer({
   const [isCompleted, setIsCompleted] = useState(false)
   
   const videoRef = useRef<HTMLVideoElement>(null)
-  const controlsTimeoutRef = useRef<NodeJS.Timeout>()
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Handle different video types
   const isYouTube = videoUrl.includes('youtube.com')

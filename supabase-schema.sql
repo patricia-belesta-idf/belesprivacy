@@ -479,3 +479,150 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+-- ===================================================================
+-- ANTI-CHEAT SYSTEM TABLES
+-- ===================================================================
+
+-- Table for anti-cheat validation
+CREATE TABLE IF NOT EXISTS public.video_validation (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    analytics_id UUID REFERENCES public.video_analytics(id) ON DELETE CASCADE,
+    
+    -- Time validation
+    total_video_duration DECIMAL(10,2), -- Total duration in seconds
+    minimum_watch_time DECIMAL(10,2), -- 90% of total duration
+    actual_watch_time DECIMAL(10,2) DEFAULT 0, -- Time actually watched
+    valid_watch_time DECIMAL(10,2) DEFAULT 0, -- Time watched without cheating
+    
+    -- Anti-cheat metrics
+    large_skips_detected INTEGER DEFAULT 0, -- Jumps > 10 seconds
+    suspicious_segments INTEGER DEFAULT 0, -- Segments with very fast progress
+    cheat_score DECIMAL(5,2) DEFAULT 100, -- 100 = no cheating, 0 = heavily cheated
+    
+    -- Validation status
+    time_requirement_met BOOLEAN DEFAULT FALSE, -- 90% time requirement met
+    progress_unlocked BOOLEAN DEFAULT FALSE, -- 95% progress tracking unlocked
+    can_complete BOOLEAN DEFAULT FALSE, -- All requirements met
+    
+    -- Detailed tracking
+    watch_segments JSONB DEFAULT '[]', -- Valid watch segments with timestamps
+    invalid_segments JSONB DEFAULT '[]', -- Skipped/invalid segments
+    last_valid_position DECIMAL(10,2) DEFAULT 0, -- Last valid position reached
+    
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- RLS Policies for video validation
+ALTER TABLE public.video_validation ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view own video validation" ON public.video_validation
+    FOR SELECT USING (
+        analytics_id IN (
+            SELECT id FROM public.video_analytics WHERE user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Users can insert own video validation" ON public.video_validation
+    FOR INSERT WITH CHECK (
+        analytics_id IN (
+            SELECT id FROM public.video_analytics WHERE user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Users can update own video validation" ON public.video_validation
+    FOR UPDATE USING (
+        analytics_id IN (
+            SELECT id FROM public.video_analytics WHERE user_id = auth.uid()
+        )
+    );
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_video_validation_analytics ON public.video_validation(analytics_id);
+CREATE INDEX IF NOT EXISTS idx_video_validation_status ON public.video_validation(can_complete, time_requirement_met);
+
+-- Triggers
+CREATE OR REPLACE FUNCTION update_video_validation_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_video_validation_updated_at
+    BEFORE UPDATE ON public.video_validation
+    FOR EACH ROW
+    EXECUTE FUNCTION update_video_validation_updated_at();
+
+-- Function to calculate cheat score
+CREATE OR REPLACE FUNCTION calculate_cheat_score(
+    total_duration DECIMAL,
+    actual_watch_time DECIMAL,
+    valid_watch_time DECIMAL,
+    large_skips INTEGER,
+    suspicious_segments INTEGER
+) RETURNS DECIMAL AS $$
+DECLARE
+    base_score DECIMAL := 100;
+    time_penalty DECIMAL;
+    skip_penalty DECIMAL;
+    segment_penalty DECIMAL;
+    final_score DECIMAL;
+BEGIN
+    -- Time penalty: if actual watch time is much less than valid time
+    IF valid_watch_time > 0 THEN
+        time_penalty := ((valid_watch_time - actual_watch_time) / valid_watch_time) * 30;
+    ELSE
+        time_penalty := 0;
+    END IF;
+    
+    -- Skip penalty: each large skip reduces score
+    skip_penalty := large_skips * 15;
+    
+    -- Suspicious segment penalty
+    segment_penalty := suspicious_segments * 10;
+    
+    final_score := base_score - time_penalty - skip_penalty - segment_penalty;
+    
+    -- Ensure score doesn't go below 0
+    RETURN GREATEST(0, final_score);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Function to validate if user can complete video
+CREATE OR REPLACE FUNCTION can_complete_video(
+    p_analytics_id UUID
+) RETURNS BOOLEAN AS $$
+DECLARE
+    v_validation RECORD;
+    v_analytics RECORD;
+BEGIN
+    -- Get validation data
+    SELECT * INTO v_validation FROM public.video_validation WHERE analytics_id = p_analytics_id;
+    SELECT * INTO v_analytics FROM public.video_analytics WHERE id = p_analytics_id;
+    
+    IF NOT FOUND THEN
+        RETURN FALSE;
+    END IF;
+    
+    -- Check if time requirement is met (90% of total duration)
+    IF v_validation.time_requirement_met = FALSE THEN
+        RETURN FALSE;
+    END IF;
+    
+    -- Check if cheat score is acceptable (above 70)
+    IF v_validation.cheat_score < 70 THEN
+        RETURN FALSE;
+    END IF;
+    
+    -- Check if progress is unlocked
+    IF v_validation.progress_unlocked = FALSE THEN
+        RETURN FALSE;
+    END IF;
+    
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql;
+

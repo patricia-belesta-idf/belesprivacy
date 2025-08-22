@@ -1,0 +1,244 @@
+import { useCallback, useRef, useState } from 'react'
+import { createClient } from '@/lib/supabase'
+
+interface WatchSegment {
+  start: number
+  end: number
+  duration: number
+  isValid: boolean
+}
+
+interface AntiCheatValidation {
+  totalDuration: number
+  minimumWatchTime: number // 90% of total duration
+  actualWatchTime: number
+  validWatchTime: number
+  largeSkipsDetected: number
+  suspiciousSegments: number
+  cheatScore: number
+  timeRequirementMet: boolean
+  progressUnlocked: boolean
+  canComplete: boolean
+  watchSegments: WatchSegment[]
+  lastValidPosition: number
+}
+
+interface UseAntiCheatValidationProps {
+  userId: string
+  unitId: string
+  analyticsId: string
+  totalDuration: number
+}
+
+export function useAntiCheatValidation({ 
+  userId, 
+  unitId, 
+  analyticsId, 
+  totalDuration 
+}: UseAntiCheatValidationProps) {
+  const supabase = createClient()
+  const [validation, setValidation] = useState<AntiCheatValidation>({
+    totalDuration,
+    minimumWatchTime: totalDuration * 0.9, // 90% requirement
+    actualWatchTime: 0,
+    validWatchTime: 0,
+    largeSkipsDetected: 0,
+    suspiciousSegments: 0,
+    cheatScore: 100,
+    timeRequirementMet: false,
+    progressUnlocked: false,
+    canComplete: false,
+    watchSegments: [],
+    lastValidPosition: 0
+  })
+
+  const currentSegmentRef = useRef<{ start: number; end: number } | null>(null)
+  const lastPositionRef = useRef<number>(0)
+  const watchStartTimeRef = useRef<number>(0)
+  const segmentStartTimeRef = useRef<number>(0)
+
+  // Initialize validation record in database
+  const initializeValidation = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('video_validation')
+        .insert({
+          analytics_id: analyticsId,
+          total_video_duration: totalDuration,
+          minimum_watch_time: totalDuration * 0.9,
+          actual_watch_time: 0,
+          valid_watch_time: 0,
+          cheat_score: 100,
+          time_requirement_met: false,
+          progress_unlocked: false,
+          can_complete: false
+        })
+        .select()
+        .single()
+
+      if (error) {
+        console.error('Error initializing validation:', error)
+      }
+    } catch (error) {
+      console.error('Error in initializeValidation:', error)
+    }
+  }, [analyticsId, totalDuration, supabase])
+
+  // Track video progress with anti-cheat validation
+  const trackProgress = useCallback((currentTime: number, isPlaying: boolean) => {
+    if (!isPlaying) return
+
+    const now = currentTime
+    const last = lastPositionRef.current
+    const timeDiff = now - last
+
+    // Detect large skips (cheating)
+    if (timeDiff > 10) {
+      setValidation(prev => ({
+        ...prev,
+        largeSkipsDetected: prev.largeSkipsDetected + 1,
+        suspiciousSegments: prev.suspiciousSegments + 1
+      }))
+      
+      // Reset current segment
+      if (currentSegmentRef.current) {
+        currentSegmentRef.current = null
+      }
+    }
+
+    // Start new segment if needed
+    if (!currentSegmentRef.current) {
+      currentSegmentRef.current = { start: now, end: now }
+      segmentStartTimeRef.current = Date.now()
+    } else {
+      // Update segment end
+      currentSegmentRef.current.end = now
+    }
+
+    // Track valid watch time (only if no large skips)
+    if (timeDiff <= 10 && timeDiff > 0) {
+      setValidation(prev => ({
+        ...prev,
+        actualWatchTime: prev.actualWatchTime + timeDiff,
+        validWatchTime: prev.validWatchTime + timeDiff
+      }))
+    }
+
+    // Check if time requirement is met (90%)
+    const timeRequirementMet = validation.validWatchTime >= validation.minimumWatchTime
+    
+    // Unlock progress tracking only after time requirement
+    const progressUnlocked = timeRequirementMet
+    
+    // Calculate cheat score
+    const cheatScore = Math.max(0, 100 - (validation.largeSkipsDetected * 15) - (validation.suspiciousSegments * 10))
+    
+    // Can complete only if all requirements met
+    const canComplete = timeRequirementMet && cheatScore >= 70 && progressUnlocked
+
+    setValidation(prev => ({
+      ...prev,
+      timeRequirementMet,
+      progressUnlocked,
+      cheatScore,
+      canComplete,
+      lastValidPosition: now
+    }))
+
+    lastPositionRef.current = now
+  }, [validation.validWatchTime, validation.minimumWatchTime, validation.largeSkipsDetected, validation.suspiciousSegments])
+
+  // Finalize segment when video is paused/stopped
+  const finalizeSegment = useCallback(() => {
+    if (currentSegmentRef.current) {
+      const segment: WatchSegment = {
+        start: currentSegmentRef.current.start,
+        end: currentSegmentRef.current.end,
+        duration: currentSegmentRef.current.end - currentSegmentRef.current.start,
+        isValid: currentSegmentRef.current.end - currentSegmentRef.current.start <= 10
+      }
+
+      setValidation(prev => ({
+        ...prev,
+        watchSegments: [...prev.watchSegments, segment]
+      }))
+
+      currentSegmentRef.current = null
+    }
+  }, [])
+
+  // Save validation data to database
+  const saveValidation = useCallback(async () => {
+    try {
+      const { error } = await supabase
+        .from('video_validation')
+        .upsert({
+          analytics_id: analyticsId,
+          total_video_duration: validation.totalDuration,
+          minimum_watch_time: validation.minimumWatchTime,
+          actual_watch_time: validation.actualWatchTime,
+          valid_watch_time: validation.validWatchTime,
+          large_skips_detected: validation.largeSkipsDetected,
+          suspicious_segments: validation.suspiciousSegments,
+          cheat_score: validation.cheatScore,
+          time_requirement_met: validation.timeRequirementMet,
+          progress_unlocked: validation.progressUnlocked,
+          can_complete: validation.canComplete,
+          watch_segments: validation.watchSegments,
+          last_valid_position: validation.lastValidPosition
+        })
+
+      if (error) {
+        console.error('Error saving validation:', error)
+      }
+    } catch (error) {
+      console.error('Error in saveValidation:', error)
+    }
+  }, [analyticsId, validation, supabase])
+
+  // Get validation status for display
+  const getValidationStatus = useCallback(() => {
+    if (!validation.timeRequirementMet) {
+      return {
+        status: 'time-required',
+        message: `Debes ver al menos ${Math.round(validation.minimumWatchTime)}s (90%) del video para desbloquear el seguimiento del progreso`,
+        progress: (validation.validWatchTime / validation.minimumWatchTime) * 100,
+        canTrackProgress: false
+      }
+    }
+
+    if (validation.cheatScore < 70) {
+      return {
+        status: 'cheating-detected',
+        message: `Se detectó comportamiento sospechoso. Puntuación: ${validation.cheatScore}/100. Ve el video normalmente.`,
+        progress: 0,
+        canTrackProgress: false
+      }
+    }
+
+    if (!validation.progressUnlocked) {
+      return {
+        status: 'progress-locked',
+        message: 'Progreso del 95% bloqueado hasta cumplir todos los requisitos',
+        progress: 0,
+        canTrackProgress: false
+      }
+    }
+
+    return {
+      status: 'ready',
+      message: '✅ Todos los requisitos cumplidos. El seguimiento del 95% está activo.',
+      progress: 100,
+      canTrackProgress: true
+    }
+  }, [validation])
+
+  return {
+    validation,
+    trackProgress,
+    finalizeSegment,
+    saveValidation,
+    getValidationStatus,
+    initializeValidation
+  }
+}

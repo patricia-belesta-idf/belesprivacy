@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BookOpen, ArrowLeft, ArrowRight, Check, Video } from 'lucide-react'
-import { AdvancedVideoPlayer } from "@/components/video/AdvancedVideoPlayer"
+import { AntiCheatVideoPlayer } from "@/components/video/AntiCheatVideoPlayer"
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Unit, Quiz } from '@/types'
@@ -349,7 +349,7 @@ export default function UnitPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <AdvancedVideoPlayer
+                <AntiCheatVideoPlayer
                   videoUrl={unit.video_url}
                   title={unit.title}
                   onVideoEnd={handleVideoEnd}

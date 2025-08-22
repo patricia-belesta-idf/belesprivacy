@@ -1,12 +1,12 @@
-import { useVideoAnalytics } from "@/hooks/useVideoAnalytics"
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Play, Pause, Volume2, VolumeX, Maximize, Check, AlertCircle, SkipBack, SkipForward, RotateCcw } from 'lucide-react'
+import { Play, Pause, Volume2, VolumeX, Maximize, Check, AlertCircle, SkipBack, SkipForward, RotateCcw, Shield, Clock, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { useAntiCheatValidation } from '@/hooks/useAntiCheatValidation'
 
 interface VideoAnalytics {
   totalWatchTime: number
@@ -25,12 +25,13 @@ interface VideoPlayerProps {
   onVideoEnd: () => void
   onProgress?: (progress: number, analytics: VideoAnalytics) => void
   className?: string
-  completionThreshold?: number // Porcentaje para marcar como completado (default: 95)
-  userId?: string // Para analytics
-  unitId?: string // Para analytics
+  completionThreshold?: number
+  userId?: string
+  unitId?: string
+  analyticsId?: string
 }
 
-export function AdvancedVideoPlayer({ 
+export function AntiCheatVideoPlayer({ 
   videoUrl, 
   title, 
   onVideoEnd, 
@@ -38,7 +39,8 @@ export function AdvancedVideoPlayer({
   className = "",
   completionThreshold = 95,
   userId,
-  unitId
+  unitId,
+  analyticsId
 }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
@@ -52,6 +54,7 @@ export function AdvancedVideoPlayer({
   const [showCompletionAlert, setShowCompletionAlert] = useState(false)
   const [isBuffering, setIsBuffering] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1)
+  const [showAntiCheatAlert, setShowAntiCheatAlert] = useState(false)
   
   // Analytics state
   const [analytics, setAnalytics] = useState<VideoAnalytics>({
@@ -70,10 +73,32 @@ export function AdvancedVideoPlayer({
   const watchStartTimeRef = useRef<number>(0)
   const currentSegmentRef = useRef<{ start: number; end: number } | null>(null)
 
+  // Anti-cheat validation
+  const {
+    validation,
+    trackProgress,
+    finalizeSegment,
+    saveValidation,
+    getValidationStatus,
+    initializeValidation
+  } = useAntiCheatValidation({
+    userId: userId || '',
+    unitId: unitId || '',
+    analyticsId: analyticsId || '',
+    totalDuration: duration
+  })
+
   // Handle different video types
   const isYouTube = videoUrl.includes('youtube.com')
   const isVimeo = videoUrl.includes('vimeo.com')
   const isDirectVideo = !isYouTube && !isVimeo
+
+  // Initialize validation when component mounts
+  useEffect(() => {
+    if (userId && unitId && analyticsId && duration > 0) {
+      initializeValidation()
+    }
+  }, [userId, unitId, analyticsId, duration, initializeValidation])
 
   // Analytics functions
   const updateAnalytics = useCallback((updates: Partial<VideoAnalytics>) => {
@@ -145,31 +170,44 @@ export function AdvancedVideoPlayer({
         // Track analytics
         trackWatchTime(current)
         
+        // Track anti-cheat validation
+        if (userId && unitId && analyticsId) {
+          trackProgress(current, isPlaying)
+        }
+        
         // Update max progress reached
         if (progressPercent > analytics.maxProgressReached) {
           updateAnalytics({ maxProgressReached: progressPercent })
         }
         
-        // Show progress alert when approaching completion threshold
-        if (progressPercent >= completionThreshold - 10 && progressPercent < completionThreshold && !showProgressAlert) {
-          setShowProgressAlert(true)
-        }
-        
-        // Mark as completed when threshold is reached (95% by default)
-        if (progressPercent >= completionThreshold && !isCompleted) {
-          setIsCompleted(true)
-          setShowCompletionAlert(true)
-          
-          // Finalizar segmento actual
-          if (currentSegmentRef.current) {
-            const segment = { ...currentSegmentRef.current, end: current }
-            updateAnalytics({
-              watchSegments: [...analytics.watchSegments, segment],
-              completedAt: new Date()
-            })
+        // Only show progress alerts if anti-cheat validation passes
+        const validationStatus = getValidationStatus()
+        if (validationStatus.canTrackProgress) {
+          if (progressPercent >= completionThreshold - 10 && progressPercent < completionThreshold && !showProgressAlert) {
+            setShowProgressAlert(true)
           }
           
-          onVideoEnd()
+          // Mark as completed when threshold is reached (95% by default)
+          if (progressPercent >= completionThreshold && !isCompleted) {
+            setIsCompleted(true)
+            setShowCompletionAlert(true)
+            
+            // Finalizar segmento actual
+            if (currentSegmentRef.current) {
+              const segment = { ...currentSegmentRef.current, end: current }
+              updateAnalytics({
+                watchSegments: [...analytics.watchSegments, segment],
+                completedAt: new Date()
+              })
+            }
+            
+            // Save final validation data
+            if (userId && unitId && analyticsId) {
+              saveValidation()
+            }
+            
+            onVideoEnd()
+          }
         }
       }
       
@@ -184,6 +222,11 @@ export function AdvancedVideoPlayer({
             watchSegments: [...analytics.watchSegments, segment],
             completedAt: new Date()
           })
+        }
+        
+        // Save final validation data
+        if (userId && unitId && analyticsId) {
+          saveValidation()
         }
         
         onVideoEnd()
@@ -210,6 +253,11 @@ export function AdvancedVideoPlayer({
             watchSegments: [...analytics.watchSegments, segment]
           })
           currentSegmentRef.current = null
+        }
+        
+        // Finalizar segmento para anti-cheat
+        if (userId && unitId && analyticsId) {
+          finalizeSegment()
         }
       }
       
@@ -238,7 +286,7 @@ export function AdvancedVideoPlayer({
         video.removeEventListener('canplay', handleCanPlay)
       }
     }
-  }, [isDirectVideo, onVideoEnd, isCompleted, completionThreshold, showProgressAlert, duration, analytics, updateAnalytics, trackWatchTime, trackSeek])
+  }, [isDirectVideo, onVideoEnd, isCompleted, completionThreshold, showProgressAlert, duration, analytics, updateAnalytics, trackWatchTime, trackSeek, userId, unitId, analyticsId, trackProgress, finalizeSegment, saveValidation, getValidationStatus, isPlaying])
 
   const togglePlay = () => {
     if (isDirectVideo && videoRef.current) {
@@ -267,8 +315,8 @@ export function AdvancedVideoPlayer({
 
   const changePlaybackRate = (rate: number) => {
     if (isDirectVideo && videoRef.current) {
-      setPlaybackRate(rate)
       videoRef.current.playbackRate = rate
+      setPlaybackRate(rate)
     }
   }
 
@@ -364,6 +412,9 @@ export function AdvancedVideoPlayer({
     )
   }
 
+  // Get validation status for display
+  const validationStatus = getValidationStatus()
+
   return (
     <div 
       className={`relative bg-black rounded-lg overflow-hidden ${className}`}
@@ -385,9 +436,39 @@ export function AdvancedVideoPlayer({
         </div>
       )}
       
-      {/* Progress Alerts */}
-      {showProgressAlert && !isCompleted && (
+      {/* Anti-Cheat Status Alert */}
+      {showAntiCheatAlert && (
         <div className="absolute top-4 left-4 right-4 z-20">
+          <Alert className={`${
+            validationStatus.status === 'ready' 
+              ? 'bg-green-50 border-green-200' 
+              : validationStatus.status === 'cheating-detected'
+              ? 'bg-red-50 border-red-200'
+              : 'bg-yellow-50 border-yellow-200'
+          }`}>
+            {validationStatus.status === 'ready' ? (
+              <Check className="h-4 w-4 text-green-600" />
+            ) : validationStatus.status === 'cheating-detected' ? (
+              <AlertTriangle className="h-4 w-4 text-red-600" />
+            ) : (
+              <Clock className="h-4 w-4 text-yellow-600" />
+            )}
+            <AlertDescription className={
+              validationStatus.status === 'ready' 
+                ? 'text-green-800' 
+                : validationStatus.status === 'cheating-detected'
+                ? 'text-red-800'
+                : 'text-yellow-800'
+            }>
+              <strong>🛡️ Sistema Anti-Trampa:</strong> {validationStatus.message}
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
+      
+      {/* Progress Alerts - Only show if validation passes */}
+      {validationStatus.canTrackProgress && showProgressAlert && !isCompleted && (
+        <div className="absolute top-20 left-4 right-4 z-20">
           <Alert className="bg-yellow-50 border-yellow-200">
             <AlertCircle className="h-4 w-4 text-yellow-600" />
             <AlertDescription className="text-yellow-800">
@@ -398,8 +479,8 @@ export function AdvancedVideoPlayer({
         </div>
       )}
       
-      {showCompletionAlert && isCompleted && (
-        <div className="absolute top-4 left-4 right-4 z-20">
+      {validationStatus.canTrackProgress && showCompletionAlert && isCompleted && (
+        <div className="absolute top-20 left-4 right-4 z-20">
           <Alert className="bg-green-50 border-green-200">
             <Check className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-green-800">
@@ -422,19 +503,21 @@ export function AdvancedVideoPlayer({
                 className="h-full bg-blue-500 rounded-full transition-all duration-200"
                 style={{ width: `${progress}%` }}
               />
-              {/* Completion threshold indicator */}
-              <div 
-                className="absolute top-0 h-full w-1 bg-green-400 rounded"
-                style={{ 
-                  left: `${completionThreshold}%`,
-                  transform: 'translateX(-50%)'
-                }}
-                title={`Meta: ${completionThreshold}%`}
-              />
+              {/* Completion threshold indicator - Only show if validation passes */}
+              {validationStatus.canTrackProgress && (
+                <div 
+                  className="absolute top-0 h-full w-1 bg-green-400 rounded"
+                  style={{ 
+                    left: `${completionThreshold}%`,
+                    transform: 'translateX(-50%)'
+                  }}
+                  title={`Meta: ${completionThreshold}%`}
+                />
+              )}
             </div>
             <div className="flex justify-between text-xs text-white/70 mt-1">
               <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
-              <span>{Math.round(progress)}% / {completionThreshold}%</span>
+              <span>{Math.round(progress)}% / {validationStatus.canTrackProgress ? completionThreshold : 'Bloqueado'}%</span>
             </div>
           </div>
           
@@ -503,9 +586,10 @@ export function AdvancedVideoPlayer({
             </div>
             
             <div className="flex items-center space-x-2">
-              {/* Analytics Info */}
+              {/* Anti-Cheat Info */}
               <div className="text-xs text-white/70 hidden sm:block">
-                Pausas: {analytics.pauseCount} | Rebobinado: {analytics.rewindCount}
+                <Shield className="h-3 w-3 inline mr-1" />
+                {validationStatus.status === 'ready' ? '✅ Validado' : '⏳ Validando...'}
               </div>
               
               <Button
@@ -521,8 +605,8 @@ export function AdvancedVideoPlayer({
         </div>
       )}
       
-      {/* Completion Badge */}
-      {isCompleted && (
+      {/* Completion Badge - Only show if validation passes */}
+      {validationStatus.canTrackProgress && isCompleted && (
         <div className="absolute top-4 right-4 z-20">
           <Badge variant="secondary" className="bg-green-600 text-white shadow-lg">
             <Check className="h-3 w-3 mr-1" />
@@ -531,12 +615,42 @@ export function AdvancedVideoPlayer({
         </div>
       )}
       
-      {/* Progress Info */}
+      {/* Progress Info with Anti-Cheat Status */}
       <div className="absolute top-4 left-4 z-20">
-        <Badge variant="outline" className="bg-black/60 text-white border-white/20">
-          {Math.round(progress)}% / {completionThreshold}%
+        <Badge variant="outline" className={`${
+          validationStatus.canTrackProgress 
+            ? 'bg-black/60 text-white border-white/20' 
+            : 'bg-red-600 text-white border-red-400'
+        }`}>
+          {validationStatus.canTrackProgress ? (
+            `${Math.round(progress)}% / ${completionThreshold}%`
+          ) : (
+            <>
+              <Shield className="h-3 w-3 mr-1" />
+              Anti-Trampa Activo
+            </>
+          )}
         </Badge>
       </div>
+      
+      {/* Time Requirement Progress */}
+      {!validationStatus.canTrackProgress && (
+        <div className="absolute top-16 left-4 right-4 z-20">
+          <div className="bg-black/80 rounded-lg p-3">
+            <div className="flex items-center justify-between text-white text-sm mb-2">
+              <span>⏱️ Tiempo requerido: {Math.round(validation.minimumWatchTime)}s (90%)</span>
+              <span>{Math.round(validation.validWatchTime)}s / {Math.round(validation.minimumWatchTime)}s</span>
+            </div>
+            <Progress 
+              value={(validation.validWatchTime / validation.minimumWatchTime) * 100} 
+              className="h-2"
+            />
+            <p className="text-white/70 text-xs mt-1">
+              {validationStatus.message}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
