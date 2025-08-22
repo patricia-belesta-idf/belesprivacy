@@ -117,10 +117,10 @@ export default function UnitPage() {
   const handleVideoEnd = async () => {
     setVideoWatched(true)
     
-    if (user && unit) {
+    if (user && unit && course) {
       try {
         // Update user progress in Supabase
-        const { error } = await supabase
+        const { error: progressError } = await supabase
           .from('user_progress')
           .upsert({
             user_id: user.id,
@@ -129,11 +129,40 @@ export default function UnitPage() {
             video_watched_at: new Date().toISOString()
           })
 
-        if (error) {
-          console.error('Error updating progress:', error)
+        if (progressError) {
+          console.error('Error updating progress:', progressError)
+        }
+
+        // Update course enrollment progress
+        const { data: currentEnrollment } = await supabase
+          .from('enrollments')
+          .select('completed_units')
+          .eq('user_id', user.id)
+          .eq('course_id', course.id)
+          .single()
+
+        if (currentEnrollment) {
+          const updatedCompletedUnits = [...(currentEnrollment.completed_units || []), unit.id]
+          
+          const { error: enrollmentError } = await supabase
+            .from('enrollments')
+            .update({
+              progress: ((unit.order) / course.total_units) * 100,
+              current_unit: unit.order + 1,
+              completed_units: updatedCompletedUnits
+            })
+            .eq('user_id', user.id)
+            .eq('course_id', course.id)
+
+          if (enrollmentError) {
+            console.error('Error updating enrollment:', enrollmentError)
+          } else {
+            toast.success('¡Video completado! Progreso actualizado.')
+          }
         }
       } catch (error) {
         console.error('Error:', error)
+        toast.error('Error al actualizar el progreso')
       }
     }
   }

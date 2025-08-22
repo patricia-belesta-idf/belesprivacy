@@ -316,11 +316,11 @@ INSERT INTO public.courses (id, title, description, duration, total_units, is_pu
 ('d0e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a', 'Implementación de Políticas de Privacidad', 'Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales.', 150, 10, true)
 ON CONFLICT (id) DO NOTHING;
 
--- Sample units for the first course with YouTube videos
+-- Sample units for the first course with direct video URLs for testing
 INSERT INTO public.units (course_id, title, description, "order", video_url, duration) VALUES
-('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Introducción a la Protección de Datos', 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.', 1, 'https://www.youtube.com/embed/dQw4w9WgXcQ', 15),
-('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Principios de la Protección de Datos', 'Los siete principios fundamentales que rigen el tratamiento de datos personales.', 2, 'https://www.youtube.com/embed/dQw4w9WgXcQ', 20),
-('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Derechos de los Usuarios', 'Conoce los derechos que tienen las personas sobre sus datos personales.', 3, 'https://www.youtube.com/embed/dQw4w9WgXcQ', 18)
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Introducción a la Protección de Datos', 'Conceptos básicos y fundamentos de la privacidad y protección de datos personales.', 1, 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 15),
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Principios de la Protección de Datos', 'Los siete principios fundamentales que rigen el tratamiento de datos personales.', 2, 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 20),
+('b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e', 'Derechos de los Usuarios', 'Conoce los derechos que tienen las personas sobre sus datos personales.', 3, 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 18)
 ON CONFLICT DO NOTHING;
 
 -- Sample quiz for the first unit
