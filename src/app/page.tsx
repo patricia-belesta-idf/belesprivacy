@@ -108,7 +108,7 @@ export default function HomePage() {
                 Protecting personal data
               </span>
               <br />
-              <span className="text-gray-900 font-normal">is not optional — it's the law</span>
+              <span className="text-gray-900 font-normal">is not optional — it&apos;s the law</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed">
               Under the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-semibold">General Data Protection Regulation (GDPR)</span>, 
