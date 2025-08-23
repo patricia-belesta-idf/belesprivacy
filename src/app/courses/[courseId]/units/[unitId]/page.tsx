@@ -309,7 +309,11 @@ export default function UnitPage() {
         
         console.log(`Is last unit: ${isLastUnit}, Is course completed: ${isCourseCompleted}`)
 
-        const updateData: any = {
+        const updateData: {
+          completed_units: string[]
+          current_unit: number
+          completed_at?: string
+        } = {
           completed_units: updatedCompletedUnits,
           current_unit: currentUnit
         }
@@ -766,7 +770,7 @@ export default function UnitPage() {
                           Tu puntuación: {quizScore}% (Puntuación mínima: {quiz.passing_score}%)
                           {isLastUnit() && quizScore && quizScore >= quiz.passing_score && (
                             <span className="block mt-2 text-green-600 font-medium">
-                              🎉 ¡Has completado exitosamente "{course.title}"!
+                              🎉 ¡Has completado exitosamente &quot;{course.title}&quot;!
                             </span>
                           )}
                         </p>

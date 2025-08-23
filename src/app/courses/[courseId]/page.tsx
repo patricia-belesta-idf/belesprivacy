@@ -20,7 +20,7 @@ export default function CourseDetailPage() {
   const params = useParams()
   const { user, loading: authLoading } = useAuth()
   const [course, setCourse] = useState<Course | null>(null)
-  const [units, setUnits] = useState<Unit[]>(null)
+  const [units, setUnits] = useState<Unit[] | null>(null)
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('curriculum')
@@ -123,7 +123,19 @@ export default function CourseDetailPage() {
             })
           } else {
             console.log('✅ Simple enrollment query succeeded:', simpleEnrollmentData)
-            setEnrollment(simpleEnrollmentData)
+            // Crear un objeto completo con valores por defecto para campos faltantes
+            if (course) {
+              const completeEnrollment: Enrollment = {
+                id: simpleEnrollmentData.id,
+                user_id: user.id,
+                course_id: course.id,
+                current_unit: simpleEnrollmentData.current_unit || 1,
+                completed_units: simpleEnrollmentData.completed_units || [],
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+              }
+              setEnrollment(completeEnrollment)
+            }
           }
         } else if (enrollmentData) {
           console.log('✅ Enrollment data loaded successfully:', enrollmentData)
@@ -316,7 +328,7 @@ export default function CourseDetailPage() {
   }
 
   const calculateProgress = () => {
-    if (!enrollment || !units.length) return 0
+    if (!enrollment || !units || !units.length) return 0
     
     // Debug: mostrar información del enrollment
     console.log('Enrollment data:', {
@@ -347,7 +359,7 @@ export default function CourseDetailPage() {
   }
 
   const getCurrentUnitId = () => {
-    if (!enrollment || !units.length) return ''
+    if (!enrollment || !units || !units.length) return ''
     const currentUnit = units.find(unit => unit.order === enrollment.current_unit)
     return currentUnit?.id || units[0]?.id || ''
   }
@@ -517,8 +529,7 @@ export default function CourseDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {console.log('🎯 Rendering units with enrollment:', enrollment)}
-                  {units.map((unit) => (
+                  {units?.map((unit) => (
                     <div
                       key={unit.id}
                       className={`flex items-center space-x-4 p-4 rounded-lg border ${
