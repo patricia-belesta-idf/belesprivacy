@@ -25,7 +25,7 @@ export default function HomePage() {
             <span className="text-gray-700 text-sm font-medium">AI-Powered Learning Platform</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-8 leading-tight tracking-wide">
             <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
               Data Protection
             </span>
@@ -103,12 +103,12 @@ export default function HomePage() {
               <Lock className="w-5 h-5 text-red-500 mr-2" />
               <span className="text-red-700 font-medium">Legal Requirement</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600">
+            <h2 className="text-3xl md:text-5xl font-light mb-8 leading-tight tracking-wide">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Protecting personal data
               </span>
               <br />
-              <span className="text-gray-900">is not optional — it's the law</span>
+              <span className="text-gray-900 font-normal">is not optional — it's the law</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed">
               Under the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-semibold">General Data Protection Regulation (GDPR)</span>, 
@@ -125,7 +125,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-100 to-pink-100 border border-red-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Shield className="w-8 h-8 text-red-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Mandatory</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Mandatory</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">EU data protection law</CardDescription>
@@ -138,7 +138,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 border border-green-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Practical</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Practical</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Real-life cases & examples</CardDescription>
@@ -151,7 +151,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-cyan-100 border border-blue-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Clock className="w-8 h-8 text-blue-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Duration</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Duration</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">30–40 minutes total</CardDescription>
@@ -164,7 +164,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-100 to-violet-100 border border-purple-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Star className="w-8 h-8 text-purple-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">AI-aware</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">AI-aware</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">AI tools best practices</CardDescription>
@@ -182,14 +182,14 @@ export default function HomePage() {
               <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
               <span className="text-blue-700 font-medium">Comprehensive Training</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Practical skills
               </span>
               <br />
-              <span className="text-gray-900">you can apply immediately</span>
+              <span className="text-gray-900 font-normal">you can apply immediately</span>
             </h2>
-            <h3 className="text-2xl text-gray-600 font-medium">Course modules</h3>
+            <h3 className="text-xl text-gray-600 font-light tracking-wide">Course modules</h3>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -199,7 +199,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <BookOpen className="w-8 h-8 text-blue-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Introduction to GDPR</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Introduction to GDPR</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Personal data, responsibility, and why it matters</CardDescription>
@@ -212,7 +212,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 border border-green-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Shield className="w-8 h-8 text-green-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Data Protection Principles</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Data Protection Principles</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Core GDPR principles for daily work</CardDescription>
@@ -225,7 +225,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Individual Rights</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Individual Rights</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Understanding and respecting data subject rights</CardDescription>
@@ -238,7 +238,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 border border-orange-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Video className="w-8 h-8 text-orange-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">AI and Data Protection</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">AI and Data Protection</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">AI tools while maintaining compliance</CardDescription>
@@ -251,7 +251,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 border border-red-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Award className="w-8 h-8 text-red-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Incident Response</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Incident Response</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Handling data protection incidents</CardDescription>
@@ -264,7 +264,7 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-emerald-100 to-emerald-200 border border-emerald-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <CheckCircle className="w-8 h-8 text-emerald-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900">Practical Implementation</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Practical Implementation</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Real-world scenarios and compliance steps</CardDescription>
@@ -292,12 +292,12 @@ export default function HomePage() {
               <Zap className="w-5 h-5 text-green-600 mr-2" />
               <span className="text-green-700 font-medium">Simple Process</span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
                 Learn at your own pace
               </span>
               <br />
-              <span className="text-gray-900">— anytime, anywhere</span>
+              <span className="text-gray-900 font-normal">— anytime, anywhere</span>
             </h2>
           </div>
 
@@ -306,9 +306,9 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-blue-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl font-black text-blue-600">1</span>
+                  <span className="text-3xl font-light text-blue-600 tracking-wider">1</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900">Sign up</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Sign up</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Corporate email registration</CardDescription>
@@ -319,9 +319,9 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-100/30 to-green-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 border border-green-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl font-black text-green-600">2</span>
+                  <span className="text-3xl font-light text-green-600 tracking-wider">2</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900">Subscribe</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Subscribe</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Data Privacy Training course</CardDescription>
@@ -332,9 +332,9 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-purple-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl font-black text-purple-600">3</span>
+                  <span className="text-3xl font-light text-purple-600 tracking-wider">3</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900">Lessons</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Lessons</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Video-based learning modules</CardDescription>
@@ -345,9 +345,9 @@ export default function HomePage() {
               <div className="absolute inset-0 bg-gradient-to-br from-orange-100/30 to-orange-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 border border-orange-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-3xl font-black text-orange-600">4</span>
+                  <span className="text-3xl font-light text-orange-600 tracking-wider">4</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900">Quizzes</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Quizzes</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
                 <CardDescription className="text-gray-600">Assessment after each section</CardDescription>
@@ -382,12 +382,12 @@ export default function HomePage() {
               <span className="text-blue-700 font-medium">Global Standard</span>
             </div>
             
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                 Ready to master
               </span>
               <br />
-              <span className="text-gray-900">GDPR compliance?</span>
+              <span className="text-gray-900 font-normal">GDPR compliance?</span>
             </h2>
             
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">

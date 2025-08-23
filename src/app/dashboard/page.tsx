@@ -110,7 +110,7 @@ export default function DashboardPage() {
         })
       }
     } catch (error) {
-      console.error('Error fetching dashboard data:', error)
+      console.error('Error:', error)
       toast.error('Error al cargar datos del dashboard')
     } finally {
       setLoading(false)
@@ -119,8 +119,12 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
         <div className="text-center">
+          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
+            <TrendingUp className="w-5 h-5 text-blue-600 mr-2" />
+            <span className="text-blue-700 font-medium">Cargando Dashboard</span>
+          </div>
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Cargando dashboard...</p>
         </div>
@@ -129,166 +133,196 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      {/* Hero Section */}
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8">
+        {/* Subtle Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-indigo-200/30 to-blue-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Mi Dashboard</h1>
-              <p className="text-gray-600 mt-1">Bienvenido de vuelta, {user?.user_metadata?.full_name || user?.email}</p>
+              <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-100 to-emerald-100 border border-green-200/50 rounded-full backdrop-blur-sm mb-4">
+                <TrendingUp className="w-5 h-5 text-green-600 mr-2" />
+                <span className="text-green-700 font-medium">Tu Progreso</span>
+              </div>
+              <h1 className="text-3xl md:text-5xl font-light text-gray-900 mb-2 tracking-wide">
+                Mi Dashboard
+              </h1>
+              <p className="text-xl text-gray-600">Bienvenido de vuelta, {user?.user_metadata?.full_name || user?.email}</p>
             </div>
             <Link href="/courses">
-              <Button>
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                 <BookOpen className="h-4 w-4 mr-2" />
                 Explorar Cursos
               </Button>
             </Link>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Cursos Inscritos</CardTitle>
-              <BookOpen className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalCourses}</div>
-              <p className="text-xs text-muted-foreground">
-                Cursos activos
-              </p>
-            </CardContent>
-          </Card>
+      {/* Dashboard Content */}
+      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Cursos Inscritos</CardTitle>
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
+                  <BookOpen className="h-4 w-4 text-blue-600" />
+                </div>
+              </CardHeader>
+              <CardContent className="relative z-10">
+                <div className="text-2xl font-bold text-gray-900">{stats.totalCourses}</div>
+                <p className="text-xs text-gray-500">
+                  Cursos activos
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Progreso General</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalProgress}%</div>
-              <p className="text-xs text-muted-foreground">
-                Promedio de todos los cursos
-              </p>
-            </CardContent>
-          </Card>
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-100/20 to-emerald-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Progreso General</CardTitle>
+                <div className="w-8 h-8 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="h-4 w-4 text-green-600" />
+                </div>
+              </CardHeader>
+              <CardContent className="relative z-10">
+                <div className="text-2xl font-bold text-gray-900">{stats.totalProgress}%</div>
+                <p className="text-xs text-gray-500">
+                  Promedio de todos los cursos
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Unidades Completadas</CardTitle>
-              <CheckCircle className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.completedUnits}</div>
-              <p className="text-xs text-muted-foreground">
-                De {stats.totalUnits} totales
-              </p>
-            </CardContent>
-          </Card>
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-pink-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Unidades Completadas</CardTitle>
+                <div className="w-8 h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg flex items-center justify-center">
+                  <CheckCircle className="h-4 w-4 text-purple-600" />
+                </div>
+              </CardHeader>
+              <CardContent className="relative z-10">
+                <div className="text-2xl font-bold text-gray-900">{stats.completedUnits}</div>
+                <p className="text-xs text-gray-500">
+                  De {stats.totalUnits} totales
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Tiempo de Estudio</CardTitle>
-              <Clock className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">2.5h</div>
-              <p className="text-xs text-muted-foreground">
-                Esta semana
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Enrolled Courses */}
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900">Mis Cursos</h2>
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-100/20 to-red-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Tiempo de Estudio</CardTitle>
+                <div className="w-8 h-8 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg flex items-center justify-center">
+                  <Clock className="h-4 w-4 text-orange-600" />
+                </div>
+              </CardHeader>
+              <CardContent className="relative z-10">
+                <div className="text-2xl font-bold text-gray-900">2.5h</div>
+                <p className="text-xs text-gray-500">
+                  Esta semana
+                </p>
+              </CardContent>
+            </Card>
           </div>
 
-          <div className="grid gap-6">
-            {enrolledCourses.map((item) => (
-              <Card key={item.id} className="overflow-hidden">
-                <div className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center">
-                        <BookOpen className="h-8 w-8 text-blue-600" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                            {item.course.title}
-                          </h3>
-                          <p className="text-sm text-gray-600 mb-3">
-                            {item.course.description}
-                          </p>
-                        </div>
-                        <Badge variant="secondary" className="ml-2">
-                          {item.enrollment.progress}% Completado
-                        </Badge>
-                      </div>
+          {/* Enrolled Courses */}
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-light text-gray-900 tracking-wide">Mis Cursos</h2>
+            </div>
 
-                      <div className="space-y-3">
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-gray-600">Progreso</span>
-                            <span className="font-medium">{item.enrollment.progress}%</span>
+            <div className="grid gap-6">
+              {enrolledCourses.map((item) => (
+                <Card key={item.id} className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/10 to-purple-100/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10 p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="flex-shrink-0">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <BookOpen className="h-8 w-8 text-blue-600" />
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h3 className="text-lg font-light text-gray-900 mb-1 tracking-wide group-hover:text-blue-600 transition-colors duration-200">
+                              {item.course.title}
+                            </h3>
+                            <p className="text-sm text-gray-600 mb-3">
+                              {item.course.description}
+                            </p>
                           </div>
-                          <Progress value={item.enrollment.progress} className="h-2" />
+                          <Badge className="ml-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border border-green-200/50">
+                            {item.enrollment.progress}% Completado
+                          </Badge>
                         </div>
 
-                        <div className="flex items-center justify-between text-sm text-gray-600">
-                          <span>Unidad actual: {item.enrollment.current_unit} de {item.course.total_units}</span>
-                          <span>{item.enrollment.completed_units.length} unidades completadas</span>
-                        </div>
+                        <div className="space-y-3">
+                          <div className="space-y-2">
+                            <div className="flex justify-between text-sm">
+                              <span className="text-gray-600">Progreso</span>
+                              <span className="font-medium">{item.enrollment.progress}%</span>
+                            </div>
+                            <Progress value={item.enrollment.progress} className="h-2" />
+                          </div>
 
-                        <div className="flex space-x-3">
-                          <Link href={`/courses/${item.course.id}`} className="flex-1">
-                            <Button className="w-full">
-                              <Play className="h-4 w-4 mr-2" />
-                              Continuar Aprendiendo
-                            </Button>
-                          </Link>
-                          <Button variant="outline" size="sm">
-                            Ver Progreso
-                          </Button>
+                          <div className="flex items-center justify-between text-sm text-gray-600">
+                            <span>Unidad actual: {item.enrollment.current_unit} de {item.course.total_units}</span>
+                          </div>
+
+                          <div className="flex space-x-3">
+                            <Link href={`/courses/${item.course.id}`}>
+                              <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 bg-white/80 backdrop-blur-sm">
+                                <BookOpen className="h-4 w-4 mr-2" />
+                                Ver Curso
+                              </Button>
+                            </Link>
+                            <Link href={`/courses/${item.course.id}/units/${item.enrollment.current_unit}`}>
+                              <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                                <Play className="h-4 w-4 mr-2" />
+                                Continuar
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+                </Card>
+              ))}
+            </div>
 
-          {enrolledCourses.length === 0 && (
-            <Card className="text-center py-12">
-              <CardContent>
-                <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No tienes cursos inscritos
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Comienza explorando nuestros cursos y inscríbete en el que más te interese.
-                </p>
-                <Link href="/courses">
-                  <Button>
-                    Explorar Cursos
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          )}
+            {enrolledCourses.length === 0 && (
+              <Card className="text-center py-12 bg-white/80 backdrop-blur-sm border border-gray-200/50">
+                <CardContent>
+                  <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-light text-gray-900 mb-2 tracking-wide">
+                    No tienes cursos inscritos
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Comienza explorando nuestros cursos y inscríbete en el que más te interese.
+                  </p>
+                  <Link href="/courses">
+                    <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                      Explorar Cursos
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }
