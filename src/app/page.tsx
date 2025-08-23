@@ -31,11 +31,11 @@ export default function HomePage() {
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-8 leading-tight tracking-wide">
             <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
-              {t('homepage.hero.title').split(' ')[0]} {t('homepage.hero.title').split(' ')[1]}
+              {t('homepage.hero.title').split(' ').slice(0, 3).join(' ')}
             </span>
             <br />
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              {t('homepage.hero.title').split(' ')[2]}
+              {t('homepage.hero.title').split(' ').slice(3).join(' ')}
             </span>
           </h1>
 

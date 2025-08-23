@@ -304,10 +304,10 @@ export default function CoursesPage() {
           <div className="flex justify-center">
             <div className={`grid gap-8 ${
               courses.length === 1 
-                ? 'grid-cols-1 max-w-4xl' 
+                ? 'grid-cols-1 max-w-2xl' 
                 : courses.length === 2 
-                ? 'grid-cols-1 md:grid-cols-2 max-w-5xl' 
-                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl'
+                ? 'grid-cols-1 md:grid-cols-2 max-w-4xl' 
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl'
             }`}>
             {courses.map((course) => {
               const enrolled = isEnrolled(course.id)
@@ -325,7 +325,7 @@ export default function CoursesPage() {
               }
 
               return (
-                <Card key={course.id} className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+                <Card key={course.id} className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-w-[400px]">
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <CardHeader className="relative z-10">
