@@ -199,9 +199,13 @@ export function AntiCheatVideoPlayer({
           updateAnalytics({ maxProgressReached: progressPercent })
         }
         
-        // Only show progress alerts if anti-cheat validation passes
-        const validationStatus = getValidationStatus()
-        if (validationStatus.canTrackProgress) {
+        // ANTI-CHEAT VALIDATION: Check if user can complete video
+        const minimumWatchTime = duration * 0.9 // 90% of total duration
+        const hasWatchedMinimum = current >= minimumWatchTime
+        
+        // Only allow completion if minimum time requirement is met
+        if (hasWatchedMinimum) {
+          // Show progress alerts
           if (progressPercent >= completionThreshold - 10 && progressPercent < completionThreshold && !showProgressAlert) {
             setShowProgressAlert(true)
           }
@@ -226,6 +230,12 @@ export function AntiCheatVideoPlayer({
             }
             
             onVideoEnd()
+          }
+        } else {
+          // User hasn't watched enough - show warning
+          if (progressPercent >= completionThreshold && !showProgressAlert) {
+            setShowProgressAlert(true)
+            setShowCompletionAlert(false)
           }
         }
       }
@@ -497,16 +507,31 @@ export function AntiCheatVideoPlayer({
         </div>
       )}
       
-      {/* Progress Alerts - Only show if validation passes */}
-      {validationStatus.canTrackProgress && showProgressAlert && !isCompleted && (
+      {/* Progress Alerts */}
+      {showProgressAlert && !isCompleted && (
         <div className="absolute top-20 left-4 right-4 z-20">
-          <Alert className="bg-yellow-50 border-yellow-200">
-            <AlertCircle className="h-4 w-4 text-yellow-600" />
-            <AlertDescription className="text-yellow-800">
-              🎯 ¡Casi lo logras! Continúa viendo para alcanzar el {completionThreshold}% requerido. 
-              <strong> Progreso actual: {Math.round(progress)}%</strong>
-            </AlertDescription>
-          </Alert>
+          {currentTime >= duration * 0.9 ? (
+            // User can complete - show progress alert
+            <Alert className="bg-yellow-50 border-yellow-200">
+              <AlertCircle className="h-4 w-4 text-yellow-600" />
+              <AlertDescription className="text-yellow-800">
+                🎯 ¡Casi lo logras! Continúa viendo para alcanzar el {completionThreshold}% requerido. 
+                <strong> Progreso actual: {Math.round(progress)}%</strong>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            // User cannot complete - show anti-cheat warning
+            <Alert className="bg-red-50 border-red-200">
+              <AlertTriangle className="h-4 w-4 text-red-600" />
+              <AlertDescription className="text-red-800">
+                🚫 <strong>Anti-Trampa Activado:</strong> Has adelantado el video sin ver el tiempo mínimo requerido.
+                <br />
+                <strong>Debes ver al menos {Math.round(duration * 0.9)}s para poder completar.</strong>
+                <br />
+                <strong>Tiempo visto: {Math.round(currentTime)}s / {Math.round(duration * 0.9)}s</strong>
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
       )}
       
@@ -636,8 +661,8 @@ export function AntiCheatVideoPlayer({
         </div>
       )}
       
-      {/* Completion Badge - Only show if validation passes */}
-      {validationStatus.canTrackProgress && isCompleted && (
+      {/* Completion Badge - Only show if requirements met */}
+      {isCompleted && currentTime >= duration * 0.9 && (
         <div className="absolute top-4 right-4 z-20">
           <Badge variant="secondary" className="bg-green-600 text-white shadow-lg">
             <Check className="h-3 w-3 mr-1" />
@@ -670,10 +695,10 @@ export function AntiCheatVideoPlayer({
           <div className="bg-black/80 rounded-lg p-3">
             <div className="flex items-center justify-between text-white text-sm mb-2">
               <span>⏱️ Tiempo requerido: {Math.round(duration * 0.9)}s (90%)</span>
-              <span>0s / {Math.round(duration * 0.9)}s</span>
+              <span>{Math.round(currentTime)}s / {Math.round(duration * 0.9)}s</span>
             </div>
             <Progress 
-              value={0} 
+              value={Math.min((currentTime / (duration * 0.9)) * 100, 100)} 
               className="h-2"
             />
             <p className="text-white/70 text-xs mt-1">

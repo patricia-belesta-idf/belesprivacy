@@ -59,30 +59,83 @@ export function useAntiCheatValidation({
 
   // Initialize validation record in database
   const initializeValidation = useCallback(async () => {
+    console.log('🔧 Initializing validation with:', { analyticsId, totalDuration })
+    
+    if (!analyticsId || !totalDuration) {
+      console.log('❌ Missing required data for validation')
+      return
+    }
+    
     try {
-      const { data, error } = await supabase
-        .from('video_validation')
-        .insert({
-          analytics_id: analyticsId,
-          total_video_duration: totalDuration,
-          minimum_watch_time: totalDuration * 0.9,
-          actual_watch_time: 0,
-          valid_watch_time: 0,
-          cheat_score: 100,
-          time_requirement_met: false,
-          progress_unlocked: false,
-          can_complete: false
-        })
-        .select()
+      // Check if analytics record already exists
+      const { data: existingAnalytics } = await supabase
+        .from('video_analytics')
+        .select('id')
+        .eq('id', analyticsId)
         .single()
 
-      if (error) {
-        console.error('Error initializing validation:', error)
+      if (existingAnalytics) {
+        console.log('✅ Analytics record already exists, skipping creation')
+      } else {
+        // Create analytics record only if it doesn't exist
+        const { data: analyticsData, error: analyticsError } = await supabase
+          .from('video_analytics')
+          .insert({
+            id: analyticsId,
+            user_id: userId,
+            unit_id: unitId,
+            total_watch_time: 0,
+            max_progress_reached: 0,
+            completion_threshold: 95
+          })
+          .select()
+          .single()
+
+        if (analyticsError) {
+          console.error('❌ Error creating analytics record:', analyticsError)
+          return
+        }
+
+        console.log('✅ Analytics record created:', analyticsData)
+      }
+
+      // Check if validation record already exists
+      const { data: existingValidation } = await supabase
+        .from('video_validation')
+        .select('id')
+        .eq('analytics_id', analyticsId)
+        .single()
+
+      if (existingValidation) {
+        console.log('✅ Validation record already exists, skipping creation')
+      } else {
+        // Create validation record only if it doesn't exist
+        const { data: validationData, error: validationError } = await supabase
+          .from('video_validation')
+          .insert({
+            analytics_id: analyticsId,
+            total_video_duration: totalDuration,
+            minimum_watch_time: totalDuration * 0.9,
+            actual_watch_time: 0,
+            valid_watch_time: 0,
+            cheat_score: 100,
+            time_requirement_met: false,
+            progress_unlocked: false,
+            can_complete: false
+          })
+          .select()
+          .single()
+
+        if (validationError) {
+          console.error('❌ Error creating validation record:', validationError)
+        } else {
+          console.log('✅ Validation record created:', validationData)
+        }
       }
     } catch (error) {
-      console.error('Error in initializeValidation:', error)
+      console.error('❌ Error in initializeValidation:', error)
     }
-  }, [analyticsId, totalDuration, supabase])
+  }, [analyticsId, totalDuration, userId, unitId, supabase])
 
   // Track video progress with anti-cheat validation
   const trackProgress = useCallback((currentTime: number, isPlaying: boolean) => {

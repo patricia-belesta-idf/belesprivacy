@@ -383,9 +383,10 @@ export default function UnitPage() {
                   title={unit.title}
                   onVideoEnd={handleVideoEnd}
                   completionThreshold={95}
-                   userId={user?.id}
-                   unitId={unit.id}
-                   onProgress={(progress, analytics) => {
+                  userId={user?.id}
+                  unitId={unit.id}
+                  analyticsId={crypto.randomUUID()}
+                  onProgress={(progress, analytics) => {
                     // Optional: You can use this to show progress
                     console.log('Video progress:', progress)
                   }}
