@@ -289,9 +289,9 @@ export default function CoursesPage() {
           <div className="flex justify-center">
             <div className={`grid gap-8 ${
               courses.length === 1 
-                ? 'grid-cols-1 max-w-2xl' 
+                ? 'grid-cols-1 max-w-4xl' 
                 : courses.length === 2 
-                ? 'grid-cols-1 md:grid-cols-2 max-w-4xl' 
+                ? 'grid-cols-1 md:grid-cols-2 max-w-5xl' 
                 : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl'
             }`}>
             {courses.map((course) => {

@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { BookOpen, ArrowLeft, ArrowRight, Check, Video } from 'lucide-react'
+import { BookOpen, ArrowLeft, ArrowRight, Check, Video, RefreshCw } from 'lucide-react'
 import { AntiCheatVideoPlayer } from "@/components/video/AntiCheatVideoPlayer"
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
@@ -29,6 +29,7 @@ export default function UnitPage() {
   const [quizScore, setQuizScore] = useState<number | null>(null)
   const [videoWatched, setVideoWatched] = useState(false)
   const [submittingQuiz, setSubmittingQuiz] = useState(false)
+  const [canRetakeQuiz, setCanRetakeQuiz] = useState(false)
 
   useEffect(() => {
     if (params.courseId && params.unitId) {
@@ -191,6 +192,11 @@ export default function UnitPage() {
       setQuizScore(score)
       setQuizSubmitted(true)
 
+      // Enable retake if failed
+      if (score < quiz.passing_score) {
+        setCanRetakeQuiz(true)
+      }
+
       // Save quiz attempt to Supabase
       const { error: attemptError } = await supabase
         .from('quiz_attempts')
@@ -217,6 +223,15 @@ export default function UnitPage() {
     } finally {
       setSubmittingQuiz(false)
     }
+  }
+
+  const retakeQuiz = () => {
+    // Reset quiz state
+    setQuizAnswers({})
+    setQuizScore(null)
+    setQuizSubmitted(false)
+    setCanRetakeQuiz(false)
+    setSubmittingQuiz(false)
   }
 
   const markUnitAsCompleted = async () => {
@@ -592,6 +607,18 @@ export default function UnitPage() {
                             Ver Curso
                           </Button>
                         </Link>
+                        
+                        {/* Botón Repetir Test - solo aparece si no aprobaste */}
+                        {canRetakeQuiz && (
+                          <Button 
+                            onClick={retakeQuiz}
+                            variant="outline"
+                            className="border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300"
+                          >
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                            Repetir Test
+                          </Button>
+                        )}
                       </div>
                       
                       <div className="flex space-x-2">
