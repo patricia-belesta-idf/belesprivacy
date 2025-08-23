@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
-import { BookOpen, Play, Clock, CheckCircle, TrendingUp } from 'lucide-react'
+import { BookOpen, Play, Clock, CheckCircle, TrendingUp, Lock } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
@@ -246,7 +246,7 @@ export default function DashboardPage() {
                     <div className="flex items-start space-x-4">
                       <div className="flex-shrink-0">
                         <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <BookOpen className="h-8 w-8 text-blue-600" />
+                          <Lock className="h-8 w-8 text-blue-600" />
                         </div>
                       </div>
                       

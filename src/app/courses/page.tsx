@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { BookOpen, Clock, Play, CheckCircle, Users, Star, ArrowRight, Sparkles } from 'lucide-react'
+import { BookOpen, Clock, Play, CheckCircle, Users, Star, ArrowRight, Sparkles, Lock } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
@@ -330,7 +330,7 @@ export default function CoursesPage() {
                   
                   <CardHeader className="relative z-10">
                     <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-4 flex items-center justify-center">
-                      <BookOpen className="w-16 h-16 text-blue-600" />
+                      <Lock className="w-16 h-16 text-blue-600" />
                     </div>
                     
                     <div className="flex items-center justify-between mb-3">
