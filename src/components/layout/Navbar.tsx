@@ -30,8 +30,8 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Lock className="h-5 w-5 text-white" />
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <Lock className="h-4 w-4 text-white" />
               </div>
             </div>
             <span className="text-xl bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">

@@ -96,15 +96,22 @@ export default function UnitPage() {
 
       // Check if user has watched this video
       if (user) {
-        const { data: progressData } = await supabase
+        console.log('🔍 Checking video progress for user:', user.id, 'unit:', params.unitId)
+        
+        const { data: progressData, error: progressError } = await supabase
           .from('user_progress')
-          .select('video_watched')
+          .select('video_watched, video_watched_at')
           .eq('user_id', user.id)
           .eq('unit_id', params.unitId)
           .single()
 
-        if (progressData?.video_watched) {
+        if (progressError) {
+          console.log('ℹ️ No progress record found for this unit (normal for new units)')
+        } else if (progressData?.video_watched) {
+          console.log('✅ Video already watched at:', progressData.video_watched_at)
           setVideoWatched(true)
+        } else {
+          console.log('⏳ Video not watched yet')
         }
       }
     } catch (error) {
@@ -351,18 +358,63 @@ export default function UnitPage() {
   }
 
   const getNextUnit = async (): Promise<{ id: string; title: string } | null> => {
-    if (!unit || !course) return null
+    if (!unit || !course) {
+      console.log('❌ getNextUnit: Missing unit or course data')
+      return null
+    }
+
+    console.log(`🔍 getNextUnit: Looking for next unit after order ${unit.order}`)
+    console.log(`🔍 getNextUnit: Course ID: ${course.id}, Current unit order: ${unit.order}`)
 
     try {
-      const { data: nextUnitData } = await supabase
+      // Primero, vamos a probar una consulta simple para diagnosticar
+      console.log('🔍 Testing basic units query...')
+      const { data: testData, error: testError } = await supabase
         .from('units')
-        .select('id, title')
+        .select('id, title, order')
+        .eq('course_id', course.id)
+        .limit(5)
+
+      if (testError) {
+        console.error('❌ Test query failed:', testError)
+        console.error('Test error details:', {
+          code: testError.code,
+          message: testError.message,
+          details: testError.details
+        })
+        return null
+      }
+
+      console.log('✅ Test query successful, found units:', testData)
+      console.log('🔍 Looking for unit with order:', unit.order + 1)
+
+      // Ahora buscamos la siguiente unidad
+      const { data: nextUnitData, error: nextUnitError } = await supabase
+        .from('units')
+        .select('id, title, order')
         .eq('course_id', course.id)
         .eq('order', unit.order + 1)
         .single()
 
-      return nextUnitData || null
+      if (nextUnitError) {
+        console.error('❌ getNextUnit: Error fetching next unit:', nextUnitError)
+        console.error('Error details:', {
+          code: nextUnitError.code,
+          message: nextUnitError.message,
+          details: nextUnitError.details
+        })
+        return null
+      }
+
+      if (nextUnitData) {
+        console.log(`✅ getNextUnit: Found next unit: ${nextUnitData.title} (order: ${nextUnitData.order})`)
+        return nextUnitData
+      } else {
+        console.log('⚠️ getNextUnit: No next unit found')
+        return null
+      }
     } catch (error) {
+      console.error('❌ getNextUnit: Unexpected error:', error)
       return null
     }
   }
@@ -608,19 +660,7 @@ export default function UnitPage() {
                 )}
 
                 {/* Mensaje especial para la última unidad cuando no has visto el video */}
-                {isLastUnit() && !videoWatched && (
-                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-5 w-5 text-purple-600" />
-                      <span className="text-purple-800 font-medium">
-                        ¡Última unidad del curso!
-                      </span>
-                    </div>
-                    <p className="text-purple-700 text-sm mt-1">
-                      Completa esta unidad para finalizar &quot;{course.title}&quot; exitosamente.
-                    </p>
-                  </div>
-                )}
+                {/* Removido el aviso de "última unidad" para una experiencia más limpia */}
 
                 {!quiz && (
                   <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
@@ -635,19 +675,7 @@ export default function UnitPage() {
                 {videoWatched && quiz && !quizSubmitted && (
                   <div className="space-y-6">
                     {/* Mensaje especial para la última unidad cuando has visto el video */}
-                    {isLastUnit() && (
-                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                        <div className="flex items-center space-x-2">
-                          <CheckCircle className="h-5 w-5 text-green-600" />
-                          <span className="text-green-800 font-medium">
-                            ¡Último paso para completar el curso!
-                          </span>
-                        </div>
-                        <p className="text-green-700 text-sm mt-1">
-                          Completa este test para finalizar &quot;{course.title}&quot; exitosamente.
-                        </p>
-                      </div>
-                    )}
+                    {/* Removido el aviso de "último paso" para una experiencia más limpia */}
                     
                     {quiz.questions.map((question, index) => (
                       <div key={question.id} className="space-y-3">
@@ -800,19 +828,7 @@ export default function UnitPage() {
                     ))}
 
                     {/* Mensaje especial cuando no apruebas el test en la última unidad */}
-                    {isLastUnit() && quizScore && quizScore < (quiz?.passing_score || 70) && (
-                      <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                        <div className="flex items-center space-x-2">
-                          <CheckCircle className="h-5 w-5 text-orange-600" />
-                          <span className="text-orange-800 font-medium">
-                            ¡Estás muy cerca de completar el curso!
-                          </span>
-                        </div>
-                        <p className="text-orange-700 text-sm mt-1">
-                          Esta es la última unidad. Aproba el test para finalizar &quot;{course.title}&quot; exitosamente.
-                        </p>
-                      </div>
-                    )}
+                    {/* Removido el aviso de "última unidad" para una experiencia más limpia */}
 
                     <div className="flex items-center justify-between pt-4 border-t">
                       <div className="flex space-x-2">
@@ -859,9 +875,18 @@ export default function UnitPage() {
                             ) : (
                               // Si no es la última, mostrar botón de siguiente unidad
                               <Button onClick={async () => {
+                                console.log('🔄 Button clicked: Siguiente Unidad')
+                                console.log('🔍 Current unit:', unit?.title, 'order:', unit?.order)
+                                
                                 const nextUnit = await getNextUnit()
+                                console.log('🔍 getNextUnit result:', nextUnit)
+                                
                                 if (nextUnit) {
+                                  console.log(`✅ Navigating to next unit: ${nextUnit.title} (${nextUnit.id})`)
                                   window.location.href = `/courses/${course.id}/units/${nextUnit.id}`
+                                } else {
+                                  console.error('❌ No next unit found, cannot navigate')
+                                  toast.error('Error: No se encontró la siguiente unidad')
                                 }
                               }}>
                                 Siguiente Unidad

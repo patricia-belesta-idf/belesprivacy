@@ -32,9 +32,9 @@ export interface Enrollment {
   id: string
   user_id: string
   course_id: string
-  progress: number // percentage completed
   current_unit: number
   completed_units: string[]
+  completed_at?: string
   created_at: string
   updated_at: string
 }

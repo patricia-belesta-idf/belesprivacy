@@ -164,8 +164,8 @@ export default function CoursesPage() {
         .insert({
           user_id: user.id,
           course_id: courseId,
-          progress: 0,
-          current_unit: 1
+          current_unit: 1,
+          completed_units: []
         })
 
       if (error) {

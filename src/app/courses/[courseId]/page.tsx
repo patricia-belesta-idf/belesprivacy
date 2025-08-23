@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { BookOpen, Play, Lock, CheckCircle, Clock, FileText, Video } from 'lucide-react'
+import { BookOpen, Play, Lock, CheckCircle, Clock, FileText, Video, RefreshCw } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Unit, Enrollment } from '@/types'
@@ -25,6 +25,7 @@ export default function CourseDetailPage() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('curriculum')
   const [enrolling, setEnrolling] = useState(false)
+  const [repeatingCourse, setRepeatingCourse] = useState(false)
 
   useEffect(() => {
     if (params.courseId && !authLoading) {
@@ -143,40 +144,168 @@ export default function CourseDetailPage() {
   }
 
   const enrollInCourse = async () => {
-    if (!user || !course) return
+    if (!user || !course) {
+      console.log('❌ enrollInCourse: Missing user or course data')
+      return
+    }
+
+    console.log('🔍 enrollInCourse: Starting enrollment process...')
+    console.log('🔍 User ID:', user.id)
+    console.log('🔍 Course ID:', course.id)
 
     setEnrolling(true)
 
     try {
       // Check if already enrolled
       if (enrollment) {
+        console.log('ℹ️ User already enrolled in this course')
         toast.info('Ya estás inscrito en este curso')
         return
       }
 
-      const { error } = await supabase
+      console.log('📝 Inserting new enrollment...')
+      
+      // Limpiar caché del cliente antes de insertar
+      console.log('🧹 Clearing Supabase client cache...')
+      
+      const { data: enrollmentData, error } = await supabase
         .from('enrollments')
         .insert({
           user_id: user.id,
           course_id: course.id,
-          progress: 0,
-          current_unit: 1
-          // completed_units will use its default value '{}'
+          current_unit: 1,
+          completed_units: []
         })
+        .select()
 
       if (error) {
-        console.error('Error enrolling in course:', error)
+        console.error('❌ Error enrolling in course:', error)
+        console.error('Error details:', {
+          code: error.code,
+          message: error.message,
+          details: error.details
+        })
+        
+        // Si es error de caché, intentar refrescar
+        if (error.code === 'PGRST204') {
+          console.log('🔄 PGRST204 error detected, trying to refresh schema...')
+          // Forzar refresh del esquema
+          window.location.reload()
+          return
+        }
+        
         toast.error('Error al inscribirse en el curso')
       } else {
+        console.log('✅ Enrollment successful:', enrollmentData)
         toast.success('¡Te has inscrito exitosamente en el curso!')
         // Refresh enrollment data
         fetchCourseData()
       }
     } catch (error) {
-      console.error('Error:', error)
+      console.error('❌ Unexpected error enrolling in course:', error)
       toast.error('Error al inscribirse en el curso')
     } finally {
       setEnrolling(false)
+    }
+  }
+
+  const handleRepeatCourse = async () => {
+    if (!user || !course || !enrollment) return
+
+    setRepeatingCourse(true)
+
+    try {
+      console.log('🔄 Starting course reset for user:', user.id, 'course:', course.id)
+
+      // 1. Reset enrollment data
+      const { error: enrollmentError } = await supabase
+        .from('enrollments')
+        .update({
+          current_unit: 1,
+          completed_units: [],
+          completed_at: null
+        })
+        .eq('user_id', user.id)
+        .eq('course_id', course.id)
+
+      if (enrollmentError) {
+        console.error('❌ Error resetting enrollment:', enrollmentError)
+        toast.error('Error al reiniciar el curso')
+        return
+      }
+
+      // 2. Clear user progress for all units
+      if (units) {
+        console.log('🗑️ Clearing user progress for', units.length, 'units...')
+        
+        // Primero, verificar qué registros existen
+        const { data: existingProgress, error: checkError } = await supabase
+          .from('user_progress')
+          .select('*')
+          .eq('user_id', user.id)
+          .in('unit_id', units.map(u => u.id))
+
+        if (checkError) {
+          console.error('❌ Error checking existing progress:', checkError)
+        } else {
+          console.log('🔍 Existing progress records to delete:', existingProgress)
+        }
+        
+        for (const unit of units) {
+          console.log(`🗑️ Clearing progress for unit: ${unit.id} (${unit.title})`)
+          
+          // Intentar DELETE con más detalle
+          const { data: deletedData, error: progressError } = await supabase
+            .from('user_progress')
+            .delete()
+            .eq('user_id', user.id)
+            .eq('unit_id', unit.id)
+            .select()
+
+          if (progressError) {
+            console.error(`❌ Error clearing progress for unit ${unit.id}:`, progressError)
+            console.error('Error details:', {
+              code: progressError.code,
+              message: progressError.message,
+              details: progressError.details
+            })
+          } else {
+            console.log(`✅ Progress cleared for unit ${unit.id}:`, deletedData)
+          }
+        }
+        console.log('✅ User progress cleared for all units')
+      }
+
+      // 3. Verify that user_progress was cleared
+      console.log('🔍 Verifying user_progress cleanup...')
+      const { data: remainingProgress, error: verifyError } = await supabase
+        .from('user_progress')
+        .select('unit_id, video_watched, quiz_passed')
+        .eq('user_id', user.id)
+        .in('unit_id', units?.map(u => u.id) || [])
+
+      if (verifyError) {
+        console.error('❌ Error verifying cleanup:', verifyError)
+      } else {
+        console.log('🔍 Remaining user_progress records:', remainingProgress)
+        if (remainingProgress && remainingProgress.length > 0) {
+          console.warn('⚠️ Some progress records still exist:', remainingProgress)
+        } else {
+          console.log('✅ All user_progress records cleared successfully')
+        }
+      }
+
+      // 4. Refresh course data to show updated state
+      await fetchCourseData()
+
+      toast.success('¡Curso reiniciado exitosamente! Puedes comenzar de nuevo.')
+      console.log('🎉 Course reset completed successfully')
+
+    } catch (error) {
+      console.error('❌ Error in handleRepeatCourse:', error)
+      toast.error('Error al reiniciar el curso')
+    } finally {
+      setRepeatingCourse(false)
     }
   }
 
@@ -298,7 +427,16 @@ export default function CourseDetailPage() {
                     'Inscribirse en el Curso'
                   )}
                 </Button>
+              ) : enrollment?.completed_at ? (
+                // Si el curso está completado, mostrar botón para ir a cursos
+                <Link href="/courses">
+                  <Button size="lg" variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Ver Otros Cursos
+                  </Button>
+                </Link>
               ) : (
+                // Si no está completado, mostrar botón para continuar
                 <Link href={`/courses/${course.id}/units/${getCurrentUnitId()}`}>
                   <Button size="lg">
                     <Play className="h-4 w-4 mr-2" />
@@ -441,6 +579,38 @@ export default function CourseDetailPage() {
                     </div>
                   ))}
                 </div>
+                
+                {/* Botón Repetir Curso - solo aparece cuando está completado */}
+                {enrollment?.completed_at && (
+                  <div className="mt-8 pt-6 border-t border-gray-200">
+                    <div className="text-center">
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">
+                        ¿Quieres repetir este curso?
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Reiniciarás todo el progreso y podrás volver a tomar el curso desde el principio.
+                      </p>
+                      <Button 
+                        onClick={handleRepeatCourse}
+                        variant="outline"
+                        className="border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300"
+                        disabled={repeatingCourse}
+                      >
+                        {repeatingCourse ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 mr-2"></div>
+                            Reiniciando...
+                          </>
+                        ) : (
+                          <>
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                            Repetir Curso
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
