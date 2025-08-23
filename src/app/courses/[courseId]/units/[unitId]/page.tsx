@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { BookOpen, ArrowLeft, ArrowRight, Check, Video, RefreshCw } from 'lucide-react'
+import { BookOpen, ArrowLeft, ArrowRight, Check, Video, RefreshCw, CheckCircle } from 'lucide-react'
 import { AntiCheatVideoPlayer } from "@/components/video/AntiCheatVideoPlayer"
 import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/supabase'
@@ -112,6 +112,11 @@ export default function UnitPage() {
       toast.error('Error al cargar datos de la unidad')
     } finally {
       setLoading(false)
+      
+      // Debug enrollment status when page loads
+      setTimeout(() => {
+        debugEnrollmentStatus()
+      }, 2000)
     }
   }
 
@@ -120,7 +125,7 @@ export default function UnitPage() {
     
     if (user && unit && course) {
       try {
-        // Update user progress in Supabase
+        // Update user progress in Supabase - ONLY mark video as watched
         const { error: progressError } = await supabase
           .from('user_progress')
           .upsert({
@@ -132,38 +137,12 @@ export default function UnitPage() {
 
         if (progressError) {
           console.error('Error updating progress:', progressError)
-        }
-
-        // Update course enrollment progress
-        const { data: currentEnrollment } = await supabase
-          .from('enrollments')
-          .select('completed_units')
-          .eq('user_id', user.id)
-          .eq('course_id', course.id)
-          .single()
-
-        if (currentEnrollment) {
-          const updatedCompletedUnits = [...(currentEnrollment.completed_units || []), unit.id]
-          
-          const { error: enrollmentError } = await supabase
-            .from('enrollments')
-            .update({
-              progress: ((unit.order) / course.total_units) * 100,
-              current_unit: unit.order + 1,
-              completed_units: updatedCompletedUnits
-            })
-            .eq('user_id', user.id)
-            .eq('course_id', course.id)
-
-          if (enrollmentError) {
-            console.error('Error updating enrollment:', enrollmentError)
-          } else {
-            toast.success('¡Video completado! Progreso actualizado.')
-          }
+        } else {
+          toast.success('¡Video completado! Ahora puedes tomar el test.')
         }
       } catch (error) {
         console.error('Error:', error)
-        toast.error('Error al actualizar el progreso')
+        toast.error('Error al actualizar el progreso del video')
       }
     }
   }
@@ -211,11 +190,20 @@ export default function UnitPage() {
 
       if (attemptError) {
         console.error('Error saving quiz attempt:', attemptError)
+        toast.error('Error al guardar el intento del test')
+      } else {
+        console.log(`Quiz attempt saved: Score ${score}%, Passed: ${score >= quiz.passing_score}`)
       }
 
       // If passed, mark unit as completed
       if (score >= quiz.passing_score) {
+        console.log('Quiz passed, calling markUnitAsCompleted...')
         await markUnitAsCompleted()
+        
+        // Debug enrollment status after marking unit as completed
+        setTimeout(() => {
+          debugEnrollmentStatus()
+        }, 1000)
       }
     } catch (error) {
       console.error('Error submitting quiz:', error)
@@ -238,7 +226,9 @@ export default function UnitPage() {
     if (!user || !unit || !course) return
 
     try {
-      // Update user progress
+      console.log(`Marking unit ${unit.id} (order: ${unit.order}) as completed for course ${course.id}`)
+
+      // Update user progress - mark quiz as passed
       const { error: progressError } = await supabase
         .from('user_progress')
         .upsert({
@@ -249,38 +239,80 @@ export default function UnitPage() {
         })
 
       if (progressError) {
-        console.error('Error updating progress:', progressError)
+        console.error('Error updating user_progress:', progressError)
+        return
       }
 
-      // Update enrollment progress
-      const { data: enrollmentData } = await supabase
+      // Get current enrollment data
+      const { data: enrollmentData, error: enrollmentSelectError } = await supabase
         .from('enrollments')
         .select('completed_units, current_unit')
         .eq('user_id', user.id)
         .eq('course_id', course.id)
         .single()
 
-      if (enrollmentData) {
-        const completedUnits = [...(enrollmentData.completed_units || []), unit.id]
-        const currentUnit = Math.max(enrollmentData.current_unit, unit.order + 1)
-        const progress = Math.round((completedUnits.length / course.total_units) * 100)
+      if (enrollmentSelectError) {
+        console.error('Error fetching enrollment data:', enrollmentSelectError)
+        return
+      }
 
-        const { error: enrollmentError } = await supabase
+      if (enrollmentData) {
+        // Ensure we don't add duplicate units
+        const existingCompletedUnits = enrollmentData.completed_units || []
+        const isUnitAlreadyCompleted = existingCompletedUnits.includes(unit.id)
+        
+        if (isUnitAlreadyCompleted) {
+          console.log(`Unit ${unit.id} already marked as completed`)
+          return
+        }
+
+        // Add current unit to completed units
+        const updatedCompletedUnits = [...existingCompletedUnits, unit.id]
+        const currentUnit = Math.max(enrollmentData.current_unit || 1, unit.order + 1)
+        
+        console.log(`Updated completed units: ${updatedCompletedUnits.length}/${course.total_units}`)
+        console.log(`Current unit: ${currentUnit}`)
+        
+        // Check if this completes the course
+        const isLastUnit = unit.order === course.total_units
+        const isCourseCompleted = isLastUnit && updatedCompletedUnits.length >= course.total_units
+        
+        console.log(`Is last unit: ${isLastUnit}, Is course completed: ${isCourseCompleted}`)
+
+        const updateData: any = {
+          completed_units: updatedCompletedUnits,
+          current_unit: currentUnit
+        }
+
+        // Mark course as completed if this is the last unit
+        if (isCourseCompleted) {
+          updateData.completed_at = new Date().toISOString()
+          console.log('Marking course as completed with timestamp:', updateData.completed_at)
+        }
+
+        // Update enrollment
+        const { error: enrollmentUpdateError } = await supabase
           .from('enrollments')
-          .update({
-            completed_units: completedUnits,
-            current_unit: currentUnit,
-            progress: progress
-          })
+          .update(updateData)
           .eq('user_id', user.id)
           .eq('course_id', course.id)
 
-        if (enrollmentError) {
-          console.error('Error updating enrollment:', enrollmentError)
+        if (enrollmentUpdateError) {
+          console.error('Error updating enrollment:', enrollmentUpdateError)
+          toast.error('Error al actualizar el progreso del curso')
+        } else {
+          if (isCourseCompleted) {
+            toast.success('¡Felicitaciones! Has completado todo el curso.')
+            console.log('Course marked as completed successfully')
+          } else {
+            toast.success('¡Unidad completada! Progreso actualizado.')
+            console.log('Unit marked as completed successfully')
+          }
         }
       }
     } catch (error) {
       console.error('Error marking unit as completed:', error)
+      toast.error('Error al marcar la unidad como completada')
     }
   }
 
@@ -298,6 +330,67 @@ export default function UnitPage() {
       return nextUnitData || null
     } catch (error) {
       return null
+    }
+  }
+
+  const isLastUnit = (): boolean => {
+    if (!unit || !course) return false
+    return unit.order === course.total_units
+  }
+
+  const isCourseCompleted = (): boolean => {
+    if (!unit || !course) return false
+    return unit.order === course.total_units && quizScore !== null && quizScore >= (quiz?.passing_score || 70)
+  }
+
+  const getCourseCompletionMessage = (): string => {
+    if (!unit || !course) return ''
+    
+    if (isLastUnit()) {
+      if (quizScore !== null && quizScore >= (quiz?.passing_score || 70)) {
+        return `¡Felicitaciones! Has completado "${course.title}" exitosamente.`
+      } else {
+        return `Esta es la última unidad de "${course.title}". Completa el test para finalizar el curso.`
+      }
+    }
+    
+    return ''
+  }
+
+  // Debug function to check enrollment status
+  const debugEnrollmentStatus = async () => {
+    if (!user || !course) return
+    
+    try {
+      const { data: enrollmentData, error } = await supabase
+        .from('enrollments')
+        .select('completed_units, current_unit, completed_at')
+        .eq('user_id', user.id)
+        .eq('course_id', course.id)
+        .single()
+      
+      if (error) {
+        console.error('Error fetching enrollment for debug:', error)
+        return
+      }
+      
+      // Calculate progress manually since column doesn't exist
+      const completedCount = enrollmentData?.completed_units?.length || 0
+      const calculatedProgress = course.total_units > 0 ? Math.round((completedCount / course.total_units) * 100) : 0
+      
+      console.log('=== ENROLLMENT DEBUG INFO ===')
+      console.log('Course ID:', course.id)
+      console.log('Course total units:', course.total_units)
+      console.log('Current unit:', enrollmentData?.current_unit)
+      console.log('Calculated progress:', calculatedProgress + '%')
+      console.log('Completed units count:', completedCount)
+      console.log('Completed units IDs:', enrollmentData?.completed_units)
+      console.log('Completed at:', enrollmentData?.completed_at)
+      console.log('Current unit order:', unit?.order)
+      console.log('Is last unit:', isLastUnit())
+      console.log('================================')
+    } catch (error) {
+      console.error('Error in debug function:', error)
     }
   }
 
@@ -447,6 +540,23 @@ export default function UnitPage() {
                     'Esta unidad no tiene test disponible aún.'
                   }
                 </CardDescription>
+                
+                {/* Mensaje especial para la última unidad */}
+                {isLastUnit() && (
+                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800 font-medium">
+                      🎯 {getCourseCompletionMessage()}
+                    </p>
+                    
+                    {/* Botón de debug temporal */}
+                    <button
+                      onClick={debugEnrollmentStatus}
+                      className="mt-2 px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded border"
+                    >
+                      🔍 Debug Enrollment
+                    </button>
+                  </div>
+                )}
               </CardHeader>
               <CardContent className="space-y-6">
                 {!videoWatched && (
@@ -463,6 +573,21 @@ export default function UnitPage() {
                   </div>
                 )}
 
+                {/* Mensaje especial para la última unidad cuando no has visto el video */}
+                {isLastUnit() && !videoWatched && (
+                  <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="h-5 w-5 text-purple-600" />
+                      <span className="text-purple-800 font-medium">
+                        ¡Última unidad del curso!
+                      </span>
+                    </div>
+                    <p className="text-purple-700 text-sm mt-1">
+                      Completa esta unidad para finalizar &quot;{course.title}&quot; exitosamente.
+                    </p>
+                  </div>
+                )}
+
                 {!quiz && (
                   <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <div className="text-center">
@@ -475,6 +600,21 @@ export default function UnitPage() {
 
                 {videoWatched && quiz && !quizSubmitted && (
                   <div className="space-y-6">
+                    {/* Mensaje especial para la última unidad cuando has visto el video */}
+                    {isLastUnit() && (
+                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          <span className="text-green-800 font-medium">
+                            ¡Último paso para completar el curso!
+                          </span>
+                        </div>
+                        <p className="text-green-700 text-sm mt-1">
+                          Completa este test para finalizar &quot;{course.title}&quot; exitosamente.
+                        </p>
+                      </div>
+                    )}
+                    
                     {quiz.questions.map((question, index) => (
                       <div key={question.id} className="space-y-3">
                         <h4 className="font-medium text-gray-900">
@@ -520,6 +660,24 @@ export default function UnitPage() {
 
                 {quizSubmitted && quiz && (
                   <div className="space-y-6">
+                    {/* Mensaje especial cuando completas el curso */}
+                    {isLastUnit() && quizScore && quizScore >= quiz.passing_score && (
+                      <div className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg text-center">
+                        <div className="flex items-center justify-center space-x-2 mb-3">
+                          <CheckCircle className="h-8 w-8 text-green-600" />
+                          <span className="text-2xl font-bold text-green-800">
+                            ¡Curso Completado!
+                          </span>
+                        </div>
+                        <p className="text-green-700 text-lg font-medium">
+                          Has completado exitosamente &quot;{course.title}&quot;
+                        </p>
+                        <p className="text-green-600 text-sm mt-2">
+                          ¡Felicitaciones por tu dedicación y esfuerzo!
+                        </p>
+                      </div>
+                    )}
+                    
                     <div className={`p-4 rounded-lg border ${
                       quizScore && quizScore >= quiz.passing_score
                         ? 'bg-green-50 border-green-200'
@@ -532,7 +690,9 @@ export default function UnitPage() {
                             : 'text-red-800'
                         }`}>
                           {quizScore && quizScore >= quiz.passing_score
-                            ? '¡Felicitaciones! Has aprobado el test'
+                            ? isLastUnit() 
+                              ? '¡Felicitaciones! Has completado todo el curso'
+                              : '¡Felicitaciones! Has aprobado el test'
                             : 'No has alcanzado la puntuación mínima'
                           }
                         </h3>
@@ -542,6 +702,11 @@ export default function UnitPage() {
                             : 'text-red-700'
                         }`}>
                           Tu puntuación: {quizScore}% (Puntuación mínima: {quiz.passing_score}%)
+                          {isLastUnit() && quizScore && quizScore >= quiz.passing_score && (
+                            <span className="block mt-2 text-green-600 font-medium">
+                              🎉 ¡Has completado exitosamente "{course.title}"!
+                            </span>
+                          )}
                         </p>
                       </div>
                     </div>
@@ -600,6 +765,21 @@ export default function UnitPage() {
                       </div>
                     ))}
 
+                    {/* Mensaje especial cuando no apruebas el test en la última unidad */}
+                    {isLastUnit() && quizScore && quizScore < (quiz?.passing_score || 70) && (
+                      <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                        <div className="flex items-center space-x-2">
+                          <CheckCircle className="h-5 w-5 text-orange-600" />
+                          <span className="text-orange-800 font-medium">
+                            ¡Estás muy cerca de completar el curso!
+                          </span>
+                        </div>
+                        <p className="text-orange-700 text-sm mt-1">
+                          Esta es la última unidad. Aproba el test para finalizar &quot;{course.title}&quot; exitosamente.
+                        </p>
+                      </div>
+                    )}
+
                     <div className="flex items-center justify-between pt-4 border-t">
                       <div className="flex space-x-2">
                         <Link href={`/courses/${course.id}`}>
@@ -623,15 +803,29 @@ export default function UnitPage() {
                       
                       <div className="flex space-x-2">
                         {quizScore && quizScore >= quiz.passing_score && (
-                          <Button onClick={async () => {
-                            const nextUnit = await getNextUnit()
-                            if (nextUnit) {
-                              window.location.href = `/courses/${course.id}/units/${nextUnit.id}`
-                            }
-                          }}>
-                            Siguiente Unidad
-                            <ArrowRight className="h-4 w-4 ml-2" />
-                          </Button>
+                          <>
+                            {isLastUnit() ? (
+                              // Si es la última unidad, mostrar botón de curso completado
+                              <Button 
+                                onClick={() => window.location.href = `/courses/${course.id}`}
+                                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
+                              >
+                                <Check className="h-4 w-4 mr-2" />
+                                Curso Completado
+                              </Button>
+                            ) : (
+                              // Si no es la última, mostrar botón de siguiente unidad
+                              <Button onClick={async () => {
+                                const nextUnit = await getNextUnit()
+                                if (nextUnit) {
+                                  window.location.href = `/courses/${course.id}/units/${nextUnit.id}`
+                                }
+                              }}>
+                                Siguiente Unidad
+                                <ArrowRight className="h-4 w-4 ml-2" />
+                              </Button>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
