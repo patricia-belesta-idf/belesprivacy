@@ -18,21 +18,38 @@ const supabase = createClient()
 
 export default function CourseDetailPage() {
   const params = useParams()
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [course, setCourse] = useState<Course | null>(null)
-  const [units, setUnits] = useState<Unit[]>([])
+  const [units, setUnits] = useState<Unit[]>(null)
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('curriculum')
   const [enrolling, setEnrolling] = useState(false)
 
   useEffect(() => {
-    if (params.courseId) {
+    if (params.courseId && !authLoading) {
+      console.log('🔐 Auth loaded, user:', user?.id, 'fetching course data...')
       fetchCourseData()
     }
-  }, [params.courseId])
+  }, [params.courseId, authLoading, user])
+
+  // Detectar si venimos de completar el curso y forzar refresh
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const refreshParam = urlParams.get('refresh')
+    
+    if (refreshParam) {
+      console.log('🔄 Refresh parameter detected, forcing data reload...')
+      // Limpiar el parámetro de la URL
+      window.history.replaceState({}, document.title, window.location.pathname)
+      // Forzar recarga de datos
+      fetchCourseData()
+    }
+  }, [])
 
   const fetchCourseData = async () => {
+    console.log('🔄 Fetching course data...')
+    console.log('🔐 Auth state - loading:', authLoading, 'user:', user?.id)
     try {
       // Fetch course data
       const { data: courseData, error: courseError } = await supabase
@@ -64,26 +81,64 @@ export default function CourseDetailPage() {
       }
       
       if (user) {
-        // Fetch enrollment data
+        // Fetch enrollment data - especificar columnas exactas
+        console.log('🔍 Fetching enrollment for user:', user.id, 'course:', params.courseId)
+        console.log('🔍 User object:', user)
+        
         const { data: enrollmentData, error: enrollmentError } = await supabase
           .from('enrollments')
-          .select('*')
+          .select('id, user_id, course_id, current_unit, completed_units, completed_at, created_at, updated_at')
           .eq('user_id', user.id)
           .eq('course_id', params.courseId)
           .single()
 
-        if (!enrollmentError && enrollmentData) {
-          console.log('Enrollment data loaded:', enrollmentData)
+        console.log('🔍 Raw enrollment query result:', { enrollmentData, enrollmentError })
+
+        if (enrollmentError) {
+          console.error('❌ Error fetching enrollment:', enrollmentError)
+          console.error('Enrollment error details:', {
+            code: enrollmentError.code,
+            message: enrollmentError.message,
+            details: enrollmentError.details
+          })
+          
+          // Intentar con select más simple si falla
+          console.log('🔄 Trying simple enrollment query...')
+          const { data: simpleEnrollmentData, error: simpleError } = await supabase
+            .from('enrollments')
+            .select('id, current_unit, completed_units')
+            .eq('user_id', user.id)
+            .eq('course_id', params.courseId)
+            .single()
+            
+          console.log('🔍 Simple enrollment query result:', { simpleEnrollmentData, simpleError })
+            
+          if (simpleError) {
+            console.error('❌ Even simple enrollment query failed:', simpleError)
+            console.error('Simple error details:', {
+              code: simpleError.code,
+              message: simpleError.message,
+              details: simpleError.details
+            })
+          } else {
+            console.log('✅ Simple enrollment query succeeded:', simpleEnrollmentData)
+            setEnrollment(simpleEnrollmentData)
+          }
+        } else if (enrollmentData) {
+          console.log('✅ Enrollment data loaded successfully:', enrollmentData)
           setEnrollment(enrollmentData)
         } else {
-          console.log('No enrollment found or error:', enrollmentError)
+          console.log('⚠️ No enrollment data found')
         }
+      } else {
+        console.log('⚠️ No user found, skipping enrollment fetch')
       }
     } catch (error) {
       console.error('Error fetching course data:', error)
       toast.error('Error al cargar datos del curso')
     } finally {
       setLoading(false)
+      console.log('✅ Course data loaded successfully')
     }
   }
 
@@ -126,8 +181,9 @@ export default function CourseDetailPage() {
   }
 
   const isUnitCompleted = (unitId: string) => {
-    if (!enrollment?.completed_units) return false
-    return enrollment.completed_units.includes(unitId)
+    const isCompleted = enrollment?.completed_units?.includes(unitId) || false
+    console.log(`🔍 Unit ${unitId} completed status:`, isCompleted, 'Enrollment:', enrollment?.completed_units)
+    return isCompleted
   }
 
   const calculateProgress = () => {
@@ -167,12 +223,14 @@ export default function CourseDetailPage() {
     return currentUnit?.id || units[0]?.id || ''
   }
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando curso...</p>
+          <p className="mt-4 text-gray-600">
+            {authLoading ? 'Cargando autenticación...' : 'Cargando curso...'}
+          </p>
         </div>
       </div>
     )
@@ -321,6 +379,7 @@ export default function CourseDetailPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
+                  {console.log('🎯 Rendering units with enrollment:', enrollment)}
                   {units.map((unit) => (
                     <div
                       key={unit.id}

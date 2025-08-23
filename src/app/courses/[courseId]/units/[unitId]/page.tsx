@@ -229,18 +229,41 @@ export default function UnitPage() {
       console.log(`Marking unit ${unit.id} (order: ${unit.order}) as completed for course ${course.id}`)
 
       // Update user progress - mark quiz as passed
-      const { error: progressError } = await supabase
+      console.log('Attempting to update user_progress for unit:', unit.id)
+      
+      const { data: progressData, error: progressError } = await supabase
         .from('user_progress')
         .upsert({
           user_id: user.id,
           unit_id: unit.id,
           quiz_passed: true,
           quiz_passed_at: new Date().toISOString()
+        }, {
+          onConflict: 'user_id,unit_id'
         })
 
       if (progressError) {
         console.error('Error updating user_progress:', progressError)
-        return
+        console.error('Progress error details:', {
+          code: progressError.code,
+          message: progressError.message,
+          details: progressError.details
+        })
+        
+        // Try to get existing record to understand the conflict
+        const { data: existingProgress } = await supabase
+          .from('user_progress')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('unit_id', unit.id)
+          .single()
+        
+        console.log('Existing progress record:', existingProgress)
+        
+        // Continue anyway - don't return here
+        console.log('Continuing with enrollment update despite user_progress error...')
+      } else {
+        console.log('✅ user_progress updated successfully:', progressData)
       }
 
       // Get current enrollment data
@@ -291,22 +314,33 @@ export default function UnitPage() {
         }
 
         // Update enrollment
-        const { error: enrollmentUpdateError } = await supabase
+        console.log('Attempting to update enrollment with data:', updateData)
+        console.log('Current enrollment state before update:', enrollmentData)
+        
+        const { data: enrollmentUpdateData, error: enrollmentUpdateError } = await supabase
           .from('enrollments')
           .update(updateData)
           .eq('user_id', user.id)
           .eq('course_id', course.id)
+          .select()
 
         if (enrollmentUpdateError) {
-          console.error('Error updating enrollment:', enrollmentUpdateError)
+          console.error('❌ Error updating enrollment:', enrollmentUpdateError)
+          console.error('Enrollment error details:', {
+            code: enrollmentUpdateError.code,
+            message: enrollmentUpdateError.message,
+            details: enrollmentUpdateError.details
+          })
           toast.error('Error al actualizar el progreso del curso')
         } else {
+          console.log('✅ Enrollment updated successfully:', enrollmentUpdateData)
+          
           if (isCourseCompleted) {
             toast.success('¡Felicitaciones! Has completado todo el curso.')
-            console.log('Course marked as completed successfully')
+            console.log('🎉 Course marked as completed successfully')
           } else {
             toast.success('¡Unidad completada! Progreso actualizado.')
-            console.log('Unit marked as completed successfully')
+            console.log('✅ Unit marked as completed successfully')
           }
         }
       }
@@ -807,7 +841,16 @@ export default function UnitPage() {
                             {isLastUnit() ? (
                               // Si es la última unidad, mostrar botón de curso completado
                               <Button 
-                                onClick={() => window.location.href = `/courses/${course.id}`}
+                                onClick={async () => {
+                                  // Forzar refresh de datos antes de navegar
+                                  console.log('🔄 Refreshing course data before navigation...')
+                                  
+                                  // Pequeño delay para asegurar que la BD se actualice
+                                  await new Promise(resolve => setTimeout(resolve, 500))
+                                  
+                                  // Navegar con refresh forzado
+                                  window.location.href = `/courses/${course.id}?refresh=${Date.now()}`
+                                }}
                                 className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500"
                               >
                                 <Check className="h-4 w-4 mr-2" />
