@@ -286,7 +286,14 @@ export default function CoursesPage() {
       {/* Courses Grid */}
       <section className="relative pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="flex justify-center">
+            <div className={`grid gap-8 ${
+              courses.length === 1 
+                ? 'grid-cols-1 max-w-2xl' 
+                : courses.length === 2 
+                ? 'grid-cols-1 md:grid-cols-2 max-w-4xl' 
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl'
+            }`}>
             {courses.map((course) => {
               const enrolled = isEnrolled(course.id)
               const progress = getEnrollmentProgress(course.id)
@@ -403,6 +410,7 @@ export default function CoursesPage() {
                 </Card>
               )
             })}
+            </div>
           </div>
 
           {/* Call to Action */}
