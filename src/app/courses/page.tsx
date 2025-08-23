@@ -51,6 +51,7 @@ export default function CoursesPage() {
   const { user } = useAuth()
   const [courses, setCourses] = useState<Course[]>([])
   const [enrollments, setEnrollments] = useState<Enrollment[]>([])
+  const [courseEnrollmentCounts, setCourseEnrollmentCounts] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(true)
   const [enrolling, setEnrolling] = useState<string | null>(null)
 
@@ -86,11 +87,17 @@ export default function CoursesPage() {
     }
   }, [user, fetchCoursesData])
 
+  useEffect(() => {
+    if (courses.length > 0) {
+      fetchCourseEnrollmentCounts()
+    }
+  }, [courses, enrollments])
+
   const fetchEnrollments = async () => {
     try {
       const { data, error } = await supabase
         .from('enrollments')
-        .select('*')
+        .select('*, completed_units')
         .eq('user_id', user?.id)
 
       if (error) {
@@ -104,6 +111,43 @@ export default function CoursesPage() {
       toast.error('Error al cargar inscripciones')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchCourseEnrollmentCounts = async () => {
+    try {
+      // Obtener el conteo de estudiantes por curso
+      const { data, error } = await supabase
+        .from('enrollments')
+        .select('course_id')
+        .not('course_id', 'is', null)
+
+      if (error) {
+        console.error('Error fetching enrollment counts:', error)
+        // Fallback: usar conteo local si falla la consulta
+        const counts: Record<string, number> = {}
+        courses.forEach(course => {
+          counts[course.id] = enrollments.filter(e => e.course_id === course.id).length
+        })
+        setCourseEnrollmentCounts(counts)
+      } else {
+        // Contar enrollments por curso
+        const counts: Record<string, number> = {}
+        data?.forEach(enrollment => {
+          if (enrollment.course_id) {
+            counts[enrollment.course_id] = (counts[enrollment.course_id] || 0) + 1
+          }
+        })
+        setCourseEnrollmentCounts(counts)
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      // Fallback: usar conteo local
+      const counts: Record<string, number> = {}
+      courses.forEach(course => {
+        counts[course.id] = enrollments.filter(e => e.course_id === course.id).length
+      })
+      setCourseEnrollmentCounts(counts)
     }
   }
 
@@ -130,6 +174,11 @@ export default function CoursesPage() {
       } else {
         toast.success('¡Inscripción exitosa!')
         fetchEnrollments()
+        // Actualizar el conteo de estudiantes para este curso
+        setCourseEnrollmentCounts(prev => ({
+          ...prev,
+          [courseId]: (prev[courseId] || 0) + 1
+        }))
       }
     } catch (error) {
       console.error('Error:', error)
@@ -145,12 +194,56 @@ export default function CoursesPage() {
 
   const getEnrollmentProgress = (courseId: string) => {
     const enrollment = enrollments.find(e => e.course_id === courseId)
-    return enrollment ? enrollment.progress : 0
+    if (!enrollment) return 0
+    
+    // Calcular progreso basado en la unidad actual vs total de unidades
+    const course = courses.find(c => c.id === courseId)
+    if (!course) return 0
+    
+    // Debug: mostrar información del enrollment
+    console.log(`Course: ${course.title}`, {
+      currentUnit: enrollment.current_unit,
+      totalUnits: course.total_units,
+      completedUnits: enrollment.completed_units,
+      enrollment
+    })
+    
+    // Priorizar completed_units si está disponible y tiene datos
+    if (enrollment.completed_units && Array.isArray(enrollment.completed_units) && enrollment.completed_units.length > 0) {
+      const completedCount = enrollment.completed_units.length
+      const progress = Math.round((completedCount / course.total_units) * 100)
+      console.log(`Progress from completed_units: ${completedCount}/${course.total_units} = ${progress}%`)
+      return Math.min(100, Math.max(0, progress))
+    }
+    
+    // Fallback: usar current_unit si completed_units no está disponible
+    // Si current_unit es 1, significa que apenas empezó (0% completado)
+    // Si current_unit es mayor que total_units, significa que completó todo (100%)
+    if (enrollment.current_unit <= 1) return 0
+    if (enrollment.current_unit >= course.total_units) return 100
+    
+    // Calcular porcentaje basado en unidades completadas
+    // Restamos 1 porque current_unit indica la siguiente unidad a hacer
+    const completedUnits = enrollment.current_unit - 1
+    const progress = Math.round((completedUnits / course.total_units) * 100)
+    
+    console.log(`Progress from current_unit: ${completedUnits}/${course.total_units} = ${progress}%`)
+    return Math.min(100, Math.max(0, progress))
   }
 
   const getCurrentUnit = (courseId: string) => {
     const enrollment = enrollments.find(e => e.course_id === courseId)
-    return enrollment ? enrollment.current_unit : 1
+    if (!enrollment) return 1
+    
+    // current_unit indica la siguiente unidad a hacer
+    // Si es 1, significa que apenas empezó
+    // Si es mayor que total_units, significa que completó todo
+    return enrollment.current_unit
+  }
+
+  const getEnrolledStudentsCount = (courseId: string) => {
+    // Usar el conteo global de estudiantes por curso
+    return courseEnrollmentCounts[courseId] || 0
   }
 
   if (loading) {
@@ -175,7 +268,7 @@ export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-8 px-4 sm:px-6 lg:px-8">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse"></div>
@@ -187,30 +280,27 @@ export default function CoursesPage() {
             <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
             <span className="text-blue-700 font-medium">Catálogo de Cursos</span>
           </div>
-          
-          <h1 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              Cursos de Protección
-            </span>
-            <br />
-            <span className="text-gray-900 font-normal">de Datos</span>
-          </h1>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Domina la protección de datos personales con nuestros cursos especializados, 
-            diseñados para profesionales que buscan cumplir con las regulaciones más exigentes.
-          </p>
         </div>
       </section>
 
       {/* Courses Grid */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
+      <section className="relative pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {courses.map((course) => {
               const enrolled = isEnrolled(course.id)
               const progress = getEnrollmentProgress(course.id)
               const currentUnit = getCurrentUnit(course.id)
+              
+              // Debug: mostrar información del progreso
+              if (enrolled) {
+                console.log(`Course: ${course.title}`, {
+                  currentUnit,
+                  totalUnits: course.total_units,
+                  progress,
+                  enrollment: enrollments.find(e => e.course_id === course.id)
+                })
+              }
 
               return (
                 <Card key={course.id} className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
@@ -253,7 +343,9 @@ export default function CoursesPage() {
                       </div>
                       <div className="flex flex-col items-center">
                         <Users className="w-5 h-5 text-green-600 mb-1" />
-                        <span className="text-sm font-medium text-gray-900">150+</span>
+                        <span className="text-sm font-medium text-gray-900">
+                          {getEnrolledStudentsCount(course.id)}
+                        </span>
                         <span className="text-xs text-gray-500">Estudiantes</span>
                       </div>
                     </div>
@@ -265,7 +357,12 @@ export default function CoursesPage() {
                           <span className="text-gray-600">Progreso</span>
                           <span className="text-blue-600 font-medium">{progress}%</span>
                         </div>
-                        <Progress value={progress} className="h-2" />
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                            style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+                          ></div>
+                        </div>
                         <p className="text-xs text-gray-500 text-center">
                           Unidad {currentUnit} de {course.total_units}
                         </p>
@@ -286,7 +383,7 @@ export default function CoursesPage() {
                         <Button 
                           onClick={() => enrollInCourse(course.id)}
                           disabled={enrolling === course.id}
-                          className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white shadow-md hover:shadow-lg transition-all duration-200"
+                          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200"
                         >
                           {enrolling === course.id ? (
                             <>
@@ -301,13 +398,6 @@ export default function CoursesPage() {
                           )}
                         </Button>
                       )}
-                      
-                      <Link href={`/courses/${course.id}`}>
-                        <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 bg-white/80 backdrop-blur-sm">
-                          <BookOpen className="w-4 h-4 mr-2" />
-                          Ver Detalles
-                        </Button>
-                      </Link>
                     </div>
                   </CardContent>
                 </Card>
@@ -326,7 +416,7 @@ export default function CoursesPage() {
               ¿No encuentras el curso que buscas?
             </h2>
             
-            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-600 mb-8 max-w-3xl mx-auto">
               Nuestro equipo está constantemente desarrollando nuevos cursos. 
               Contáctanos para sugerencias o solicitudes específicas.
             </p>

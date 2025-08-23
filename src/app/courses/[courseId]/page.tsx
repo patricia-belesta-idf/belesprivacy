@@ -23,7 +23,7 @@ export default function CourseDetailPage() {
   const [units, setUnits] = useState<Unit[]>([])
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState('curriculum')
   const [enrolling, setEnrolling] = useState(false)
 
   useEffect(() => {
@@ -73,7 +73,10 @@ export default function CourseDetailPage() {
           .single()
 
         if (!enrollmentError && enrollmentData) {
+          console.log('Enrollment data loaded:', enrollmentData)
           setEnrollment(enrollmentData)
+        } else {
+          console.log('No enrollment found or error:', enrollmentError)
         }
       }
     } catch (error) {
@@ -125,6 +128,32 @@ export default function CourseDetailPage() {
   const isUnitCompleted = (unitId: string) => {
     if (!enrollment?.completed_units) return false
     return enrollment.completed_units.includes(unitId)
+  }
+
+  const calculateProgress = () => {
+    if (!enrollment || !units.length) return 0
+    
+    // Debug: mostrar información del enrollment
+    console.log('Enrollment data:', {
+      enrollment,
+      completedUnits: enrollment.completed_units,
+      unitsCount: units.length,
+      currentUnit: enrollment.current_unit
+    })
+    
+    // Si no hay unidades completadas, el progreso es 0
+    if (!enrollment.completed_units || enrollment.completed_units.length === 0) {
+      console.log('No completed units found, progress: 0%')
+      return 0
+    }
+    
+    // Calcular progreso basado en unidades completadas vs total de unidades
+    const completedCount = enrollment.completed_units.length
+    const totalUnits = units.length
+    const progress = Math.round((completedCount / totalUnits) * 100)
+    
+    console.log(`Progress calculation: ${completedCount}/${totalUnits} = ${progress}%`)
+    return Math.min(100, Math.max(0, progress))
   }
 
   const isUnitAccessible = (unitOrder: number) => {
@@ -188,8 +217,8 @@ export default function CourseDetailPage() {
                 </div>
                 {enrollment && (
                   <div className="flex items-center space-x-1">
-                    <Progress value={enrollment.progress} className="w-20 h-2" />
-                    <span>{enrollment.progress}% completado</span>
+                    <Progress value={calculateProgress()} className="w-20 h-2" />
+                    <span>{calculateProgress()}% completado</span>
                   </div>
                 )}
               </div>

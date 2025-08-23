@@ -18,7 +18,7 @@ export default function HomePage() {
           <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-gradient-to-br from-purple-200/40 to-pink-200/40 rounded-full blur-3xl animate-pulse delay-2000"></div>
         </div>
 
-        <div className="relative z-10 text-center max-w-6xl mx-auto">
+        <div className="relative z-10 text-center max-w-7xl mx-auto">
           {/* Elegant Badge */}
           <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-full shadow-sm mb-12">
             <Sparkles className="w-4 h-4 text-purple-500 mr-2" />
@@ -62,7 +62,7 @@ export default function HomePage() {
           </div>
 
           {/* Clean Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-blue-200/50">
                 <Clock className="w-8 h-8 text-blue-600" />
@@ -390,10 +390,10 @@ export default function HomePage() {
               <span className="text-gray-900 font-normal">GDPR compliance?</span>
             </h2>
             
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Join thousands of professionals who have already transformed their data protection 
-              practices with our comprehensive GDPR training course.
-            </p>
+                            <p className="text-xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+                  Join thousands of professionals who have already transformed their data protection 
+                  practices with our comprehensive GDPR training course.
+                </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link href="/signup">

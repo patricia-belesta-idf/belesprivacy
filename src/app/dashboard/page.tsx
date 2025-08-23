@@ -89,14 +89,25 @@ export default function DashboardPage() {
         setEnrolledCourses(enrolledCoursesData)
 
         // Calculate stats
-        const totalProgress = enrolledCoursesData.reduce((acc, item) => acc + item.enrollment.progress, 0)
-        const avgProgress = enrolledCoursesData.length > 0 ? Math.round(totalProgress / enrolledCoursesData.length) : 0
         const totalUnits = enrolledCoursesData.reduce((acc, item) => acc + item.course.total_units, 0)
-        const completedUnits = enrolledCoursesData.reduce((acc, item) => acc + item.enrollment.completed_units.length, 0)
+        const completedUnits = enrolledCoursesData.reduce((acc, item) => {
+          // Usar completed_units si está disponible, sino calcular basado en current_unit
+          if (item.enrollment.completed_units && Array.isArray(item.enrollment.completed_units)) {
+            return acc + item.enrollment.completed_units.length
+          } else {
+            // Fallback: calcular basado en current_unit
+            const currentUnit = item.enrollment.current_unit || 1
+            const completed = Math.max(0, currentUnit - 1)
+            return acc + completed
+          }
+        }, 0)
+        
+        // Calcular progreso general basado en unidades completadas vs total
+        const generalProgress = totalUnits > 0 ? Math.round((completedUnits / totalUnits) * 100) : 0
 
         setStats({
           totalCourses: enrolledCoursesData.length,
-          totalProgress: avgProgress,
+          totalProgress: generalProgress,
           completedUnits,
           totalUnits
         })
@@ -135,7 +146,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
-      <section className="relative py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-8 px-4 sm:px-6 lg:px-8">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse"></div>
@@ -165,10 +176,10 @@ export default function DashboardPage() {
       </section>
 
       {/* Dashboard Content */}
-      <section className="relative py-16 px-4 sm:px-6 lg:px-8">
+      <section className="relative py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
@@ -217,21 +228,6 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-100/20 to-red-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Tiempo de Estudio</CardTitle>
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg flex items-center justify-center">
-                  <Clock className="h-4 w-4 text-orange-600" />
-                </div>
-              </CardHeader>
-              <CardContent className="relative z-10">
-                <div className="text-2xl font-bold text-gray-900">2.5h</div>
-                <p className="text-xs text-gray-500">
-                  Esta semana
-                </p>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Enrolled Courses */}
@@ -263,7 +259,21 @@ export default function DashboardPage() {
                             </p>
                           </div>
                           <Badge className="ml-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border border-green-200/50">
-                            {item.enrollment.progress}% Completado
+                            {(() => {
+                              // Calcular progreso real basado en completed_units o current_unit
+                              if (item.enrollment.completed_units && Array.isArray(item.enrollment.completed_units)) {
+                                const progress = Math.round((item.enrollment.completed_units.length / item.course.total_units) * 100)
+                                return Math.min(100, Math.max(0, progress))
+                              } else {
+                                // Fallback: usar current_unit
+                                const currentUnit = item.enrollment.current_unit || 1
+                                if (currentUnit <= 1) return 0
+                                if (currentUnit >= item.course.total_units) return 100
+                                const completedUnits = currentUnit - 1
+                                const progress = Math.round((completedUnits / item.course.total_units) * 100)
+                                return Math.min(100, Math.max(0, progress))
+                              }
+                            })()}% Completado
                           </Badge>
                         </div>
 
@@ -271,9 +281,42 @@ export default function DashboardPage() {
                           <div className="space-y-2">
                             <div className="flex justify-between text-sm">
                               <span className="text-gray-600">Progreso</span>
-                              <span className="font-medium">{item.enrollment.progress}%</span>
+                              <span className="font-medium">{(() => {
+                                // Calcular progreso real basado en completed_units o current_unit
+                                if (item.enrollment.completed_units && Array.isArray(item.enrollment.completed_units)) {
+                                  const progress = Math.round((item.enrollment.completed_units.length / item.course.total_units) * 100)
+                                  return Math.min(100, Math.max(0, progress))
+                                } else {
+                                  // Fallback: usar current_unit
+                                  const currentUnit = item.enrollment.current_unit || 1
+                                  if (currentUnit <= 1) return 0
+                                  if (currentUnit >= item.course.total_units) return 100
+                                  const completedUnits = currentUnit - 1
+                                  const progress = Math.round((completedUnits / item.course.total_units) * 100)
+                                  return Math.min(100, Math.max(0, progress))
+                                }
+                              })()}%</span>
                             </div>
-                            <Progress value={item.enrollment.progress} className="h-2" />
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                                style={{ width: `${(() => {
+                                  // Calcular progreso real basado en completed_units o current_unit
+                                  if (item.enrollment.completed_units && Array.isArray(item.enrollment.completed_units)) {
+                                    const progress = Math.round((item.enrollment.completed_units.length / item.course.total_units) * 100)
+                                    return Math.min(100, Math.max(0, progress))
+                                  } else {
+                                    // Fallback: usar current_unit
+                                    const currentUnit = item.enrollment.current_unit || 1
+                                    if (currentUnit <= 1) return 0
+                                    if (currentUnit >= item.course.total_units) return 100
+                                    const completedUnits = currentUnit - 1
+                                    const progress = Math.round((completedUnits / item.course.total_units) * 100)
+                                    return Math.min(100, Math.max(0, progress))
+                                  }
+                                })()}%` }}
+                              ></div>
+                            </div>
                           </div>
 
                           <div className="flex items-center justify-between text-sm text-gray-600">
@@ -287,7 +330,7 @@ export default function DashboardPage() {
                                 Ver Curso
                               </Button>
                             </Link>
-                            <Link href={`/courses/${item.course.id}/units/${item.enrollment.current_unit}`}>
+                            <Link href={`/courses/${item.course.id}`}>
                               <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                                 <Play className="h-4 w-4 mr-2" />
                                 Continuar

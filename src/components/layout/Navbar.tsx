@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { BookOpen, User, LogOut, Menu, X, ChevronDown } from 'lucide-react'
+import { BookOpen, User, LogOut, Menu, X, ChevronDown, Lock } from 'lucide-react'
 
 export function Navbar() {
   const { user, signOut } = useAuth()
@@ -31,36 +31,37 @@ export function Navbar() {
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <BookOpen className="h-5 w-5 text-white" />
+                <Lock className="h-5 w-5 text-white" />
               </div>
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
-              BelesPrivacy
+            <span className="text-xl bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
+              <span className="font-bold">beles</span><span className="font-normal">privacy</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link 
-              href="/courses" 
-              className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
-            >
-              Cursos
-              <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
-            </Link>
-            {user && (
-              <Link 
-                href="/dashboard" 
-                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
-              >
-                Mi Dashboard
-                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
-              </Link>
-            )}
-          </div>
+
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6 mr-8">
+              <Link 
+                href="/courses" 
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
+              >
+                Cursos
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+              </Link>
+              {user && (
+                <Link 
+                  href="/dashboard" 
+                  className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
+                >
+                  Mi Dashboard
+                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+                </Link>
+              )}
+            </div>
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
