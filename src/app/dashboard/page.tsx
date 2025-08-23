@@ -8,6 +8,7 @@ import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { BookOpen, Play, Clock, CheckCircle, TrendingUp } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Enrollment } from '@/types'
 import { toast } from 'sonner'
@@ -22,6 +23,7 @@ interface EnrolledCourse {
 
 export default function DashboardPage() {
   const { user } = useAuth()
+  const { t } = useLanguage()
   const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([])
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({
@@ -49,7 +51,7 @@ export default function DashboardPage() {
 
       if (enrollmentsError) {
         console.error('Error fetching enrollments:', enrollmentsError)
-        toast.error('Error al cargar inscripciones')
+        toast.error(t('common.error'))
         return
       }
 
@@ -63,7 +65,7 @@ export default function DashboardPage() {
 
         if (coursesError) {
           console.error('Error fetching courses:', coursesError)
-          toast.error('Error al cargar cursos')
+          toast.error(t('common.error'))
           return
         }
 
@@ -74,7 +76,7 @@ export default function DashboardPage() {
             id: enrollment.id,
             course: course || {
               id: enrollment.course_id,
-              title: 'Curso no encontrado',
+              title: t('courseDetail.courseNotFound'),
               description: '',
               image_url: '',
               duration: 0,
@@ -122,7 +124,7 @@ export default function DashboardPage() {
       }
     } catch (error) {
       console.error('Error:', error)
-      toast.error('Error al cargar datos del dashboard')
+      toast.error(t('common.error'))
     } finally {
       setLoading(false)
     }
@@ -134,10 +136,10 @@ export default function DashboardPage() {
         <div className="text-center">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
             <TrendingUp className="w-5 h-5 text-blue-600 mr-2" />
-            <span className="text-blue-700 font-medium">Cargando Dashboard</span>
+            <span className="text-blue-700 font-medium">{t('dashboard.loading')}</span>
           </div>
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando dashboard...</p>
+          <p className="mt-4 text-gray-600">{t('dashboard.loading')}</p>
         </div>
       </div>
     )
@@ -158,17 +160,17 @@ export default function DashboardPage() {
             <div>
               <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-100 to-emerald-100 border border-green-200/50 rounded-full backdrop-blur-sm mb-4">
                 <TrendingUp className="w-5 h-5 text-green-600 mr-2" />
-                <span className="text-green-700 font-medium">Tu Progreso</span>
+                <span className="text-green-700 font-medium">{t('dashboard.yourProgress')}</span>
               </div>
               <h1 className="text-3xl md:text-5xl font-light text-gray-900 mb-2 tracking-wide">
-                Mi Dashboard
+                {t('dashboard.myDashboard')}
               </h1>
-              <p className="text-xl text-gray-600">Bienvenido de vuelta, {user?.user_metadata?.full_name || user?.email}</p>
+              <p className="text-xl text-gray-600">{t('dashboard.welcomeBack')}, {user?.user_metadata?.full_name || user?.email}</p>
             </div>
             <Link href="/courses">
               <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                 <BookOpen className="h-4 w-4 mr-2" />
-                Explorar Cursos
+                {t('dashboard.exploreCourses')}
               </Button>
             </Link>
           </div>
@@ -183,7 +185,7 @@ export default function DashboardPage() {
             <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Cursos Inscritos</CardTitle>
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">{t('dashboard.enrolledCourses')}</CardTitle>
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
                   <BookOpen className="h-4 w-4 text-blue-600" />
                 </div>
@@ -191,7 +193,7 @@ export default function DashboardPage() {
               <CardContent className="relative z-10">
                 <div className="text-2xl font-bold text-gray-900">{stats.totalCourses}</div>
                 <p className="text-xs text-gray-500">
-                  Cursos activos
+                  {t('dashboard.activeCourses')}
                 </p>
               </CardContent>
             </Card>
@@ -199,7 +201,7 @@ export default function DashboardPage() {
             <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
               <div className="absolute inset-0 bg-gradient-to-br from-green-100/20 to-emerald-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Progreso General</CardTitle>
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">{t('dashboard.overallProgress')}</CardTitle>
                 <div className="w-8 h-8 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center">
                   <TrendingUp className="h-4 w-4 text-green-600" />
                 </div>
@@ -207,7 +209,7 @@ export default function DashboardPage() {
               <CardContent className="relative z-10">
                 <div className="text-2xl font-bold text-gray-900">{stats.totalProgress}%</div>
                 <p className="text-xs text-gray-500">
-                  Promedio de todos los cursos
+                  {t('dashboard.averageOfAllCourses')}
                 </p>
               </CardContent>
             </Card>
@@ -215,7 +217,7 @@ export default function DashboardPage() {
             <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-pink-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">Unidades Completadas</CardTitle>
+                <CardTitle className="text-sm font-light text-gray-900 tracking-wide">{t('dashboard.completedUnits')}</CardTitle>
                 <div className="w-8 h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg flex items-center justify-center">
                   <CheckCircle className="h-4 w-4 text-purple-600" />
                 </div>
@@ -223,7 +225,7 @@ export default function DashboardPage() {
               <CardContent className="relative z-10">
                 <div className="text-2xl font-bold text-gray-900">{stats.completedUnits}</div>
                 <p className="text-xs text-gray-500">
-                  De {stats.totalUnits} totales
+                  {t('dashboard.of')} {stats.totalUnits} {t('dashboard.total')}
                 </p>
               </CardContent>
             </Card>
@@ -233,7 +235,7 @@ export default function DashboardPage() {
           {/* Enrolled Courses */}
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-light text-gray-900 tracking-wide">Mis Cursos</h2>
+              <h2 className="text-2xl font-light text-gray-900 tracking-wide">{t('dashboard.myCourses')}</h2>
             </div>
 
             <div className="grid gap-6">
@@ -273,14 +275,14 @@ export default function DashboardPage() {
                                 const progress = Math.round((completedUnits / item.course.total_units) * 100)
                                 return Math.min(100, Math.max(0, progress))
                               }
-                            })()}% Completado
+                            })()}% {t('common.completed')}
                           </Badge>
                         </div>
 
                         <div className="space-y-3">
                           <div className="space-y-2">
                             <div className="flex justify-between text-sm">
-                              <span className="text-gray-600">Progreso</span>
+                              <span className="text-gray-600">{t('courses.progress')}</span>
                               <span className="font-medium">{(() => {
                                 // Calcular progreso real basado en completed_units o current_unit
                                 if (item.enrollment.completed_units && Array.isArray(item.enrollment.completed_units)) {
@@ -320,20 +322,20 @@ export default function DashboardPage() {
                           </div>
 
                           <div className="flex items-center justify-between text-sm text-gray-600">
-                            <span>Unidad actual: {item.enrollment.current_unit} de {item.course.total_units}</span>
+                            <span>{t('dashboard.currentUnit')}: {item.enrollment.current_unit} {t('dashboard.of')} {item.course.total_units}</span>
                           </div>
 
                           <div className="flex space-x-3">
                             <Link href={`/courses/${item.course.id}`}>
                               <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 bg-white/80 backdrop-blur-sm">
                                 <BookOpen className="h-4 w-4 mr-2" />
-                                Ver Curso
+                                {t('dashboard.viewCourse')}
                               </Button>
                             </Link>
                             <Link href={`/courses/${item.course.id}`}>
                               <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                                 <Play className="h-4 w-4 mr-2" />
-                                Continuar
+                                {t('dashboard.continue')}
                               </Button>
                             </Link>
                           </div>
@@ -350,14 +352,14 @@ export default function DashboardPage() {
                 <CardContent>
                   <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-light text-gray-900 mb-2 tracking-wide">
-                    No tienes cursos inscritos
+                    {t('dashboard.noEnrolledCourses')}
                   </h3>
                   <p className="text-gray-600 mb-6">
-                    Comienza explorando nuestros cursos y inscríbete en el que más te interese.
+                    {t('dashboard.startExploring')}
                   </p>
                   <Link href="/courses">
                     <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
-                      Explorar Cursos
+                      {t('dashboard.exploreCourses')}
                     </Button>
                   </Link>
                 </CardContent>

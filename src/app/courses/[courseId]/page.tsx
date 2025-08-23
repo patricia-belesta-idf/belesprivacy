@@ -10,6 +10,7 @@ import { Progress } from '@/components/ui/progress'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BookOpen, Play, Lock, CheckCircle, Clock, FileText, Video, RefreshCw } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Unit, Enrollment } from '@/types'
 import { toast } from 'sonner'
@@ -19,6 +20,7 @@ const supabase = createClient()
 export default function CourseDetailPage() {
   const params = useParams()
   const { user, loading: authLoading } = useAuth()
+  const { t } = useLanguage()
   const [course, setCourse] = useState<Course | null>(null)
   const [units, setUnits] = useState<Unit[] | null>(null)
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
@@ -61,7 +63,7 @@ export default function CourseDetailPage() {
 
       if (courseError) {
         console.error('Error fetching course:', courseError)
-        toast.error('Error al cargar el curso')
+        toast.error(t('common.error'))
         return
       }
 
@@ -76,7 +78,7 @@ export default function CourseDetailPage() {
 
       if (unitsError) {
         console.error('Error fetching units:', unitsError)
-        toast.error('Error al cargar las unidades')
+        toast.error(t('common.error'))
       } else {
         setUnits(unitsData || [])
       }
@@ -148,7 +150,7 @@ export default function CourseDetailPage() {
       }
     } catch (error) {
       console.error('Error fetching course data:', error)
-      toast.error('Error al cargar datos del curso')
+      toast.error(t('common.error'))
     } finally {
       setLoading(false)
       console.log('✅ Course data loaded successfully')
@@ -171,7 +173,7 @@ export default function CourseDetailPage() {
       // Check if already enrolled
       if (enrollment) {
         console.log('ℹ️ User already enrolled in this course')
-        toast.info('Ya estás inscrito en este curso')
+        toast.info(t('courseDetail.alreadyEnrolled'))
         return
       }
 
@@ -206,16 +208,16 @@ export default function CourseDetailPage() {
           return
         }
         
-        toast.error('Error al inscribirse en el curso')
+        toast.error(t('courseDetail.enrollmentError'))
       } else {
         console.log('✅ Enrollment successful:', enrollmentData)
-        toast.success('¡Te has inscrito exitosamente en el curso!')
+        toast.success(t('courseDetail.enrollmentSuccess'))
         // Refresh enrollment data
         fetchCourseData()
       }
     } catch (error) {
       console.error('❌ Unexpected error enrolling in course:', error)
-      toast.error('Error al inscribirse en el curso')
+      toast.error(t('courseDetail.enrollmentError'))
     } finally {
       setEnrolling(false)
     }
@@ -242,7 +244,7 @@ export default function CourseDetailPage() {
 
       if (enrollmentError) {
         console.error('❌ Error resetting enrollment:', enrollmentError)
-        toast.error('Error al reiniciar el curso')
+        toast.error(t('courseDetail.repeatError'))
         return
       }
 
@@ -310,12 +312,12 @@ export default function CourseDetailPage() {
       // 4. Refresh course data to show updated state
       await fetchCourseData()
 
-      toast.success('¡Curso reiniciado exitosamente! Puedes comenzar de nuevo.')
+      toast.success(t('courseDetail.repeatSuccess'))
       console.log('🎉 Course reset completed successfully')
 
     } catch (error) {
       console.error('❌ Error in handleRepeatCourse:', error)
-      toast.error('Error al reiniciar el curso')
+      toast.error(t('courseDetail.repeatError'))
     } finally {
       setRepeatingCourse(false)
     }
@@ -370,7 +372,7 @@ export default function CourseDetailPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">
-            {authLoading ? 'Cargando autenticación...' : 'Cargando curso...'}
+            {authLoading ? t('courseDetail.authLoading') : t('courseDetail.loading')}
           </p>
         </div>
       </div>
@@ -381,9 +383,9 @@ export default function CourseDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Curso no encontrado</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('courseDetail.courseNotFound')}</h1>
           <Link href="/courses">
-            <Button>Volver a Cursos</Button>
+            <Button>{t('common.backToCourses')}</Button>
           </Link>
         </div>
       </div>
@@ -399,7 +401,7 @@ export default function CourseDetailPage() {
             <div className="flex-1">
               <div className="flex items-center space-x-2 mb-2">
                 <Link href="/courses" className="text-blue-600 hover:text-blue-800">
-                  ← Volver a Cursos
+                  ← {t('common.backToCourses')}
                 </Link>
               </div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{course.title}</h1>
@@ -408,16 +410,16 @@ export default function CourseDetailPage() {
               <div className="flex items-center space-x-6 text-sm text-gray-600">
                 <div className="flex items-center space-x-1">
                   <Clock className="h-4 w-4" />
-                  <span>{course.duration} minutos</span>
+                  <span>{course.duration} {t('courseDetail.minutes')}</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <BookOpen className="h-4 w-4" />
-                  <span>{course.total_units} unidades</span>
+                  <span>{course.total_units} {t('courseDetail.units')}</span>
                 </div>
                 {enrollment && (
                   <div className="flex items-center space-x-1">
                     <Progress value={calculateProgress()} className="w-20 h-2" />
-                    <span>{calculateProgress()}% completado</span>
+                    <span>{calculateProgress()}% {t('common.completed')}</span>
                   </div>
                 )}
               </div>
@@ -433,10 +435,10 @@ export default function CourseDetailPage() {
                   {enrolling ? (
                     <>
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Inscribiendo...
+                      {t('courseDetail.enrolling')}
                     </>
                   ) : (
-                    'Inscribirse en el Curso'
+                    t('courseDetail.enroll')
                   )}
                 </Button>
               ) : enrollment?.completed_at ? (
@@ -444,7 +446,7 @@ export default function CourseDetailPage() {
                 <Link href="/courses">
                   <Button size="lg" variant="outline" className="border-green-200 text-green-700 hover:bg-green-50">
                     <CheckCircle className="h-4 w-4 mr-2" />
-                    Ver Otros Cursos
+                    {t('courseDetail.viewOtherCourses')}
                   </Button>
                 </Link>
               ) : (
@@ -452,7 +454,7 @@ export default function CourseDetailPage() {
                 <Link href={`/courses/${course.id}/units/${getCurrentUnitId()}`}>
                   <Button size="lg">
                     <Play className="h-4 w-4 mr-2" />
-                    Continuar Aprendiendo
+                    {t('courseDetail.continueLearning')}
                   </Button>
                 </Link>
               )}
@@ -464,53 +466,53 @@ export default function CourseDetailPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="overview">Vista General</TabsTrigger>
-            <TabsTrigger value="curriculum">Contenido del Curso</TabsTrigger>
-            <TabsTrigger value="resources">Recursos</TabsTrigger>
+            <TabsTrigger value="overview">{t('courseDetail.overview')}</TabsTrigger>
+            <TabsTrigger value="curriculum">{t('courseDetail.curriculum')}</TabsTrigger>
+            <TabsTrigger value="resources">{t('courseDetail.resources')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>¿Qué aprenderás?</CardTitle>
+                <CardTitle>{t('courseDetail.whatYouWillLearn')}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-gray-900">Habilidades que desarrollarás:</h4>
+                    <h4 className="font-semibold text-gray-900">{t('courseDetail.skillsToDevelop')}:</h4>
                     <ul className="space-y-2 text-sm text-gray-600">
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>Comprensión de principios de protección de datos</span>
+                        <span>{t('courseDetail.skills.dataProtection')}</span>
                       </li>
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>Implementación de medidas de seguridad</span>
+                        <span>{t('courseDetail.skills.securityMeasures')}</span>
                       </li>
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>Gestión de derechos de usuarios</span>
+                        <span>{t('courseDetail.skills.userRights')}</span>
                       </li>
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>Cumplimiento normativo</span>
+                        <span>{t('courseDetail.skills.compliance')}</span>
                       </li>
                     </ul>
                   </div>
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-gray-900">Requisitos previos:</h4>
+                    <h4 className="font-semibold text-gray-900">{t('courseDetail.prerequisites')}:</h4>
                     <ul className="space-y-2 text-sm text-gray-600">
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>No se requieren conocimientos previos</span>
+                        <span>{t('courseDetail.prereq.noPriorKnowledge')}</span>
                       </li>
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>Interés en privacidad y protección de datos</span>
+                        <span>{t('courseDetail.prereq.privacyInterest')}</span>
                       </li>
                       <li className="flex items-start space-x-2">
                         <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>Dispositivo con conexión a internet</span>
+                        <span>{t('courseDetail.prereq.internetConnection')}</span>
                       </li>
                     </ul>
                   </div>
@@ -522,9 +524,9 @@ export default function CourseDetailPage() {
           <TabsContent value="curriculum" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Contenido del Curso</CardTitle>
+                <CardTitle>{t('courseDetail.curriculum')}</CardTitle>
                 <CardDescription>
-                  {course.total_units} unidades • {course.duration} minutos de contenido
+                  {course.total_units} {t('courseDetail.units')} • {course.duration} {t('courseDetail.minutes')} {t('courseDetail.ofContent')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -567,7 +569,7 @@ export default function CourseDetailPage() {
                           {unit.order === course.total_units && (
                             <span className="flex items-center space-x-1">
                               <FileText className="h-3 w-3" />
-                              <span>Test Final</span>
+                              <span>{t('courseDetail.finalQuiz')}</span>
                             </span>
                           )}
                         </div>
@@ -575,16 +577,16 @@ export default function CourseDetailPage() {
 
                       <div className="flex-shrink-0">
                         {isUnitCompleted(unit.id) ? (
-                          <Badge variant="secondary">Completado</Badge>
+                          <Badge variant="secondary">{t('common.completed')}</Badge>
                         ) : isUnitAccessible(unit.order) ? (
                           <Link href={`/courses/${course.id}/units/${unit.id}`}>
-                            <Button size="sm">
-                              <Play className="h-4 w-4 mr-2" />
-                              Comenzar
-                            </Button>
+                                                                <Button size="sm">
+                                <Play className="h-4 w-4 mr-2" />
+                                {t('common.start')}
+                              </Button>
                           </Link>
                         ) : (
-                          <Badge variant="outline">Bloqueado</Badge>
+                          <Badge variant="outline">{t('common.locked')}</Badge>
                         )}
                       </div>
                     </div>
@@ -596,10 +598,10 @@ export default function CourseDetailPage() {
                   <div className="mt-8 pt-6 border-t border-gray-200">
                     <div className="text-center">
                       <h3 className="text-lg font-medium text-gray-900 mb-3">
-                        ¿Quieres repetir este curso?
+                        {t('courseDetail.repeatCourseQuestion')}
                       </h3>
                       <p className="text-sm text-gray-600 mb-4">
-                        Reiniciarás todo el progreso y podrás volver a tomar el curso desde el principio.
+                        {t('courseDetail.repeatCourseDescription')}
                       </p>
                       <Button 
                         onClick={handleRepeatCourse}
@@ -610,12 +612,12 @@ export default function CourseDetailPage() {
                         {repeatingCourse ? (
                           <>
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 mr-2"></div>
-                            Reiniciando...
+                            {t('courseDetail.repeating')}
                           </>
                         ) : (
                           <>
                             <RefreshCw className="h-4 w-4 mr-2" />
-                            Repetir Curso
+                            {t('courseDetail.repeatCourse')}
                           </>
                         )}
                       </Button>
@@ -629,50 +631,50 @@ export default function CourseDetailPage() {
           <TabsContent value="resources" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Recursos Adicionales</CardTitle>
+                <CardTitle>{t('courseDetail.additionalResources')}</CardTitle>
                 <CardDescription>
-                  Materiales complementarios para enriquecer tu aprendizaje
+                  {t('courseDetail.resourcesDescription')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900">Documentos Descargables</h4>
+                    <h4 className="font-semibold text-gray-900">{t('courseDetail.downloadableDocuments')}</h4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 border rounded-lg">
                         <div className="flex items-center space-x-3">
                           <FileText className="h-5 w-5 text-blue-600" />
-                          <span className="text-sm font-medium">Guía de Mejores Prácticas</span>
+                          <span className="text-sm font-medium">{t('courseDetail.documents.bestPractices')}</span>
                         </div>
-                        <Button variant="outline" size="sm">Descargar</Button>
+                        <Button variant="outline" size="sm">{t('common.download')}</Button>
                       </div>
                       <div className="flex items-center justify-between p-3 border rounded-lg">
                         <div className="flex items-center space-x-3">
                           <FileText className="h-5 w-5 text-blue-600" />
-                          <span className="text-sm font-medium">Plantillas de Políticas</span>
+                          <span className="text-sm font-medium">{t('courseDetail.documents.policyTemplates')}</span>
                         </div>
-                        <Button variant="outline" size="sm">Descargar</Button>
+                        <Button variant="outline" size="sm">{t('common.download')}</Button>
                       </div>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900">Enlaces Útiles</h4>
+                    <h4 className="font-semibold text-gray-900">{t('courseDetail.usefulLinks')}</h4>
                     <div className="space-y-3">
                       <a href="#" className="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                         <div className="text-sm font-medium text-blue-600 hover:text-blue-800">
-                          Regulaciones Oficiales
+                          {t('courseDetail.links.officialRegulations')}
                         </div>
                         <p className="text-xs text-gray-600 mt-1">
-                          Enlaces a leyes y regulaciones vigentes
+                          {t('courseDetail.links.regulationsDescription')}
                         </p>
                       </a>
                       <a href="#" className="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                         <div className="text-sm font-medium text-blue-600 hover:text-blue-800">
-                          Casos de Estudio
+                          {t('courseDetail.links.caseStudies')}
                         </div>
                         <p className="text-xs text-gray-600 mt-1">
-                          Ejemplos reales de implementación
+                          {t('courseDetail.links.caseStudiesDescription')}
                         </p>
                       </a>
                     </div>

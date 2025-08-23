@@ -1,8 +1,12 @@
+'use client'
+
 import { AuthForm } from '@/components/auth/AuthForm'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BookOpen, Sparkles } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function LoginPage() {
+  const { t } = useLanguage()
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center p-4">
       {/* Subtle Background Elements */}
@@ -15,7 +19,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-6">
             <Sparkles className="w-5 h-5 text-blue-600 mr-2" />
-            <span className="text-blue-700 font-medium">Acceso Seguro</span>
+            <span className="text-blue-700 font-medium">{t('auth.secureAccess')}</span>
           </div>
           
           <div className="flex justify-center mb-6">
@@ -24,15 +28,15 @@ export default function LoginPage() {
             </div>
           </div>
           
-          <h1 className="text-3xl font-light text-gray-900 mb-3 tracking-wide">Bienvenido de vuelta</h1>
-          <p className="text-gray-600 text-lg">Inicia sesión en tu cuenta para continuar</p>
+          <h1 className="text-3xl font-light text-gray-900 mb-3 tracking-wide">{t('auth.loginTitle')}</h1>
+          <p className="text-gray-600 text-lg">{t('auth.loginSubtitle')}</p>
         </div>
         
         <Card className="shadow-xl bg-white/80 backdrop-blur-sm border border-gray-200/50">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-gray-900 font-light tracking-wide">Iniciar Sesión</CardTitle>
+            <CardTitle className="text-2xl text-gray-900 font-light tracking-wide">{t('auth.login')}</CardTitle>
             <CardDescription className="text-gray-600">
-              Accede a tus cursos y continúa aprendiendo
+              {t('auth.loginSubtitle')}
             </CardDescription>
           </CardHeader>
           <CardContent>

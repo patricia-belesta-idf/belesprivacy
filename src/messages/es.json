@@ -1,0 +1,356 @@
+{
+  "navigation": {
+    "courses": "Cursos",
+    "dashboard": "Mi Dashboard",
+    "profile": "Perfil",
+    "signOut": "Cerrar Sesión",
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse"
+  },
+  "homepage": {
+    "hero": {
+      "badge": "Plataforma de Aprendizaje con IA",
+      "title": "Entrenamiento en Protección de Datos",
+      "subtitle": "Domina el RGPD en menos de 1 hora",
+      "description": "Entrenamiento moderno, práctico y consciente de la IA que transforma el cumplimiento aburrido en aprendizaje atractivo",
+      "startLearning": "Comenzar a Aprender",
+      "signUpNow": "Registrarse Ahora"
+    },
+    "features": {
+      "duration": {
+        "title": "30-40 min",
+        "description": "Duración Total"
+      },
+      "compliance": {
+        "title": "100%",
+        "description": "Cumple RGPD"
+      },
+      "aiReady": {
+        "title": "Listo para IA",
+        "description": "Preparado para el Futuro"
+      }
+    },
+    "legal": {
+      "badge": "Requisito Legal",
+      "title": "Proteger los datos personales no es opcional — es la ley",
+      "description": "Bajo el Reglamento General de Protección de Datos (RGPD), toda empresa está legalmente obligada a procesar los datos personales de manera segura y legal. Este curso transforma los requisitos legales complejos en conocimiento práctico y accionable.",
+      "mandatory": {
+        "title": "Obligatorio",
+        "description": "Ley europea de protección de datos"
+      },
+      "practical": {
+        "title": "Práctico",
+        "description": "Casos reales y ejemplos"
+      },
+      "duration": {
+        "title": "Duración",
+        "description": "30–40 minutos en total"
+      },
+      "aiAware": {
+        "title": "Consciente de IA",
+        "description": "Mejores prácticas de herramientas de IA"
+      }
+    },
+    "courseModules": {
+      "badge": "Entrenamiento Integral",
+      "title": "Habilidades prácticas que puedes aplicar inmediatamente",
+      "subtitle": "Módulos del curso",
+      "introduction": {
+        "title": "Introducción al RGPD",
+        "description": "Datos personales, responsabilidad y por qué importa"
+      },
+      "principles": {
+        "title": "Principios de Protección de Datos",
+        "description": "Principios fundamentales del RGPD para el trabajo diario"
+      },
+      "rights": {
+        "title": "Derechos Individuales",
+        "description": "Comprensión y respeto de los derechos de los interesados"
+      },
+      "ai": {
+        "title": "IA y Protección de Datos",
+        "description": "Herramientas de IA manteniendo el cumplimiento"
+      },
+      "incidents": {
+        "title": "Respuesta a Incidentes",
+        "description": "Manejo de incidentes de protección de datos"
+      },
+      "implementation": {
+        "title": "Implementación Práctica",
+        "description": "Escenarios del mundo real y pasos de cumplimiento"
+      },
+      "subscribeNow": "Suscribirse Ahora"
+    },
+    "process": {
+      "badge": "Proceso Simple",
+      "title": "Aprende a tu propio ritmo — en cualquier momento, en cualquier lugar",
+      "step1": {
+        "title": "Registrarse",
+        "description": "Registro con email corporativo"
+      },
+      "step2": {
+        "title": "Suscribirse",
+        "description": "Curso de Entrenamiento en Privacidad de Datos"
+      },
+      "step3": {
+        "title": "Lecciones",
+        "description": "Módulos de aprendizaje basados en video"
+      },
+      "step4": {
+        "title": "Cuestionarios",
+        "description": "Evaluación después de cada sección"
+      },
+      "signUpNow": "Registrarse Ahora"
+    },
+    "cta": {
+      "badge": "Estándar Global",
+      "title": "¿Listo para dominar el cumplimiento del RGPD?",
+      "description": "Únete a miles de profesionales que ya han transformado sus prácticas de protección de datos con nuestro curso integral de entrenamiento en RGPD.",
+      "startLearning": "Comenzar a Aprender",
+      "viewCourse": "Ver Detalles del Curso"
+    }
+  },
+  "courses": {
+    "catalog": "Catálogo de Cursos",
+    "enrollFree": "Inscribirse Gratis",
+    "continueLearning": "Continuar Aprendiendo",
+    "viewCourse": "Ver Curso",
+    "enrolled": "Inscrito",
+    "progress": "Progreso",
+    "units": "unidades",
+    "students": "estudiantes",
+    "loading": "Cargando cursos...",
+    "noEnrollments": "Aún no estás inscrito en ningún curso.",
+    "exploreButton": "Explorar cursos disponibles",
+    "courseNotFound": "¿No encuentras el curso que buscas?",
+    "contactDescription": "Nuestro equipo está constantemente desarrollando nuevos cursos. Contáctanos para sugerencias o solicitudes específicas.",
+    "contactTeam": "Contactar Equipo",
+    "mock": {
+      "course1": {
+        "title": "Fundamentos de Protección de Datos",
+        "description": "Aprende los conceptos básicos de la protección de datos personales, incluyendo principios fundamentales, derechos de los usuarios y obligaciones de las organizaciones."
+      },
+      "course2": {
+        "title": "GDPR y Regulaciones Europeas",
+        "description": "Domina el Reglamento General de Protección de Datos (GDPR) y otras regulaciones europeas relacionadas con la privacidad y protección de datos."
+      },
+      "course3": {
+        "title": "Implementación de Políticas de Privacidad",
+        "description": "Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales."
+      }
+    }
+  },
+  "courseDetail": {
+    "enroll": "Inscribirse en el Curso",
+    "enrolling": "Inscribiendo...",
+    "enrolled": "Inscrito",
+    "curriculum": "Contenido del Curso",
+    "resources": "Recursos",
+    "repeatCourse": "Repetir Curso",
+    "repeating": "Repitiendo...",
+    "viewOtherCourses": "Ver Otros Cursos",
+    "courseCompleted": "Curso Completado",
+    "loading": "Cargando curso...",
+    "authLoading": "Cargando autenticación...",
+    "continueLearning": "Continuar Aprendiendo",
+    "startCourse": "Comenzar Curso",
+    "courseNotFound": "Curso no encontrado",
+    "enrollmentError": "Error al inscribirse en el curso",
+    "enrollmentSuccess": "Inscripción exitosa en el curso",
+    "alreadyEnrolled": "Ya estás inscrito en este curso",
+    "repeatError": "Error al reiniciar el curso",
+    "repeatSuccess": "¡Curso reiniciado exitosamente! Puedes comenzar de nuevo.",
+    "overview": "Vista General",
+    "whatYouWillLearn": "¿Qué aprenderás?",
+    "skillsToDevelop": "Habilidades que desarrollarás",
+    "prerequisites": "Requisitos previos",
+    "minutes": "minutos",
+    "ofContent": "de contenido",
+    "finalQuiz": "Test Final",
+    "additionalResources": "Recursos Adicionales",
+    "resourcesDescription": "Materiales complementarios para enriquecer tu aprendizaje",
+    "downloadableDocuments": "Documentos Descargables",
+    "usefulLinks": "Enlaces Útiles",
+    "skills": {
+      "dataProtection": "Comprensión de principios de protección de datos",
+      "securityMeasures": "Implementación de medidas de seguridad",
+      "userRights": "Gestión de derechos de usuarios",
+      "compliance": "Cumplimiento normativo"
+    },
+    "prereq": {
+      "noPriorKnowledge": "No se requieren conocimientos previos",
+      "privacyInterest": "Interés en privacidad y protección de datos",
+      "internetConnection": "Dispositivo con conexión a internet"
+    },
+    "documents": {
+      "bestPractices": "Guía de Mejores Prácticas",
+      "policyTemplates": "Plantillas de Políticas"
+    },
+    "links": {
+      "officialRegulations": "Regulaciones Oficiales",
+      "regulationsDescription": "Enlaces a leyes y regulaciones vigentes",
+      "caseStudies": "Casos de Estudio",
+      "caseStudiesDescription": "Ejemplos reales de implementación"
+    },
+    "units": "unidades",
+    "duration": "Duración",
+    "level": "Nivel",
+    "certificate": "Certificado incluido"
+  },
+  "units": {
+    "video": "Video",
+    "quiz": "Test",
+    "nextUnit": "Siguiente Unidad",
+    "courseCompleted": "Curso Completado",
+    "viewCourse": "Ver Curso",
+    "retakeQuiz": "Repetir Test",
+    "loading": "Cargando unidad...",
+    "videoCompleted": "Video completado satisfactoriamente",
+    "quizPassed": "¡Test aprobado!",
+    "quizFailed": "Test no aprobado. Puedes repetirlo.",
+    "score": "Tu puntuación: {score}% (Puntuación mínima: {minScore}%)",
+    "courseCompletedMessage": "🎉 ¡Has completado exitosamente \"{courseTitle}\"!",
+    "explanation": "Explicación:",
+    "submitAnswer": "Enviar Respuesta",
+    "nextQuestion": "Siguiente Pregunta",
+    "finishQuiz": "Finalizar Test",
+    "question": "Pregunta",
+    "of": "de",
+    "correctAnswer": "Respuesta Correcta",
+    "yourAnswer": "Tu Respuesta",
+    "watchTimeRequired": "Debes ver al menos el {percentage}% del video para continuar",
+    "antiCheatDetected": "Avance rápido detectado. Por favor ve el video normalmente.",
+    "unitNotFound": "Unidad no encontrada",
+    "playVideo": "Reproducir Video",
+    "pauseVideo": "Pausar Video",
+    "videoProgress": "Progreso del Video",
+    "completed": "Completado"
+  },
+  "dashboard": {
+    "welcome": "¡Bienvenido de vuelta!",
+    "recentActivity": "Actividad Reciente",
+    "courseProgress": "Progreso del Curso",
+    "completedUnits": "Unidades Completadas",
+    "currentUnit": "Unidad Actual",
+    "overallProgress": "Progreso General",
+    "timeSpent": "Tiempo Dedicado",
+    "quizzesTaken": "Tests Realizados",
+    "certificates": "Certificados",
+    "loading": "Cargando dashboard...",
+    "noCourses": "No hay cursos inscritos",
+    "enrollInCourse": "Inscríbete en un curso para comenzar",
+    "browseCoursesButton": "Explorar Cursos",
+    "continueWatching": "Continuar Viendo",
+    "enrolledCourses": "Cursos Inscritos",
+    "stats": {
+      "coursesEnrolled": "Cursos Inscritos",
+      "hoursWatched": "Horas Vistas",
+      "quizzesCompleted": "Tests Completados",
+      "certificatesEarned": "Certificados Obtenidos",
+      "completionRate": "Tasa de Finalización",
+      "averageScore": "Puntuación Promedio"
+    }
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "email": "Email",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "fullName": "Nombre Completo",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "signInWith": "Iniciar sesión con",
+    "signUpWith": "Registrarse con",
+    "or": "o",
+    "continue": "Continuar",
+    "loginTitle": "Bienvenido de vuelta",
+    "loginSubtitle": "Inicia sesión en tu cuenta para continuar",
+    "signupTitle": "Únete a BelesPrivacy",
+    "signupSubtitle": "Crea tu cuenta y comienza a aprender",
+    "secureAccess": "Acceso Seguro",
+    "newUser": "Nuevo Usuario",
+    "loginButton": "Iniciar Sesión",
+    "signupButton": "Crear Cuenta",
+    "loggingIn": "Iniciando sesión...",
+    "signingUp": "Creando cuenta...",
+    "invalidCredentials": "Email o contraseña inválidos",
+    "emailRequired": "El email es requerido",
+    "passwordRequired": "La contraseña es requerida",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "emailInvalid": "Por favor ingresa un email válido",
+    "passwordsNotMatch": "Las contraseñas no coinciden",
+    "fullNameRequired": "El nombre completo es requerido",
+    "signupSuccess": "¡Cuenta creada exitosamente! Por favor revisa tu email para verificar tu cuenta.",
+    "loginSuccess": "¡Bienvenido de vuelta!",
+    "authError": "Error de autenticación. Por favor intenta de nuevo."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "refresh": "Actualizar",
+    "download": "Descargar",
+    "upload": "Subir",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK",
+    "confirm": "Confirmar",
+    "warning": "Advertencia",
+    "info": "Información",
+    "tryAgain": "Intentar de Nuevo",
+    "goBack": "Volver",
+    "notFound": "No Encontrado",
+    "pageNotFound": "Página no encontrada",
+    "serverError": "Error del servidor",
+    "networkError": "Error de red",
+    "required": "Requerido",
+    "optional": "Opcional",
+    "all": "Todos",
+    "none": "Ninguno",
+    "other": "Otro",
+    "view": "Ver",
+    "hide": "Ocultar",
+    "show": "Mostrar",
+    "help": "¿Necesitas ayuda?",
+    "backToHome": "Volver al Inicio",
+    "backToCourses": "Volver a Cursos",
+    "of": "de",
+    "completed": "completado",
+    "start": "Comenzar",
+    "locked": "Bloqueado"
+  },
+  "dashboard": {
+    "loading": "Cargando Dashboard",
+    "yourProgress": "Tu Progreso",
+    "myDashboard": "Mi Dashboard",
+    "welcomeBack": "Bienvenido de vuelta",
+    "exploreCourses": "Explorar Cursos",
+    "enrolledCourses": "Cursos Inscritos",
+    "activeCourses": "Cursos activos",
+    "overallProgress": "Progreso General",
+    "averageOfAllCourses": "Promedio de todos los cursos",
+    "completedUnits": "Unidades Completadas",
+    "of": "de",
+    "total": "totales",
+    "myCourses": "Mis Cursos",
+    "currentUnit": "Unidad actual",
+    "viewCourse": "Ver Curso",
+    "continue": "Continuar",
+    "noEnrolledCourses": "No tienes cursos inscritos",
+    "startExploring": "Comienza explorando nuestros cursos y inscríbete en el que más te interese."
+  }
+}

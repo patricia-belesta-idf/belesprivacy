@@ -1,0 +1,356 @@
+{
+  "navigation": {
+    "courses": "Courses",
+    "dashboard": "My Dashboard",
+    "profile": "Profile",
+    "signOut": "Sign Out",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "homepage": {
+    "hero": {
+      "badge": "AI-Powered Learning Platform",
+      "title": "Data Protection Training",
+      "subtitle": "Master the GDPR in under 1 hour",
+      "description": "Modern, practical, AI-aware training that transforms boring compliance into engaging learning",
+      "startLearning": "Start Learning Now",
+      "signUpNow": "Sign Up Now"
+    },
+    "features": {
+      "duration": {
+        "title": "30-40 min",
+        "description": "Total Duration"
+      },
+      "compliance": {
+        "title": "100%",
+        "description": "GDPR Compliant"
+      },
+      "aiReady": {
+        "title": "AI-Ready",
+        "description": "Future-Proof"
+      }
+    },
+    "legal": {
+      "badge": "Legal Requirement",
+      "title": "Protecting personal data is not optional — it's the law",
+      "description": "Under the General Data Protection Regulation (GDPR), every company is legally required to process personal data safely and lawfully. This course transforms complex legal requirements into practical, actionable knowledge.",
+      "mandatory": {
+        "title": "Mandatory",
+        "description": "EU data protection law"
+      },
+      "practical": {
+        "title": "Practical",
+        "description": "Real-life cases & examples"
+      },
+      "duration": {
+        "title": "Duration",
+        "description": "30–40 minutes total"
+      },
+      "aiAware": {
+        "title": "AI-aware",
+        "description": "AI tools best practices"
+      }
+    },
+    "courseModules": {
+      "badge": "Comprehensive Training",
+      "title": "Practical skills you can apply immediately",
+      "subtitle": "Course modules",
+      "introduction": {
+        "title": "Introduction to GDPR",
+        "description": "Personal data, responsibility, and why it matters"
+      },
+      "principles": {
+        "title": "Data Protection Principles",
+        "description": "Core GDPR principles for daily work"
+      },
+      "rights": {
+        "title": "Individual Rights",
+        "description": "Understanding and respecting data subject rights"
+      },
+      "ai": {
+        "title": "AI and Data Protection",
+        "description": "AI tools while maintaining compliance"
+      },
+      "incidents": {
+        "title": "Incident Response",
+        "description": "Handling data protection incidents"
+      },
+      "implementation": {
+        "title": "Practical Implementation",
+        "description": "Real-world scenarios and compliance steps"
+      },
+      "subscribeNow": "Subscribe Now"
+    },
+    "process": {
+      "badge": "Simple Process",
+      "title": "Learn at your own pace — anytime, anywhere",
+      "step1": {
+        "title": "Sign up",
+        "description": "Corporate email registration"
+      },
+      "step2": {
+        "title": "Subscribe",
+        "description": "Data Privacy Training course"
+      },
+      "step3": {
+        "title": "Lessons",
+        "description": "Video-based learning modules"
+      },
+      "step4": {
+        "title": "Quizzes",
+        "description": "Assessment after each section"
+      },
+      "signUpNow": "Sign Up Now"
+    },
+    "cta": {
+      "badge": "Global Standard",
+      "title": "Ready to master GDPR compliance?",
+      "description": "Join thousands of professionals who have already transformed their data protection practices with our comprehensive GDPR training course.",
+      "startLearning": "Start Learning Now",
+      "viewCourse": "View Course Details"
+    }
+  },
+  "courses": {
+    "catalog": "Course Catalog",
+    "enrollFree": "Enroll Free",
+    "continueLearning": "Continue Learning",
+    "viewCourse": "View Course",
+    "enrolled": "Enrolled",
+    "progress": "Progress",
+    "units": "units",
+    "students": "students",
+    "loading": "Loading courses...",
+    "noEnrollments": "You are not enrolled in any courses yet.",
+    "exploreButton": "Explore available courses",
+    "courseNotFound": "Can't find the course you're looking_for?",
+    "contactDescription": "Our team is constantly developing new courses. Contact us for suggestions or specific requests.",
+    "contactTeam": "Contact Team",
+    "mock": {
+      "course1": {
+        "title": "Data Protection Fundamentals",
+        "description": "Learn the basic concepts of personal data protection, including fundamental principles, user rights, and organizational obligations."
+      },
+      "course2": {
+        "title": "GDPR and European Regulations",
+        "description": "Master the General Data Protection Regulation (GDPR) and other European regulations related to privacy and data protection."
+      },
+      "course3": {
+        "title": "Privacy Policy Implementation",
+        "description": "Learn to create and implement effective privacy policies, compliance procedures, and personal data management systems."
+      }
+    }
+  },
+  "courseDetail": {
+    "enroll": "Enroll in Course",
+    "enrolling": "Enrolling...",
+    "enrolled": "Enrolled",
+    "curriculum": "Course Curriculum",
+    "resources": "Resources",
+    "repeatCourse": "Repeat Course",
+    "repeating": "Repeating...",
+    "viewOtherCourses": "View Other Courses",
+    "courseCompleted": "Course Completed",
+    "loading": "Loading course...",
+    "authLoading": "Loading authentication...",
+    "continueLearning": "Continue Learning",
+    "startCourse": "Start Course",
+    "courseNotFound": "Course not found",
+    "enrollmentError": "Error enrolling in course",
+    "enrollmentSuccess": "Successfully enrolled in course",
+    "alreadyEnrolled": "You are already enrolled in this course",
+    "repeatError": "Error restarting course",
+    "repeatSuccess": "Course restarted successfully! You can start over.",
+    "overview": "Overview",
+    "whatYouWillLearn": "What will you learn?",
+    "skillsToDevelop": "Skills you will develop",
+    "prerequisites": "Prerequisites",
+    "minutes": "minutes",
+    "ofContent": "of content",
+    "finalQuiz": "Final Quiz",
+    "additionalResources": "Additional Resources",
+    "resourcesDescription": "Complementary materials to enrich your learning",
+    "downloadableDocuments": "Downloadable Documents",
+    "usefulLinks": "Useful Links",
+    "skills": {
+      "dataProtection": "Understanding data protection principles",
+      "securityMeasures": "Implementing security measures",
+      "userRights": "Managing user rights",
+      "compliance": "Regulatory compliance"
+    },
+    "prereq": {
+      "noPriorKnowledge": "No prior knowledge required",
+      "privacyInterest": "Interest in privacy and data protection",
+      "internetConnection": "Device with internet connection"
+    },
+    "documents": {
+      "bestPractices": "Best Practices Guide",
+      "policyTemplates": "Policy Templates"
+    },
+    "links": {
+      "officialRegulations": "Official Regulations",
+      "regulationsDescription": "Links to current laws and regulations",
+      "caseStudies": "Case Studies",
+      "caseStudiesDescription": "Real implementation examples"
+    },
+    "units": "units",
+    "duration": "Duration",
+    "level": "Level",
+    "certificate": "Certificate included"
+  },
+  "units": {
+    "video": "Video",
+    "quiz": "Quiz",
+    "nextUnit": "Next Unit",
+    "courseCompleted": "Course Completed",
+    "viewCourse": "View Course",
+    "retakeQuiz": "Retake Quiz",
+    "loading": "Loading unit...",
+    "videoCompleted": "Video completed successfully",
+    "quizPassed": "Quiz passed!",
+    "quizFailed": "Quiz failed. You can retake it.",
+    "score": "Your score: {score}% (Minimum score: {minScore}%)",
+    "courseCompletedMessage": "🎉 You have successfully completed \"{courseTitle}\"!",
+    "explanation": "Explanation:",
+    "submitAnswer": "Submit Answer",
+    "nextQuestion": "Next Question",
+    "finishQuiz": "Finish Quiz",
+    "question": "Question",
+    "of": "of",
+    "correctAnswer": "Correct Answer",
+    "yourAnswer": "Your Answer",
+    "watchTimeRequired": "You must watch at least {percentage}% of the video to continue",
+    "antiCheatDetected": "Fast forwarding detected. Please watch the video normally.",
+    "unitNotFound": "Unit not found",
+    "playVideo": "Play Video",
+    "pauseVideo": "Pause Video",
+    "videoProgress": "Video Progress",
+    "completed": "Completed"
+  },
+  "dashboard": {
+    "welcome": "Welcome back!",
+    "recentActivity": "Recent Activity",
+    "courseProgress": "Course Progress",
+    "completedUnits": "Completed Units",
+    "currentUnit": "Current Unit",
+    "overallProgress": "Overall Progress",
+    "timeSpent": "Time Spent",
+    "quizzesTaken": "Quizzes Taken",
+    "certificates": "Certificates",
+    "loading": "Loading dashboard...",
+    "noCourses": "No courses enrolled",
+    "enrollInCourse": "Enroll in a course to get started",
+    "browseCoursesButton": "Browse Courses",
+    "continueWatching": "Continue Watching",
+    "enrolledCourses": "Enrolled Courses",
+    "stats": {
+      "coursesEnrolled": "Courses Enrolled",
+      "hoursWatched": "Hours Watched",
+      "quizzesCompleted": "Quizzes Completed",
+      "certificatesEarned": "Certificates Earned",
+      "completionRate": "Completion Rate",
+      "averageScore": "Average Score"
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signInWith": "Sign in with",
+    "signUpWith": "Sign up with",
+    "or": "or",
+    "continue": "Continue",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to your account to continue",
+    "signupTitle": "Join BelesPrivacy",
+    "signupSubtitle": "Create your account and start learning",
+    "secureAccess": "Secure Access",
+    "newUser": "New User",
+    "loginButton": "Sign In",
+    "signupButton": "Create Account",
+    "loggingIn": "Signing in...",
+    "signingUp": "Creating account...",
+    "invalidCredentials": "Invalid email or password",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "emailInvalid": "Please enter a valid email",
+    "passwordsNotMatch": "Passwords do not match",
+    "fullNameRequired": "Full name is required",
+    "signupSuccess": "Account created successfully! Please check your email to verify your account.",
+    "loginSuccess": "Welcome back!",
+    "authError": "Authentication error. Please try again."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "refresh": "Refresh",
+    "download": "Download",
+    "upload": "Upload",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "confirm": "Confirm",
+    "warning": "Warning",
+    "info": "Information",
+    "tryAgain": "Try Again",
+    "goBack": "Go Back",
+    "notFound": "Not Found",
+    "pageNotFound": "Page not found",
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "required": "Required",
+    "optional": "Optional",
+    "all": "All",
+    "none": "None",
+    "other": "Other",
+    "view": "View",
+    "hide": "Hide",
+    "show": "Show",
+    "help": "Need help?",
+    "backToHome": "Back to Home",
+    "backToCourses": "Back to Courses",
+    "of": "of",
+    "completed": "completed",
+    "start": "Start",
+    "locked": "Locked"
+  },
+  "dashboard": {
+    "loading": "Loading Dashboard",
+    "yourProgress": "Your Progress",
+    "myDashboard": "My Dashboard",
+    "welcomeBack": "Welcome back",
+    "exploreCourses": "Explore Courses",
+    "enrolledCourses": "Enrolled Courses",
+    "activeCourses": "Active courses",
+    "overallProgress": "Overall Progress",
+    "averageOfAllCourses": "Average of all courses",
+    "completedUnits": "Completed Units",
+    "of": "of",
+    "total": "total",
+    "myCourses": "My Courses",
+    "currentUnit": "Current unit",
+    "viewCourse": "View Course",
+    "continue": "Continue",
+    "noEnrolledCourses": "You have no enrolled courses",
+    "startExploring": "Start exploring our courses and enroll in the one that interests you most."
+  }
+}

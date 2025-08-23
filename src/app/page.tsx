@@ -1,9 +1,13 @@
+'use client'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BookOpen, Shield, Video, Award, Users, Clock, CheckCircle, Star, Play, ArrowRight, Sparkles, Zap, Target, Globe, Lock } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function HomePage() {
+  const { t } = useLanguage()
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900 overflow-hidden">
       {/* Subtle Background Pattern */}
@@ -22,26 +26,26 @@ export default function HomePage() {
           {/* Elegant Badge */}
           <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-full shadow-sm mb-12">
             <Sparkles className="w-4 h-4 text-purple-500 mr-2" />
-            <span className="text-gray-700 text-sm font-medium">AI-Powered Learning Platform</span>
+            <span className="text-gray-700 text-sm font-medium">{t('homepage.hero.badge')}</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-8 leading-tight tracking-wide">
             <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent">
-              Data Protection
+              {t('homepage.hero.title').split(' ')[0]} {t('homepage.hero.title').split(' ')[1]}
             </span>
             <br />
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              Training
+              {t('homepage.hero.title').split(' ')[2]}
             </span>
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 font-semibold">
-              Master the GDPR in under 1 hour
+              {t('homepage.hero.subtitle')}
             </span>
             <br />
             <span className="text-gray-500">
-              Modern, practical, AI-aware training that transforms boring compliance into engaging learning
+              {t('homepage.hero.description')}
             </span>
           </p>
 
@@ -49,14 +53,14 @@ export default function HomePage() {
             <Link href="/courses">
               <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg px-8 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <Play className="w-6 h-6 mr-3 group-hover:animate-pulse" />
-                Start Course
+                {t('homepage.hero.startLearning')}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
             <Link href="/signup">
               <Button size="lg" variant="outline" className="group text-lg px-8 py-6 rounded-2xl border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 bg-white/80 backdrop-blur-sm">
                 <Zap className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                Sign Up Free
+                {t('homepage.hero.signUpNow')}
               </Button>
             </Link>
           </div>
@@ -67,22 +71,22 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-blue-200/50">
                 <Clock className="w-8 h-8 text-blue-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">30-40 min</div>
-              <div className="text-gray-500">Total Duration</div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">{t('homepage.features.duration.title')}</div>
+              <div className="text-gray-500">{t('homepage.features.duration.description')}</div>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-green-200/50">
                 <Target className="w-8 h-8 text-green-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">100%</div>
-              <div className="text-gray-500">GDPR Compliant</div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">{t('homepage.features.compliance.title')}</div>
+              <div className="text-gray-500">{t('homepage.features.compliance.description')}</div>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-purple-200/50">
                 <Star className="w-8 h-8 text-purple-600" />
               </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">AI-Ready</div>
-              <div className="text-gray-500">Future-Proof</div>
+              <div className="text-3xl font-bold text-gray-900 mb-2">{t('homepage.features.aiReady.title')}</div>
+              <div className="text-gray-500">{t('homepage.features.aiReady.description')}</div>
             </div>
           </div>
         </div>
@@ -101,19 +105,17 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-100 to-orange-100 border border-red-200/50 rounded-full backdrop-blur-sm mb-8">
               <Lock className="w-5 h-5 text-red-500 mr-2" />
-              <span className="text-red-700 font-medium">Legal Requirement</span>
+              <span className="text-red-700 font-medium">{t('homepage.legal.badge')}</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-light mb-8 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Protecting personal data
+                {t('homepage.legal.title').split(' — ')[0]}
               </span>
               <br />
-              <span className="text-gray-900 font-normal">is not optional — it&apos;s the law</span>
+              <span className="text-gray-900 font-normal">— {t('homepage.legal.title').split(' — ')[1]}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed">
-              Under the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-semibold">General Data Protection Regulation (GDPR)</span>, 
-              every company is legally required to process personal data safely and lawfully. 
-              This course transforms complex legal requirements into practical, actionable knowledge.
+              {t('homepage.legal.description')}
             </p>
           </div>
 
@@ -125,10 +127,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-100 to-pink-100 border border-red-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Shield className="w-8 h-8 text-red-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Mandatory</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.legal.mandatory.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">EU data protection law</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.legal.mandatory.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -138,10 +140,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 border border-green-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <CheckCircle className="w-8 h-8 text-green-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Practical</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.legal.practical.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Real-life cases & examples</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.legal.practical.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -151,10 +153,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-cyan-100 border border-blue-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Clock className="w-8 h-8 text-blue-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Duration</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.legal.duration.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">30–40 minutes total</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.legal.duration.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -164,10 +166,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-100 to-violet-100 border border-purple-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Star className="w-8 h-8 text-purple-600" />
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">AI-aware</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.legal.aiAware.title')}</CardTitle>
               </CardHeader>
-              <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">AI tools best practices</CardDescription>
+              <CardContent className="text-center">
+                <CardDescription className="text-gray-600">{t('homepage.legal.aiAware.description')}</CardDescription>
               </CardContent>
             </Card>
           </div>
@@ -180,16 +182,16 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
               <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
-              <span className="text-blue-700 font-medium">Comprehensive Training</span>
+              <span className="text-blue-700 font-medium">{t('homepage.courseModules.badge')}</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Practical skills
+                {t('homepage.courseModules.title').split(' ')[0]} {t('homepage.courseModules.title').split(' ')[1]}
               </span>
               <br />
-              <span className="text-gray-900 font-normal">you can apply immediately</span>
+              <span className="text-gray-900 font-normal">{t('homepage.courseModules.title').split(' ').slice(2).join(' ')}</span>
             </h2>
-            <h3 className="text-xl text-gray-600 font-light tracking-wide">Course modules</h3>
+            <h3 className="text-xl text-gray-600 font-light tracking-wide">{t('homepage.courseModules.subtitle')}</h3>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -199,10 +201,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <BookOpen className="w-8 h-8 text-blue-600" />
                 </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Introduction to GDPR</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.introduction.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Personal data, responsibility, and why it matters</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.courseModules.introduction.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -212,10 +214,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 border border-green-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Shield className="w-8 h-8 text-green-600" />
                 </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Data Protection Principles</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.principles.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Core GDPR principles for daily work</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.courseModules.principles.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -225,10 +227,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Users className="w-8 h-8 text-purple-600" />
                 </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Individual Rights</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.rights.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Understanding and respecting data subject rights</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.courseModules.rights.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -238,10 +240,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 border border-orange-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Video className="w-8 h-8 text-orange-600" />
                 </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">AI and Data Protection</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.ai.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">AI tools while maintaining compliance</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.courseModules.ai.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -251,10 +253,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 border border-red-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Award className="w-8 h-8 text-red-600" />
                 </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Incident Response</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.incidents.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Handling data protection incidents</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.courseModules.incidents.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -264,10 +266,10 @@ export default function HomePage() {
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-emerald-100 to-emerald-200 border border-emerald-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <CheckCircle className="w-8 h-8 text-emerald-600" />
                 </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Practical Implementation</CardTitle>
+                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.implementation.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Real-world scenarios and compliance steps</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.courseModules.implementation.description')}</CardDescription>
               </CardContent>
             </Card>
           </div>
@@ -276,7 +278,7 @@ export default function HomePage() {
             <Link href="/signup">
               <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <Sparkles className="w-6 h-6 mr-3 group-hover:animate-spin" />
-                Subscribe Now
+                {t('homepage.courseModules.subscribeNow')}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -290,14 +292,14 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-100 to-emerald-100 border border-green-200/50 rounded-full backdrop-blur-sm mb-8">
               <Zap className="w-5 h-5 text-green-600 mr-2" />
-              <span className="text-green-700 font-medium">Simple Process</span>
+              <span className="text-green-700 font-medium">{t('homepage.process.badge')}</span>
             </div>
             <h2 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
-                Learn at your own pace
+                {t('homepage.process.title').split(' — ')[0]}
               </span>
               <br />
-              <span className="text-gray-900 font-normal">— anytime, anywhere</span>
+              <span className="text-gray-900 font-normal">— {t('homepage.process.title').split(' — ')[1]}</span>
             </h2>
           </div>
 
@@ -308,10 +310,10 @@ export default function HomePage() {
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl font-light text-blue-600 tracking-wider">1</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Sign up</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.process.step1.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Corporate email registration</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.process.step1.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -321,10 +323,10 @@ export default function HomePage() {
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 border border-green-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl font-light text-green-600 tracking-wider">2</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Subscribe</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.process.step2.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Data Privacy Training course</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.process.step2.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -334,10 +336,10 @@ export default function HomePage() {
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl font-light text-purple-600 tracking-wider">3</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Lessons</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.process.step3.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Video-based learning modules</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.process.step3.description')}</CardDescription>
               </CardContent>
             </Card>
 
@@ -347,10 +349,10 @@ export default function HomePage() {
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 border border-orange-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-3xl font-light text-orange-600 tracking-wider">4</span>
                 </div>
-                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">Quizzes</CardTitle>
+                <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.process.step4.title')}</CardTitle>
               </CardHeader>
               <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">Assessment after each section</CardDescription>
+                <CardDescription className="text-gray-600">{t('homepage.process.step4.description')}</CardDescription>
               </CardContent>
             </Card>
           </div>
@@ -359,7 +361,7 @@ export default function HomePage() {
             <Link href="/signup">
               <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white text-lg px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <Target className="w-6 h-6 mr-3 group-hover:animate-pulse" />
-                Sign Up Now
+                {t('homepage.process.signUpNow')}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -379,34 +381,33 @@ export default function HomePage() {
           <div className="relative z-10">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
               <Globe className="w-5 h-5 text-blue-600 mr-2" />
-              <span className="text-blue-700 font-medium">Global Standard</span>
+              <span className="text-blue-700 font-medium">{t('homepage.cta.badge')}</span>
             </div>
             
             <h2 className="text-3xl md:text-5xl font-light mb-6 leading-tight tracking-wide">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Ready to master
+                {t('homepage.cta.title').split(' ')[0]} {t('homepage.cta.title').split(' ')[1]}
               </span>
               <br />
-              <span className="text-gray-900 font-normal">GDPR compliance?</span>
+              <span className="text-gray-900 font-normal">{t('homepage.cta.title').split(' ').slice(2).join(' ')}</span>
             </h2>
             
-                            <p className="text-xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-                  Join thousands of professionals who have already transformed their data protection 
-                  practices with our comprehensive GDPR training course.
-                </p>
+            <p className="text-xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+              {t('homepage.cta.description')}
+            </p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link href="/signup">
                 <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                   <Sparkles className="w-6 h-6 mr-3 group-hover:animate-spin" />
-                  Start Learning Now
+                  {t('homepage.cta.startLearning')}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link href="/courses">
                 <Button size="lg" variant="outline" className="group text-lg px-10 py-6 rounded-2xl border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300 bg-white/80 backdrop-blur-sm">
                   <BookOpen className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                  View Course Details
+                  {t('homepage.cta.viewCourse')}
                 </Button>
               </Link>
             </div>

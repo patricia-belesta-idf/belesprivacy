@@ -7,53 +7,68 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { BookOpen, Clock, Play, CheckCircle, Users, Star, ArrowRight, Sparkles } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Enrollment } from '@/types'
 import { toast } from 'sonner'
 
 const supabase = createClient()
 
-// Course data that matches the database UUIDs
-const mockCourses: Course[] = [
-  {
+// Course data that matches the database UUIDs - will be translated dynamically
+const mockCoursesData = {
+  course1: {
     id: 'b8c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e',
-    title: 'Fundamentos de Protección de Datos',
-    description: 'Aprende los conceptos básicos de la protección de datos personales, incluyendo principios fundamentales, derechos de los usuarios y obligaciones de las organizaciones.',
     image_url: '/api/placeholder/400/250',
     duration: 120,
     total_units: 8,
     created_at: '2024-01-01',
     updated_at: '2024-01-01'
   },
-  {
+  course2: {
     id: 'c9d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f',
-    title: 'GDPR y Regulaciones Europeas',
-    description: 'Domina el Reglamento General de Protección de Datos (GDPR) y otras regulaciones europeas relacionadas con la privacidad y protección de datos.',
     image_url: '/api/placeholder/400/250',
     duration: 180,
     total_units: 12,
     created_at: '2024-01-01',
     updated_at: '2024-01-01'
   },
-  {
+  course3: {
     id: 'd0e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a',
-    title: 'Implementación de Políticas de Privacidad',
-    description: 'Aprende a crear e implementar políticas de privacidad efectivas, procedimientos de cumplimiento y sistemas de gestión de datos personales.',
     image_url: '/api/placeholder/400/250',
     duration: 150,
     total_units: 10,
     created_at: '2024-01-01',
     updated_at: '2024-01-01'
   }
-]
+}
 
 export default function CoursesPage() {
   const { user } = useAuth()
+  const { t } = useLanguage()
   const [courses, setCourses] = useState<Course[]>([])
   const [enrollments, setEnrollments] = useState<Enrollment[]>([])
   const [courseEnrollmentCounts, setCourseEnrollmentCounts] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(true)
   const [enrolling, setEnrolling] = useState<string | null>(null)
+
+  // Function to get mock courses with translations
+  const getMockCourses = useCallback(() => [
+    {
+      ...mockCoursesData.course1,
+      title: t('courses.mock.course1.title'),
+      description: t('courses.mock.course1.description'),
+    },
+    {
+      ...mockCoursesData.course2,
+      title: t('courses.mock.course2.title'),
+      description: t('courses.mock.course2.description'),
+    },
+    {
+      ...mockCoursesData.course3,
+      title: t('courses.mock.course3.title'),
+      description: t('courses.mock.course3.description'),
+    }
+  ], [t])
 
   const fetchCoursesData = useCallback(async () => {
     try {
@@ -65,18 +80,18 @@ export default function CoursesPage() {
       if (error) {
         console.error('Error fetching courses:', error)
         toast.error('Error al cargar cursos')
-        // Fallback to mock data if database fails
-        setCourses(mockCourses)
+                // Fallback to mock data if database fails
+        setCourses(getMockCourses())
       } else {
-        setCourses(data || mockCourses)
+        setCourses(data || getMockCourses())
       }
     } catch (error) {
       console.error('Error:', error)
       toast.error('Error al cargar cursos')
       // Fallback to mock data if database fails
-      setCourses(mockCourses)
+      setCourses(getMockCourses())
     }
-  }, [])
+  }, [getMockCourses])
 
   useEffect(() => {
     fetchCoursesData()
@@ -253,7 +268,7 @@ export default function CoursesPage() {
           <div className="text-center">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
               <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
-              <span className="text-blue-700 font-medium">Cargando Cursos</span>
+              <span className="text-blue-700 font-medium">{t('courses.loading')}</span>
             </div>
             <div className="animate-pulse">
               <div className="h-8 bg-gray-200 rounded-lg w-64 mx-auto mb-4"></div>
@@ -278,7 +293,7 @@ export default function CoursesPage() {
         <div className="relative z-10 max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
             <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
-            <span className="text-blue-700 font-medium">Catálogo de Cursos</span>
+            <span className="text-blue-700 font-medium">{t('courses.catalog')}</span>
           </div>
         </div>
       </section>
@@ -325,7 +340,7 @@ export default function CoursesPage() {
                       {enrolled && (
                         <div className="flex items-center space-x-1 text-green-600">
                           <CheckCircle className="w-4 h-4" />
-                          <span className="text-xs font-medium">Inscrito</span>
+                          <span className="text-xs font-medium">{t('courses.enrolled')}</span>
                         </div>
                       )}
                     </div>
@@ -341,19 +356,19 @@ export default function CoursesPage() {
                       <div className="flex flex-col items-center">
                         <Clock className="w-5 h-5 text-blue-600 mb-1" />
                         <span className="text-sm font-medium text-gray-900">{course.duration} min</span>
-                        <span className="text-xs text-gray-500">Duración</span>
+                        <span className="text-xs text-gray-500">{t('courseDetail.duration')}</span>
                       </div>
                       <div className="flex flex-col items-center">
                         <BookOpen className="w-5 h-5 text-purple-600 mb-1" />
                         <span className="text-sm font-medium text-gray-900">{course.total_units}</span>
-                        <span className="text-xs text-gray-500">Unidades</span>
+                        <span className="text-xs text-gray-500">{t('courseDetail.units')}</span>
                       </div>
                       <div className="flex flex-col items-center">
                         <Users className="w-5 h-5 text-green-600 mb-1" />
                         <span className="text-sm font-medium text-gray-900">
                           {getEnrolledStudentsCount(course.id)}
                         </span>
-                        <span className="text-xs text-gray-500">Estudiantes</span>
+                        <span className="text-xs text-gray-500">{t('courses.students')}</span>
                       </div>
                     </div>
 
@@ -361,7 +376,7 @@ export default function CoursesPage() {
                     {enrolled && (
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                          <span className="text-gray-600">Progreso</span>
+                          <span className="text-gray-600">{t('courses.progress')}</span>
                           <span className="text-blue-600 font-medium">{progress}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
@@ -371,7 +386,7 @@ export default function CoursesPage() {
                           ></div>
                         </div>
                         <p className="text-xs text-gray-500 text-center">
-                          Unidad {currentUnit} de {course.total_units}
+                          {t('courseDetail.units')} {currentUnit} {t('common.of')} {course.total_units}
                         </p>
                       </div>
                     )}
@@ -382,7 +397,7 @@ export default function CoursesPage() {
                         <Link href={`/courses/${course.id}`}>
                           <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                             <Play className="w-4 h-4 mr-2" />
-                            Continuar Aprendiendo
+                            {t('courses.continueLearning')}
                             <ArrowRight className="w-4 h-4 ml-2" />
                           </Button>
                         </Link>
@@ -395,12 +410,12 @@ export default function CoursesPage() {
                           {enrolling === course.id ? (
                             <>
                               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                              Inscribiéndose...
+                              {t('courseDetail.enrolling')}
                             </>
                           ) : (
                             <>
                               <Sparkles className="w-4 h-4 mr-2" />
-                              Inscribirse Gratis
+                              {t('courses.enrollFree')}
                             </>
                           )}
                         </Button>
@@ -417,28 +432,27 @@ export default function CoursesPage() {
           <div className="text-center mt-16">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-100 to-blue-100 border border-purple-200/50 rounded-full backdrop-blur-sm mb-8">
               <Star className="w-5 h-5 text-purple-600 mr-2" />
-              <span className="text-purple-700 font-medium">¿Necesitas ayuda?</span>
+              <span className="text-purple-700 font-medium">{t('common.help')}</span>
             </div>
             
             <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4 tracking-wide">
-              ¿No encuentras el curso que buscas?
+              {t('courses.courseNotFound')}
             </h2>
             
             <p className="text-gray-600 mb-8 max-w-3xl mx-auto">
-              Nuestro equipo está constantemente desarrollando nuevos cursos. 
-              Contáctanos para sugerencias o solicitudes específicas.
+              {t('courses.contactDescription')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact">
                 <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                   <Sparkles className="w-4 h-4 mr-2" />
-                  Contactar Equipo
+                  {t('courses.contactTeam')}
                 </Button>
               </Link>
               <Link href="/">
                 <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 bg-white/80 backdrop-blur-sm">
-                  Volver al Inicio
+                  {t('common.backToHome')}
                 </Button>
               </Link>
             </div>

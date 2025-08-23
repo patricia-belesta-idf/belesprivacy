@@ -14,9 +14,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { BookOpen, User, LogOut, Menu, X, ChevronDown, Lock } from 'lucide-react'
+import { LanguageSelector } from '@/components/ui/LanguageSelector'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export function Navbar() {
   const { user, signOut } = useAuth()
+  const { t } = useLanguage()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleSignOut = async () => {
@@ -49,7 +52,7 @@ export function Navbar() {
                 href="/courses" 
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
               >
-                Cursos
+                {t('navigation.courses')}
                 <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
               </Link>
               {user && (
@@ -57,11 +60,14 @@ export function Navbar() {
                   href="/dashboard" 
                   className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
                 >
-                  Mi Dashboard
+                  {t('navigation.dashboard')}
                   <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
                 </Link>
               )}
             </div>
+            {/* Language Selector */}
+            <LanguageSelector />
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -93,19 +99,19 @@ export function Navbar() {
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/profile" className="flex items-center w-full">
                       <User className="mr-2 h-4 w-4" />
-                      Perfil
+                      {t('navigation.profile')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="cursor-pointer">
                     <Link href="/dashboard" className="flex items-center w-full">
                       <BookOpen className="mr-2 h-4 w-4" />
-                      Dashboard
+                      {t('navigation.dashboard')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50">
                     <LogOut className="mr-2 h-4 w-4" />
-                    Cerrar Sesión
+                    {t('navigation.signOut')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -113,12 +119,12 @@ export function Navbar() {
               <div className="flex items-center space-x-3">
                 <Link href="/login">
                   <Button variant="ghost" className="text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200">
-                    Iniciar Sesión
+                    {t('navigation.signIn')}
                   </Button>
                 </Link>
                 <Link href="/signup">
-                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
-                    Registrarse
+                  <Button className="bg-gradient-to-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                    {t('navigation.signUp')}
                   </Button>
                 </Link>
               </div>
