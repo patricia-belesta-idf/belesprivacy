@@ -333,6 +333,27 @@
     "start": "Comenzar",
     "locked": "Bloqueado"
   },
+  "video": {
+    "timeRequired": "Tiempo requerido: {seconds}s (90%)",
+    "watchTimeRequired": "Debes ver al menos {seconds}s (90%) del video para desbloquear el seguimiento del progreso",
+    "antiCheatActive": "Anti-Trampa Activo",
+    "validated": "✅ Validado",
+    "validating": "⏳ Validando...",
+    "completed": "Completado ({percentage}%)",
+    "cheatingDetected": "Se detectó comportamiento sospechoso. Puntuación: {score}/100. Ve el video normalmente.",
+    "progressLocked": "Progreso del 95% bloqueado hasta cumplir todos los requisitos",
+    "requirementsMet": "✅ Todos los requisitos cumplidos. El seguimiento del 95% está activo."
+  },
+  "test": {
+    "firstWatchVideo": "Primero debes ver el video de la unidad",
+    "goToVideoTab": "Ve a la pestaña \"Video\" y completa la reproducción antes de tomar el test.",
+    "noTestAvailable": "Esta unidad no tiene test disponible aún. Pronto se agregará contenido de evaluación.",
+    "sending": "Enviando...",
+    "submitTest": "Enviar Test",
+    "courseCompleted": "¡Curso Completado!",
+    "courseCompletedMessage": "Has completado exitosamente \"{courseTitle}\"",
+    "congratulations": "¡Felicitaciones por tu dedicación y esfuerzo!"
+  },
   "dashboard": {
     "loading": "Cargando Dashboard",
     "yourProgress": "Tu Progreso",

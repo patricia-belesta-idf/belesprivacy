@@ -11,6 +11,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "BelesPrivacy - Cursos de Protección de Datos",
   description: "Plataforma de aprendizaje especializada en protección de datos personales, privacidad y cumplimiento normativo.",
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 export default function RootLayout({

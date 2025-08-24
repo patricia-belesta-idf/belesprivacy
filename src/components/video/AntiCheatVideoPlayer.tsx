@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useAntiCheatValidation } from '@/hooks/useAntiCheatValidation'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface VideoAnalytics {
   totalWatchTime: number
@@ -42,6 +43,7 @@ export function AntiCheatVideoPlayer({
   unitId,
   analyticsId
 }: VideoPlayerProps) {
+  const { t } = useLanguage()
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [volume, setVolume] = useState(1)
@@ -645,7 +647,7 @@ export function AntiCheatVideoPlayer({
               {/* Anti-Cheat Info */}
               <div className="text-xs text-white/70 hidden sm:block">
                 <Shield className="h-3 w-3 inline mr-1" />
-                {validationStatus.status === 'ready' ? '✅ Validado' : '⏳ Validando...'}
+                {validationStatus.status === 'ready' ? t('video.validated') : t('video.validating')}
               </div>
               
               <Button
@@ -666,7 +668,7 @@ export function AntiCheatVideoPlayer({
         <div className="absolute top-4 right-4 z-20">
           <Badge variant="secondary" className="bg-green-600 text-white shadow-lg">
             <Check className="h-3 w-3 mr-1" />
-            Completado ({Math.round(progress)}%)
+            {t('video.completed', { percentage: Math.round(progress) })}
           </Badge>
         </div>
       )}
@@ -683,7 +685,7 @@ export function AntiCheatVideoPlayer({
           ) : (
             <>
               <Shield className="h-3 w-3 mr-1" />
-              Anti-Trampa Activo
+              {t('video.antiCheatActive')}
             </>
           )}
         </Badge>
@@ -694,7 +696,7 @@ export function AntiCheatVideoPlayer({
         <div className="absolute top-16 left-4 right-4 z-20">
           <div className="bg-black/80 rounded-lg p-3">
             <div className="flex items-center justify-between text-white text-sm mb-2">
-              <span>⏱️ Tiempo requerido: {Math.round(duration * 0.9)}s (90%)</span>
+              <span>⏱️ {t('video.timeRequired', { seconds: Math.round(duration * 0.9) })}</span>
               <span>{Math.round(currentTime)}s / {Math.round(duration * 0.9)}s</span>
             </div>
             <Progress 
@@ -702,7 +704,7 @@ export function AntiCheatVideoPlayer({
               className="h-2"
             />
             <p className="text-white/70 text-xs mt-1">
-              Debes ver al menos {Math.round(duration * 0.9)}s (90%) del video para desbloquear el seguimiento del progreso
+              {t('video.watchTimeRequired', { seconds: Math.round(duration * 0.9) })}
             </p>
           </div>
         </div>

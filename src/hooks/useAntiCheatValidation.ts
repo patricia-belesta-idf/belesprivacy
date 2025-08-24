@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import { createClient } from '@/lib/supabase'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface WatchSegment {
   start: number
@@ -36,6 +37,7 @@ export function useAntiCheatValidation({
   analyticsId, 
   totalDuration 
 }: UseAntiCheatValidationProps) {
+  const { t } = useLanguage()
   const supabase = createClient()
   const [validation, setValidation] = useState<AntiCheatValidation>({
     totalDuration,
@@ -254,7 +256,7 @@ export function useAntiCheatValidation({
     if (!validation.timeRequirementMet) {
       return {
         status: 'time-required',
-        message: `Debes ver al menos ${Math.round(validation.minimumWatchTime)}s (90%) del video para desbloquear el seguimiento del progreso`,
+        message: t('video.watchTimeRequired', { seconds: Math.round(validation.minimumWatchTime) }),
         progress: (validation.validWatchTime / validation.minimumWatchTime) * 100,
         canTrackProgress: false
       }
@@ -263,7 +265,7 @@ export function useAntiCheatValidation({
     if (validation.cheatScore < 70) {
       return {
         status: 'cheating-detected',
-        message: `Se detectó comportamiento sospechoso. Puntuación: ${validation.cheatScore}/100. Ve el video normalmente.`,
+        message: t('video.cheatingDetected', { score: validation.cheatScore }),
         progress: 0,
         canTrackProgress: false
       }
@@ -272,7 +274,7 @@ export function useAntiCheatValidation({
     if (!validation.progressUnlocked) {
       return {
         status: 'progress-locked',
-        message: 'Progreso del 95% bloqueado hasta cumplir todos los requisitos',
+        message: t('video.progressLocked'),
         progress: 0,
         canTrackProgress: false
       }
@@ -280,7 +282,7 @@ export function useAntiCheatValidation({
 
     return {
       status: 'ready',
-      message: '✅ Todos los requisitos cumplidos. El seguimiento del 95% está activo.',
+              message: t('video.requirementsMet'),
       progress: 100,
       canTrackProgress: true
     }

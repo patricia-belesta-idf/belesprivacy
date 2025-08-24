@@ -333,6 +333,27 @@
     "start": "Start",
     "locked": "Locked"
   },
+  "video": {
+    "timeRequired": "Time required: {seconds}s (90%)",
+    "watchTimeRequired": "You must watch at least {seconds}s (90%) of the video to unlock progress tracking",
+    "antiCheatActive": "Anti-Cheat Active",
+    "validated": "✅ Validated",
+    "validating": "⏳ Validating...",
+    "completed": "Completed ({percentage}%)",
+    "cheatingDetected": "Suspicious behavior detected. Score: {score}/100. Watch the video normally.",
+    "progressLocked": "95% progress locked until all requirements are met",
+    "requirementsMet": "✅ All requirements met. 95% tracking is active."
+  },
+  "test": {
+    "firstWatchVideo": "You must first watch the unit video",
+    "goToVideoTab": "Go to the \"Video\" tab and complete playback before taking the test.",
+    "noTestAvailable": "This unit has no test available yet. Assessment content will be added soon.",
+    "sending": "Sending...",
+    "submitTest": "Submit Test",
+    "courseCompleted": "Course Completed!",
+    "courseCompletedMessage": "You have successfully completed \"{courseTitle}\"",
+    "congratulations": "Congratulations for your dedication and effort!"
+  },
   "dashboard": {
     "loading": "Loading Dashboard",
     "yourProgress": "Your Progress",

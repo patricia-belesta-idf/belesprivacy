@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BookOpen, ArrowLeft, ArrowRight, Check, Video, RefreshCw, CheckCircle } from 'lucide-react'
 import { AntiCheatVideoPlayer } from "@/components/video/AntiCheatVideoPlayer"
 import { useAuth } from '@/contexts/AuthContext'
+import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
 import { Course, Unit, Quiz } from '@/types'
 import { toast } from 'sonner'
@@ -19,6 +20,7 @@ const supabase = createClient()
 export default function UnitPage() {
   const params = useParams()
   const { user } = useAuth()
+  const { t } = useLanguage()
   const [unit, setUnit] = useState<Unit | null>(null)
   const [course, setCourse] = useState<Course | null>(null)
   const [quiz, setQuiz] = useState<Quiz | null>(null)
@@ -654,11 +656,11 @@ export default function UnitPage() {
                     <div className="flex items-center space-x-2">
                       <Video className="h-5 w-5 text-yellow-600" />
                       <span className="text-yellow-800 font-medium">
-                        Primero debes ver el video de la unidad
+                        {t('test.firstWatchVideo')}
                       </span>
                     </div>
                     <p className="text-yellow-700 text-sm mt-1">
-                      Ve a la pestaña &quot;Video&quot; y completa la reproducción antes de tomar el test.
+                      {t('test.goToVideoTab')}
                     </p>
                   </div>
                 )}
@@ -670,7 +672,7 @@ export default function UnitPage() {
                   <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <div className="text-center">
                       <p className="text-blue-800">
-                        Esta unidad no tiene test disponible aún. Pronto se agregará contenido de evaluación.
+                        {t('test.noTestAvailable')}
                       </p>
                     </div>
                   </div>
@@ -715,10 +717,10 @@ export default function UnitPage() {
                       {submittingQuiz ? (
                         <>
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                          Enviando...
+                          {t('test.sending')}
                         </>
                       ) : (
-                        'Enviar Test'
+                        t('test.submitTest')
                       )}
                     </Button>
                   </div>
@@ -732,14 +734,14 @@ export default function UnitPage() {
                         <div className="flex items-center justify-center space-x-2 mb-3">
                           <CheckCircle className="h-8 w-8 text-green-600" />
                           <span className="text-2xl font-bold text-green-800">
-                            ¡Curso Completado!
+                            {t('test.courseCompleted')}
                           </span>
                         </div>
                         <p className="text-green-700 text-lg font-medium">
-                          Has completado exitosamente &quot;{course.title}&quot;
+                          {t('test.courseCompletedMessage', { courseTitle: course.title })}
                         </p>
                         <p className="text-green-600 text-sm mt-2">
-                          ¡Felicitaciones por tu dedicación y esfuerzo!
+                          {t('test.congratulations')}
                         </p>
                       </div>
                     )}
