@@ -207,3 +207,77 @@
   z-index: -1;
   animation: inherit;
 }
+
+/* =====================================================
+   ANIMACIÓN DE ONDA PARA BOTONES CTA
+   ===================================================== */
+
+@keyframes waveFlow {
+  0% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+  100% { 
+    background-position: 0% 50%; 
+  }
+}
+
+@keyframes waveFlowReverse {
+  0% { 
+    background-position: 100% 50%; 
+  }
+  50% { 
+    background-position: 0% 50%; 
+  }
+  100% { 
+    background-position: 100% 50%; 
+  }
+}
+
+.animated-button-gradient {
+  background: linear-gradient(
+    90deg, 
+    #2563eb, 
+    #7c3aed, 
+    #3b82f6, 
+    #8b5cf6, 
+    #2563eb
+  );
+  background-size: 200% 200%;
+  animation: waveFlow 4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-button-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.2), 
+    transparent
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { 
+    left: -100%; 
+  }
+  100% { 
+    left: 100%; 
+  }
+}
+
+.animated-button-gradient:hover {
+  animation: waveFlowReverse 2s ease-in-out infinite;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}

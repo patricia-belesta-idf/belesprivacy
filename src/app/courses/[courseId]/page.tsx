@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BookOpen, Play, Lock, CheckCircle, Clock, FileText, Video, RefreshCw } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
@@ -25,7 +24,6 @@ export default function CourseDetailPage() {
   const [units, setUnits] = useState<Unit[] | null>(null)
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null)
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('curriculum')
   const [enrolling, setEnrolling] = useState(false)
   const [repeatingCourse, setRepeatingCourse] = useState(false)
 
@@ -464,226 +462,112 @@ export default function CourseDetailPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="overview">{t('courseDetail.overview')}</TabsTrigger>
-            <TabsTrigger value="curriculum">{t('courseDetail.curriculum')}</TabsTrigger>
-            <TabsTrigger value="resources">{t('courseDetail.resources')}</TabsTrigger>
-          </TabsList>
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('courseDetail.curriculum')}</CardTitle>
+              <CardDescription>
+                {course.total_units} {t('courseDetail.units')} • {course.duration} {t('courseDetail.minutes')} {t('courseDetail.ofContent')}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {units?.map((unit) => (
+                  <div
+                    key={unit.id}
+                    className={`flex items-center space-x-4 p-4 rounded-lg border ${
+                      isUnitCompleted(unit.id)
+                        ? 'bg-green-50 border-green-200'
+                        : isUnitAccessible(unit.order)
+                        ? 'bg-blue-50 border-blue-200'
+                        : 'bg-gray-50 border-gray-200'
+                    }`}
+                  >
+                    <div className="flex-shrink-0">
+                      {isUnitCompleted(unit.id) ? (
+                        <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                          <CheckCircle className="h-5 w-5 text-white" />
+                        </div>
+                      ) : isUnitAccessible(unit.order) ? (
+                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                          <span className="text-white font-medium">{unit.order}</span>
+                        </div>
+                      ) : (
+                        <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
+                          <Lock className="h-5 w-5 text-white" />
+                        </div>
+                      )}
+                    </div>
 
-          <TabsContent value="overview" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('courseDetail.whatYouWillLearn')}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-gray-900">{t('courseDetail.skillsToDevelop')}:</h4>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.skills.dataProtection')}</span>
-                      </li>
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.skills.securityMeasures')}</span>
-                      </li>
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.skills.userRights')}</span>
-                      </li>
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.skills.compliance')}</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-gray-900">{t('courseDetail.prerequisites')}:</h4>
-                    <ul className="space-y-2 text-sm text-gray-600">
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.prereq.noPriorKnowledge')}</span>
-                      </li>
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.prereq.privacyInterest')}</span>
-                      </li>
-                      <li className="flex items-start space-x-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>{t('courseDetail.prereq.internetConnection')}</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="curriculum" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('courseDetail.curriculum')}</CardTitle>
-                <CardDescription>
-                  {course.total_units} {t('courseDetail.units')} • {course.duration} {t('courseDetail.minutes')} {t('courseDetail.ofContent')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {units?.map((unit) => (
-                    <div
-                      key={unit.id}
-                      className={`flex items-center space-x-4 p-4 rounded-lg border ${
-                        isUnitCompleted(unit.id)
-                          ? 'bg-green-50 border-green-200'
-                          : isUnitAccessible(unit.order)
-                          ? 'bg-blue-50 border-blue-200'
-                          : 'bg-gray-50 border-gray-200'
-                      }`}
-                    >
-                      <div className="flex-shrink-0">
-                        {isUnitCompleted(unit.id) ? (
-                          <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-                            <CheckCircle className="h-5 w-5 text-white" />
-                          </div>
-                        ) : isUnitAccessible(unit.order) ? (
-                          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span className="text-white font-medium">{unit.order}</span>
-                          </div>
-                        ) : (
-                          <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-                            <Lock className="h-5 w-5 text-white" />
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-900">{unit.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{unit.description}</p>
-                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-gray-900">{unit.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{unit.description}</p>
+                      <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                        <span className="flex items-center space-x-1">
+                          <Video className="h-3 w-3" />
+                          <span>{unit.duration} min</span>
+                        </span>
+                        {unit.order === course.total_units && (
                           <span className="flex items-center space-x-1">
-                            <Video className="h-3 w-3" />
-                            <span>{unit.duration} min</span>
+                            <FileText className="h-3 w-3" />
+                            <span>{t('courseDetail.finalQuiz')}</span>
                           </span>
-                          {unit.order === course.total_units && (
-                            <span className="flex items-center space-x-1">
-                              <FileText className="h-3 w-3" />
-                              <span>{t('courseDetail.finalQuiz')}</span>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex-shrink-0">
-                        {isUnitCompleted(unit.id) ? (
-                          <Badge variant="secondary">{t('common.completed')}</Badge>
-                        ) : isUnitAccessible(unit.order) ? (
-                          <Link href={`/courses/${course.id}/units/${unit.id}`}>
-                                                                <Button size="sm">
-                                <Play className="h-4 w-4 mr-2" />
-                                {t('common.start')}
-                              </Button>
-                          </Link>
-                        ) : (
-                          <Badge variant="outline">{t('common.locked')}</Badge>
                         )}
                       </div>
                     </div>
-                  ))}
-                </div>
-                
-                {/* Botón Repetir Curso - solo aparece cuando está completado */}
-                {enrollment?.completed_at && (
-                  <div className="mt-8 pt-6 border-t border-gray-200">
-                    <div className="text-center">
-                      <h3 className="text-lg font-medium text-gray-900 mb-3">
-                        {t('courseDetail.repeatCourseQuestion')}
-                      </h3>
-                      <p className="text-sm text-gray-600 mb-4">
-                        {t('courseDetail.repeatCourseDescription')}
-                      </p>
-                      <Button 
-                        onClick={handleRepeatCourse}
-                        variant="outline"
-                        className="border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300"
-                        disabled={repeatingCourse}
-                      >
-                        {repeatingCourse ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 mr-2"></div>
-                            {t('courseDetail.repeating')}
-                          </>
-                        ) : (
-                          <>
-                            <RefreshCw className="h-4 w-4 mr-2" />
-                            {t('courseDetail.repeatCourse')}
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
 
-          <TabsContent value="resources" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('courseDetail.additionalResources')}</CardTitle>
-                <CardDescription>
-                  {t('courseDetail.resourcesDescription')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900">{t('courseDetail.downloadableDocuments')}</h4>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between p-3 border rounded-lg">
-                        <div className="flex items-center space-x-3">
-                          <FileText className="h-5 w-5 text-blue-600" />
-                          <span className="text-sm font-medium">{t('courseDetail.documents.bestPractices')}</span>
-                        </div>
-                        <Button variant="outline" size="sm">{t('common.download')}</Button>
-                      </div>
-                      <div className="flex items-center justify-between p-3 border rounded-lg">
-                        <div className="flex items-center space-x-3">
-                          <FileText className="h-5 w-5 text-blue-600" />
-                          <span className="text-sm font-medium">{t('courseDetail.documents.policyTemplates')}</span>
-                        </div>
-                        <Button variant="outline" size="sm">{t('common.download')}</Button>
-                      </div>
+                    <div className="flex-shrink-0">
+                      {isUnitCompleted(unit.id) ? (
+                        <Badge variant="secondary">{t('common.completed')}</Badge>
+                      ) : isUnitAccessible(unit.order) ? (
+                        <Link href={`/courses/${course.id}/units/${unit.id}`}>
+                          <Button size="sm">
+                            <Play className="h-4 w-4 mr-2" />
+                            {t('common.start')}
+                          </Button>
+                        </Link>
+                      ) : (
+                        <Badge variant="outline">{t('common.locked')}</Badge>
+                      )}
                     </div>
                   </div>
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900">{t('courseDetail.usefulLinks')}</h4>
-                    <div className="space-y-3">
-                      <a href="#" className="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                        <div className="text-sm font-medium text-blue-600 hover:text-blue-800">
-                          {t('courseDetail.links.officialRegulations')}
-                        </div>
-                        <p className="text-xs text-gray-600 mt-1">
-                          {t('courseDetail.links.regulationsDescription')}
-                        </p>
-                      </a>
-                      <a href="#" className="block p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                        <div className="text-sm font-medium text-blue-600 hover:text-blue-800">
-                          {t('courseDetail.links.caseStudies')}
-                        </div>
-                        <p className="text-xs text-gray-600 mt-1">
-                          {t('courseDetail.links.caseStudiesDescription')}
-                        </p>
-                      </a>
-                    </div>
+                ))}
+              </div>
+              
+              {/* Botón Repetir Curso - solo aparece cuando está completado */}
+              {enrollment?.completed_at && (
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <div className="text-center">
+                    <h3 className="text-lg font-medium text-gray-900 mb-3">
+                      {t('courseDetail.repeatCourseQuestion')}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      {t('courseDetail.repeatCourseDescription')}
+                    </p>
+                    <Button 
+                      onClick={handleRepeatCourse}
+                      variant="outline"
+                      className="border-orange-200 text-orange-700 hover:bg-orange-50 hover:border-orange-300"
+                      disabled={repeatingCourse}
+                    >
+                      {repeatingCourse ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 mr-2"></div>
+                          {t('courseDetail.repeating')}
+                        </>
+                      ) : (
+                        <>
+                          <RefreshCw className="h-4 w-4 mr-2" />
+                          {t('courseDetail.repeatCourse')}
+                        </>
+                      )}
+                    </Button>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )

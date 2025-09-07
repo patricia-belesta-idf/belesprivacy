@@ -18,7 +18,7 @@
     },
     "features": {
       "duration": {
-        "title": "30-40 min",
+        "title": "40-50 min",
         "description": "Duración Total"
       },
       "compliance": {
@@ -44,7 +44,7 @@
       },
       "duration": {
         "title": "Duración",
-        "description": "30–40 minutos en total"
+        "description": "40–50 minutos en total"
       },
       "aiAware": {
         "title": "Consciente de IA",

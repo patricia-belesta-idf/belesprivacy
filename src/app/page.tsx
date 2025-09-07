@@ -51,7 +51,7 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
             <Link href="/courses">
-              <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg px-8 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+              <Button size="lg" className="group relative overflow-hidden animated-button-gradient text-white text-lg px-8 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <Play className="w-6 h-6 mr-3 group-hover:animate-pulse" />
                 {t('homepage.hero.startLearning')}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -393,7 +393,7 @@ export default function HomePage() {
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
               <Link href="/signup">
-                <Button size="lg" className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-lg px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <Button size="lg" className="group relative overflow-hidden animated-button-gradient text-white text-lg px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                   <Sparkles className="w-6 h-6 mr-3 group-hover:animate-spin" />
                   {t('homepage.cta.startLearning')}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

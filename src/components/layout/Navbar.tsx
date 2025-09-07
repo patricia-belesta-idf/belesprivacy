@@ -123,7 +123,7 @@ export function Navbar() {
                   </Button>
                 </Link>
                 <Link href="/signup">
-                  <Button className="bg-gradient-to-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
                     {t('navigation.signUp')}
                   </Button>
                 </Link>
@@ -177,7 +177,7 @@ export function Navbar() {
                   </Link>
                   <Link 
                     href="/signup" 
-                    className="block text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-gray-50"
+                    className="block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all duration-200 font-medium px-4 py-2 rounded-lg shadow-md hover:shadow-lg mx-3"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Registrarse

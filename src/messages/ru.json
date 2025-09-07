@@ -18,7 +18,7 @@
     },
     "features": {
       "duration": {
-        "title": "30-40 мин",
+        "title": "40-50 мин",
         "description": "Общая продолжительность"
       },
       "compliance": {
@@ -44,7 +44,7 @@
       },
       "duration": {
         "title": "Продолжительность",
-        "description": "30–40 минут всего"
+        "description": "40–50 минут всего"
       },
       "aiAware": {
         "title": "С учетом ИИ",
