@@ -377,7 +377,7 @@ export default function UnitPage() {
       console.log('🔍 Testing basic units query...')
       const { data: testData, error: testError } = await supabase
         .from('units')
-        .select('id, title, order')
+        .select('id, title, "order"')
         .eq('course_id', course.id)
         .limit(5)
 
@@ -394,13 +394,13 @@ export default function UnitPage() {
       console.log('✅ Test query successful, found units:', testData)
       console.log('🔍 Looking for unit with order:', unit.order + 1)
 
-      // Ahora buscamos la siguiente unidad
+      // Ahora buscamos la siguiente unidad - usando limit(1) en lugar de single()
       const { data: nextUnitData, error: nextUnitError } = await supabase
         .from('units')
-        .select('id, title, order')
+        .select('id, title, "order"')
         .eq('course_id', course.id)
-        .eq('order', unit.order + 1)
-        .single()
+        .eq('"order"', unit.order + 1)
+        .limit(1)
 
       if (nextUnitError) {
         console.error('❌ getNextUnit: Error fetching next unit:', nextUnitError)
@@ -412,9 +412,10 @@ export default function UnitPage() {
         return null
       }
 
-      if (nextUnitData) {
-        console.log(`✅ getNextUnit: Found next unit: ${nextUnitData.title} (order: ${nextUnitData.order})`)
-        return nextUnitData
+      if (nextUnitData && nextUnitData.length > 0) {
+        const nextUnit = nextUnitData[0]
+        console.log(`✅ getNextUnit: Found next unit: ${nextUnit.title} (order: ${nextUnit.order})`)
+        return nextUnit
       } else {
         console.log('⚠️ getNextUnit: No next unit found')
         return null
