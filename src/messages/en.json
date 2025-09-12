@@ -10,10 +10,10 @@
   "homepage": {
     "hero": {
       "badge": "AI-Powered Learning Platform",
-      "title": "Data Protection Training",
-      "subtitle": "Master the GDPR in under 1 hour",
-      "description": "Modern, practical, AI-aware training that transforms boring compliance into engaging learning",
-      "startLearning": "Start Learning Now",
+      "title": "Data Protection Course",
+      "subtitle": "Master GDPR in less than 1 hour",
+      "description": "A modern and practical training that transforms boring compliance into clear, useful and applicable learning in your daily work at ID Finance",
+      "startLearning": "Start Learning",
       "signUpNow": "Sign Up Now"
     },
     "features": {
@@ -32,48 +32,48 @@
     },
     "legal": {
       "badge": "Legal Requirement",
-      "title": "Protecting personal data is not optional — it's the law",
-      "description": "Under the General Data Protection Regulation (GDPR), every company is legally required to process personal data safely and lawfully. This course transforms complex legal requirements into practical, actionable knowledge.",
+      "title": "Protecting personal data is creating trust — Make privacy part of your daily work",
+      "description": "At ID Finance, caring for personal data means protecting our clients and colleagues. This course helps you understand in a simple way what to do in each situation, transforming legal requirements into actions that bring value and security to the entire team",
       "mandatory": {
-        "title": "Mandatory",
-        "description": "EU data protection law"
+        "title": "100% practical",
+        "description": "Real examples and solutions for work at ID Finance"
       },
       "practical": {
-        "title": "Practical",
-        "description": "Real-life cases & examples"
+        "title": "Duration",
+        "description": "40–50 minutes total, agile and direct learning"
       },
       "duration": {
-        "title": "Duration",
-        "description": "40–50 minutes total"
+        "title": "Flexible",
+        "description": "A brief and accessible training that adapts to your pace."
       },
       "aiAware": {
-        "title": "AI-aware",
-        "description": "AI tools best practices"
+        "title": "100% compliance",
+        "description": "Aligned with current regulations to protect the company and individuals."
       }
     },
     "courseModules": {
       "badge": "Comprehensive Training",
-      "title": "Practical skills you can apply immediately",
+      "title": "Practical skills you can apply from today",
       "subtitle": "Course modules",
       "introduction": {
-        "title": "Introduction to GDPR",
-        "description": "Personal data, responsibility, and why it matters"
+        "title": "Introduction to data protection",
+        "description": "What personal data is and why it's key to protect it at ID Finance"
       },
       "principles": {
-        "title": "Data Protection Principles",
-        "description": "Core GDPR principles for daily work"
+        "title": "Roles and legitimizing bases",
+        "description": "Who does what and when data can be processed correctly"
       },
       "rights": {
-        "title": "Individual Rights",
-        "description": "Understanding and respecting data subject rights"
+        "title": "Rights and International Transfers",
+        "description": "How to respect rights and manage data securely between countries"
       },
       "ai": {
-        "title": "AI and Data Protection",
-        "description": "AI tools while maintaining compliance"
+        "title": "Security breaches",
+        "description": "Identification, management and reporting of data protection incidents"
       },
       "incidents": {
-        "title": "Incident Response",
-        "description": "Handling data protection incidents"
+        "title": "Sanctioning regime",
+        "description": "Risks, sanctions and how to avoid problems with good practices"
       },
       "implementation": {
         "title": "Practical Implementation",
@@ -85,12 +85,12 @@
       "badge": "Simple Process",
       "title": "Learn at your own pace — anytime, anywhere",
       "step1": {
-        "title": "Sign up",
-        "description": "Corporate email registration"
+        "title": "Register",
+        "description": "Registration with corporate email"
       },
       "step2": {
         "title": "Subscribe",
-        "description": "Data Privacy Training course"
+        "description": "Data Privacy Training Course"
       },
       "step3": {
         "title": "Lessons",
@@ -98,15 +98,15 @@
       },
       "step4": {
         "title": "Quizzes",
-        "description": "Assessment after each section"
+        "description": "Evaluation after each section"
       },
       "signUpNow": "Sign Up Now"
     },
     "cta": {
       "badge": "Global Standard",
       "title": "Ready to master GDPR compliance?",
-      "description": "Join thousands of professionals who have already transformed their data protection practices with our comprehensive GDPR training course.",
-      "startLearning": "Start Learning Now",
+      "description": "Data protection starts with you: every action counts to create trust, security and value at ID Finance.",
+      "startLearning": "Start Learning",
       "viewCourse": "View Course Details"
     }
   },
@@ -122,13 +122,13 @@
     "loading": "Loading courses...",
     "noEnrollments": "You are not enrolled in any courses yet.",
     "exploreButton": "Explore available courses",
-    "courseNotFound": "Can't find the course you're looking_for?",
+    "courseNotFound": "Can't find the course you're looking for?",
     "contactDescription": "Our team is constantly developing new courses. Contact us for suggestions or specific requests.",
     "contactTeam": "Contact Team",
     "mock": {
       "course1": {
         "title": "Data Protection Fundamentals",
-        "description": "Learn the basic concepts of personal data protection, including fundamental principles, user rights, and organizational obligations."
+        "description": "Learn the basics of personal data protection, including fundamental principles, user rights and organizational obligations."
       },
       "course2": {
         "title": "GDPR and European Regulations",
@@ -136,7 +136,7 @@
       },
       "course3": {
         "title": "Privacy Policy Implementation",
-        "description": "Learn to create and implement effective privacy policies, compliance procedures, and personal data management systems."
+        "description": "Learn to create and implement effective privacy policies, compliance procedures and personal data management systems."
       }
     }
   },
@@ -144,7 +144,7 @@
     "enroll": "Enroll in Course",
     "enrolling": "Enrolling...",
     "enrolled": "Enrolled",
-    "curriculum": "Course Curriculum",
+    "curriculum": "Course Content",
     "resources": "Resources",
     "repeatCourse": "Repeat Course",
     "repeating": "Repeating...",
@@ -159,14 +159,14 @@
     "enrollmentSuccess": "Successfully enrolled in course",
     "alreadyEnrolled": "You are already enrolled in this course",
     "repeatError": "Error restarting course",
-    "repeatSuccess": "Course restarted successfully! You can start over.",
+    "repeatSuccess": "Course restarted successfully! You can start again.",
     "overview": "Overview",
     "whatYouWillLearn": "What will you learn?",
     "skillsToDevelop": "Skills you will develop",
     "prerequisites": "Prerequisites",
     "minutes": "minutes",
     "ofContent": "of content",
-    "finalQuiz": "Final Quiz",
+    "finalQuiz": "Final Test",
     "additionalResources": "Additional Resources",
     "resourcesDescription": "Complementary materials to enrich your learning",
     "downloadableDocuments": "Downloadable Documents",
@@ -199,27 +199,27 @@
   },
   "units": {
     "video": "Video",
-    "quiz": "Quiz",
+    "quiz": "Test",
     "nextUnit": "Next Unit",
     "courseCompleted": "Course Completed",
     "viewCourse": "View Course",
-    "retakeQuiz": "Retake Quiz",
+    "retakeQuiz": "Retake Test",
     "loading": "Loading unit...",
     "videoCompleted": "Video completed successfully",
-    "quizPassed": "Quiz passed!",
-    "quizFailed": "Quiz failed. You can retake it.",
+    "quizPassed": "Test passed!",
+    "quizFailed": "Test not passed. You can retake it.",
     "score": "Your score: {score}% (Minimum score: {minScore}%)",
     "courseCompletedMessage": "🎉 You have successfully completed \"{courseTitle}\"!",
     "explanation": "Explanation:",
     "submitAnswer": "Submit Answer",
     "nextQuestion": "Next Question",
-    "finishQuiz": "Finish Quiz",
+    "finishQuiz": "Finish Test",
     "question": "Question",
     "of": "of",
     "correctAnswer": "Correct Answer",
     "yourAnswer": "Your Answer",
     "watchTimeRequired": "You must watch at least {percentage}% of the video to continue",
-    "antiCheatDetected": "Fast forwarding detected. Please watch the video normally.",
+    "antiCheatDetected": "Fast forward detected. Please watch the video normally.",
     "unitNotFound": "Unit not found",
     "playVideo": "Play Video",
     "pauseVideo": "Pause Video",
@@ -234,10 +234,10 @@
     "currentUnit": "Current Unit",
     "overallProgress": "Overall Progress",
     "timeSpent": "Time Spent",
-    "quizzesTaken": "Quizzes Taken",
+    "quizzesTaken": "Tests Taken",
     "certificates": "Certificates",
     "loading": "Loading dashboard...",
-    "noCourses": "No courses enrolled",
+    "noCourses": "No enrolled courses",
     "enrollInCourse": "Enroll in a course to get started",
     "browseCoursesButton": "Browse Courses",
     "continueWatching": "Continue Watching",
@@ -245,20 +245,20 @@
     "stats": {
       "coursesEnrolled": "Courses Enrolled",
       "hoursWatched": "Hours Watched",
-      "quizzesCompleted": "Quizzes Completed",
+      "quizzesCompleted": "Tests Completed",
       "certificatesEarned": "Certificates Earned",
       "completionRate": "Completion Rate",
       "averageScore": "Average Score"
     }
   },
   "auth": {
-    "login": "Login",
+    "login": "Sign In",
     "signup": "Sign Up",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "fullName": "Full Name",
-    "forgotPassword": "Forgot Password?",
+    "forgotPassword": "Forgot your password?",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "signInWith": "Sign in with",
@@ -352,7 +352,7 @@
     "submitTest": "Submit Test",
     "courseCompleted": "Course Completed!",
     "courseCompletedMessage": "You have successfully completed \"{courseTitle}\"",
-    "congratulations": "Congratulations for your dedication and effort!"
+    "congratulations": "Congratulations on your dedication and effort!"
   },
   "dashboard": {
     "loading": "Loading Dashboard",
@@ -372,6 +372,6 @@
     "viewCourse": "View Course",
     "continue": "Continue",
     "noEnrolledCourses": "You have no enrolled courses",
-    "startExploring": "Start exploring our courses and enroll in the one that interests you most."
+    "startExploring": "Start by exploring our courses and enroll in the one that interests you most."
   }
 }
