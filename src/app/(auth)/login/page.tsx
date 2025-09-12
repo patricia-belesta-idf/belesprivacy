@@ -29,7 +29,6 @@ export default function LoginPage() {
           </div>
           
           <h1 className="text-3xl font-light text-gray-900 mb-3 tracking-wide">{t('auth.loginTitle')}</h1>
-          <p className="text-gray-600 text-lg">{t('auth.loginSubtitle')}</p>
         </div>
         
         <Card className="shadow-xl bg-white/80 backdrop-blur-sm border border-gray-200/50">

@@ -12,7 +12,7 @@
       "badge": "Plataforma de Aprendizaje con IA",
       "title": "Curso de protección de datos",
       "subtitle": "Domina el RGPD en menos de 1 hora",
-      "description": "Entrenamiento moderno, práctico y consciente de la IA que transforma el cumplimiento aburrido en aprendizaje atractivo",
+      "description": "Un entrenamiento moderno y práctico que transforma el cumplimiento aburrido en aprendizaje claro, útil y aplicable en tu día a día en ID Finance",
       "startLearning": "Comenzar a Aprender",
       "signUpNow": "Registrarse Ahora"
     },
@@ -32,48 +32,48 @@
     },
     "legal": {
       "badge": "Requisito Legal",
-      "title": "Proteger los datos personales no es opcional — es la ley",
-      "description": "Bajo el Reglamento General de Protección de Datos (RGPD), toda empresa está legalmente obligada a procesar los datos personales de manera segura y legal. Este curso transforma los requisitos legales complejos en conocimiento práctico y accionable.",
+      "title": "Proteger los datos personales es crear confianza — Haz que la privacidad sea parte de tu trabajo diario",
+      "description": "En ID Finance, cuidar los datos personales significa proteger a nuestros clientes y compañeros. Este curso te ayuda a entender de forma sencilla qué hacer en cada situación, transformar los requisitos legales en acciones que aportan valor y seguridad a todo el equipo",
       "mandatory": {
-        "title": "Obligatorio",
-        "description": "Ley europea de protección de datos"
+        "title": "100% práctica",
+        "description": "Ejemplos y soluciones reales para el trabajo en ID Finance"
       },
       "practical": {
-        "title": "Práctico",
-        "description": "Casos reales y ejemplos"
+        "title": "Duración",
+        "description": "40–50 minutos en total, aprendizaje ágil y directo"
       },
       "duration": {
-        "title": "Duración",
-        "description": "40–50 minutos en total"
+        "title": "Flexible",
+        "description": "Una formación breve y accesible que se adapta a tu ritmo."
       },
       "aiAware": {
-        "title": "Consciente de IA",
-        "description": "Mejores prácticas de herramientas de IA"
+        "title": "100% compliance",
+        "description": "Alineados con la normativa vigente para proteger la empresa y a las personas."
       }
     },
     "courseModules": {
       "badge": "Entrenamiento Integral",
-      "title": "Habilidades prácticas que puedes aplicar inmediatamente",
+      "title": "Habilidades prácticas que puedes aplicar desde hoy",
       "subtitle": "Módulos del curso",
       "introduction": {
-        "title": "Introducción al RGPD",
-        "description": "Datos personales, responsabilidad y por qué importa"
+        "title": "Introducción a la protección de datos",
+        "description": "Qué son los datos personales y por qué es clave protegerlos en ID Finance"
       },
       "principles": {
-        "title": "Principios de Protección de Datos",
-        "description": "Principios fundamentales del RGPD para el trabajo diario"
+        "title": "Roles y bases legitimadoras",
+        "description": "Quién hace qué y cuándo se puede tratar datos de manera correcta"
       },
       "rights": {
-        "title": "Derechos Individuales",
-        "description": "Comprensión y respeto de los derechos de los interesados"
+        "title": "Derechos y Transferencias Internacionales",
+        "description": "Cómo respetar los derechos y manejar datos entre países de forma segura"
       },
       "ai": {
-        "title": "IA y Protección de Datos",
-        "description": "Herramientas de IA manteniendo el cumplimiento"
+        "title": "Brechas de seguridad",
+        "description": "Identificación, gestión y reporte de incidentes en protección de datos"
       },
       "incidents": {
-        "title": "Respuesta a Incidentes",
-        "description": "Manejo de incidentes de protección de datos"
+        "title": "Régimen sancionador",
+        "description": "Riesgos, sanciones y cómo evitar problemas con buenas prácticas"
       },
       "implementation": {
         "title": "Implementación Práctica",
@@ -105,7 +105,7 @@
     "cta": {
       "badge": "Estándar Global",
       "title": "¿Listo para dominar el cumplimiento del RGPD?",
-      "description": "Únete a miles de profesionales que ya han transformado sus prácticas de protección de datos con nuestro curso integral de entrenamiento en RGPD.",
+      "description": "La protección de datos empieza contigo: cada acción cuenta para crear confianza, seguridad y valor en ID Finance.",
       "startLearning": "Comenzar a Aprender",
       "viewCourse": "Ver Detalles del Curso"
     }

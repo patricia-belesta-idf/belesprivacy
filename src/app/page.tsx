@@ -14,7 +14,7 @@ export default function HomePage() {
       <div className="fixed inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23E2E8F0%22%20fill-opacity%3D%220.3%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
+      <section className="relative py-24 px-4 sm:px-6 lg:px-8 pt-20">
         {/* Subtle Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/40 to-purple-200/40 rounded-full blur-3xl animate-pulse"></div>
@@ -24,12 +24,12 @@ export default function HomePage() {
 
         <div className="relative z-10 text-center max-w-7xl mx-auto">
           {/* Elegant Badge */}
-          <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-full shadow-sm mb-12">
+          <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-full shadow-sm mb-8">
             <Sparkles className="w-4 h-4 text-purple-500 mr-2" />
             <span className="text-gray-700 text-sm font-medium">{t('homepage.hero.badge')}</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-8 leading-tight tracking-wide relative">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light mb-6 leading-tight tracking-wide relative">
             <span className="animated-gradient-primary relative">
               {t('homepage.hero.title').split(' ').slice(0, 3).join(' ')}
             </span>
@@ -39,7 +39,7 @@ export default function HomePage() {
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-4xl mx-auto leading-relaxed">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 font-semibold">
               {t('homepage.hero.subtitle')}
             </span>
@@ -49,7 +49,7 @@ export default function HomePage() {
             </span>
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/courses">
               <Button size="lg" className="group relative overflow-hidden animated-button-gradient text-white text-lg px-8 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 <Play className="w-6 h-6 mr-3 group-hover:animate-pulse" />
@@ -57,38 +57,8 @@ export default function HomePage() {
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Link href="/signup">
-              <Button size="lg" variant="outline" className="group text-lg px-8 py-6 rounded-2xl border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 bg-white/80 backdrop-blur-sm">
-                <Zap className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                {t('homepage.hero.signUpNow')}
-              </Button>
-            </Link>
           </div>
 
-          {/* Clean Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-blue-200/50">
-                <Clock className="w-8 h-8 text-blue-600" />
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">{t('homepage.features.duration.title')}</div>
-              <div className="text-gray-500">{t('homepage.features.duration.description')}</div>
-            </div>
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-green-200/50">
-                <Target className="w-8 h-8 text-green-600" />
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">{t('homepage.features.compliance.title')}</div>
-              <div className="text-gray-500">{t('homepage.features.compliance.description')}</div>
-            </div>
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 border border-purple-200/50">
-                <Star className="w-8 h-8 text-purple-600" />
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">{t('homepage.features.aiReady.title')}</div>
-              <div className="text-gray-500">{t('homepage.features.aiReady.description')}</div>
-            </div>
-          </div>
         </div>
 
 
@@ -116,7 +86,7 @@ export default function HomePage() {
 
           {/* Key Benefits Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-red-100/50 to-pink-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-100 to-pink-100 border border-red-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -129,7 +99,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-green-100/50 to-emerald-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 border border-green-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -142,7 +112,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 to-cyan-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-cyan-100 border border-blue-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -155,7 +125,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-violet-100/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-100 to-violet-100 border border-purple-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -189,8 +159,8 @@ export default function HomePage() {
             <h3 className="text-xl text-gray-600 font-light tracking-wide">{t('homepage.courseModules.subtitle')}</h3>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16 justify-items-center">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-purple-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -203,7 +173,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-purple-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 border border-green-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -216,7 +186,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-purple-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -229,7 +199,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-purple-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 border border-orange-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -242,7 +212,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-purple-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center">
                 <div className="mx-auto w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 border border-red-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -255,18 +225,6 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-purple-100/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <CardHeader className="relative z-10 text-center">
-                <div className="mx-auto w-16 h-16 bg-gradient-to-br from-emerald-100 to-emerald-200 border border-emerald-200/50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <CheckCircle className="w-8 h-8 text-emerald-600" />
-                </div>
-                                  <CardTitle className="text-xl text-gray-900 font-light tracking-wide">{t('homepage.courseModules.implementation.title')}</CardTitle>
-              </CardHeader>
-              <CardContent className="relative z-10 text-center">
-                <CardDescription className="text-gray-600">{t('homepage.courseModules.implementation.description')}</CardDescription>
-              </CardContent>
-            </Card>
           </div>
 
           <div className="text-center">
@@ -299,7 +257,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/30 to-blue-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 border border-blue-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -312,7 +270,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-green-100/30 to-green-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-green-100 to-green-200 border border-green-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -325,7 +283,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-100/30 to-purple-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 border border-purple-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -338,7 +296,7 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
+            <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 w-full max-w-md">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-100/30 to-orange-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 text-center pb-4">
                 <div className="mx-auto w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 border border-orange-200/50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -391,18 +349,12 @@ export default function HomePage() {
               {t('homepage.cta.description')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <div className="flex justify-center items-center">
               <Link href="/signup">
                 <Button size="lg" className="group relative overflow-hidden animated-button-gradient text-white text-lg px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                   <Sparkles className="w-6 h-6 mr-3 group-hover:animate-spin" />
                   {t('homepage.cta.startLearning')}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/courses">
-                <Button size="lg" variant="outline" className="group text-lg px-10 py-6 rounded-2xl border-2 border-blue-300 text-blue-700 hover:bg-blue-50 hover:border-blue-400 transition-all duration-300 bg-white/80 backdrop-blur-sm">
-                  <BookOpen className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                  {t('homepage.cta.viewCourse')}
                 </Button>
               </Link>
             </div>
