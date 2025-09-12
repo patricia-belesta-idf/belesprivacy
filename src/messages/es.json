@@ -122,8 +122,8 @@
     "loading": "Cargando cursos...",
     "noEnrollments": "Aún no estás inscrito en ningún curso.",
     "exploreButton": "Explorar cursos disponibles",
-    "courseNotFound": "¿No encuentras el curso que buscas?",
-    "contactDescription": "Nuestro equipo está constantemente desarrollando nuevos cursos. Contáctanos para sugerencias o solicitudes específicas.",
+    "courseNotFound": "¿Necesitas ayuda?",
+    "contactDescription": "Contáctanos si necesitas ayuda.",
     "contactTeam": "Contactar Equipo",
     "mock": {
       "course1": {

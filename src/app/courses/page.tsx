@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { BookOpen, Clock, Play, CheckCircle, Users, Star, ArrowRight, Sparkles, Lock } from 'lucide-react'
+import { BookOpen, Clock, Play, CheckCircle, Star, ArrowRight, Sparkles, Lock } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
@@ -47,7 +47,6 @@ export default function CoursesPage() {
   const { t } = useLanguage()
   const [courses, setCourses] = useState<Course[]>([])
   const [enrollments, setEnrollments] = useState<Enrollment[]>([])
-  const [courseEnrollmentCounts, setCourseEnrollmentCounts] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(true)
   const [enrolling, setEnrolling] = useState<string | null>(null)
 
@@ -102,11 +101,6 @@ export default function CoursesPage() {
     }
   }, [user, fetchCoursesData])
 
-  useEffect(() => {
-    if (courses.length > 0) {
-      fetchCourseEnrollmentCounts()
-    }
-  }, [courses, enrollments])
 
   const fetchEnrollments = async () => {
     try {
@@ -129,42 +123,6 @@ export default function CoursesPage() {
     }
   }
 
-  const fetchCourseEnrollmentCounts = async () => {
-    try {
-      // Obtener el conteo de estudiantes por curso
-      const { data, error } = await supabase
-        .from('enrollments')
-        .select('course_id')
-        .not('course_id', 'is', null)
-
-      if (error) {
-        console.error('Error fetching enrollment counts:', error)
-        // Fallback: usar conteo local si falla la consulta
-        const counts: Record<string, number> = {}
-        courses.forEach(course => {
-          counts[course.id] = enrollments.filter(e => e.course_id === course.id).length
-        })
-        setCourseEnrollmentCounts(counts)
-      } else {
-        // Contar enrollments por curso
-        const counts: Record<string, number> = {}
-        data?.forEach(enrollment => {
-          if (enrollment.course_id) {
-            counts[enrollment.course_id] = (counts[enrollment.course_id] || 0) + 1
-          }
-        })
-        setCourseEnrollmentCounts(counts)
-      }
-    } catch (error) {
-      console.error('Error:', error)
-      // Fallback: usar conteo local
-      const counts: Record<string, number> = {}
-      courses.forEach(course => {
-        counts[course.id] = enrollments.filter(e => e.course_id === course.id).length
-      })
-      setCourseEnrollmentCounts(counts)
-    }
-  }
 
   const enrollInCourse = async (courseId: string) => {
     if (!user) {
@@ -189,11 +147,6 @@ export default function CoursesPage() {
       } else {
         toast.success('¡Inscripción exitosa!')
         fetchEnrollments()
-        // Actualizar el conteo de estudiantes para este curso
-        setCourseEnrollmentCounts(prev => ({
-          ...prev,
-          [courseId]: (prev[courseId] || 0) + 1
-        }))
       }
     } catch (error) {
       console.error('Error:', error)
@@ -256,10 +209,6 @@ export default function CoursesPage() {
     return enrollment.current_unit
   }
 
-  const getEnrolledStudentsCount = (courseId: string) => {
-    // Usar el conteo global de estudiantes por curso
-    return courseEnrollmentCounts[courseId] || 0
-  }
 
   if (loading) {
     return (
@@ -352,7 +301,7 @@ export default function CoursesPage() {
 
                   <CardContent className="relative z-10 space-y-4">
                     {/* Course Stats */}
-                    <div className="grid grid-cols-3 gap-4 text-center">
+                    <div className="grid grid-cols-2 gap-4 text-center">
                       <div className="flex flex-col items-center">
                         <Clock className="w-5 h-5 text-blue-600 mb-1" />
                         <span className="text-sm font-medium text-gray-900">{course.duration} min</span>
@@ -362,13 +311,6 @@ export default function CoursesPage() {
                         <BookOpen className="w-5 h-5 text-purple-600 mb-1" />
                         <span className="text-sm font-medium text-gray-900">{course.total_units}</span>
                         <span className="text-xs text-gray-500">{t('courseDetail.units')}</span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <Users className="w-5 h-5 text-green-600 mb-1" />
-                        <span className="text-sm font-medium text-gray-900">
-                          {getEnrolledStudentsCount(course.id)}
-                        </span>
-                        <span className="text-xs text-gray-500">{t('courses.students')}</span>
                       </div>
                     </div>
 

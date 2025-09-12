@@ -122,8 +122,8 @@
     "loading": "Loading courses...",
     "noEnrollments": "You are not enrolled in any courses yet.",
     "exploreButton": "Explore available courses",
-    "courseNotFound": "Can't find the course you're looking for?",
-    "contactDescription": "Our team is constantly developing new courses. Contact us for suggestions or specific requests.",
+    "courseNotFound": "Need help?",
+    "contactDescription": "Contact us if you need help.",
     "contactTeam": "Contact Team",
     "mock": {
       "course1": {
