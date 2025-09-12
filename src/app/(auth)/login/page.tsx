@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { AuthForm } from '@/components/auth/AuthForm'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BookOpen, Sparkles } from 'lucide-react'
@@ -7,6 +8,8 @@ import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function LoginPage() {
   const { t } = useLanguage()
+  const [isSignUp, setIsSignUp] = useState(false)
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center p-4">
       {/* Subtle Background Elements */}
@@ -28,18 +31,22 @@ export default function LoginPage() {
             </div>
           </div>
           
-          <h1 className="text-3xl font-light text-gray-900 mb-3 tracking-wide">{t('auth.loginTitle')}</h1>
+          <h1 className="text-3xl font-light text-gray-900 mb-3 tracking-wide">
+            {isSignUp ? t('auth.signupTitle') : t('auth.loginTitle')}
+          </h1>
         </div>
         
         <Card className="shadow-xl bg-white/80 backdrop-blur-sm border border-gray-200/50">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-gray-900 font-light tracking-wide">{t('auth.login')}</CardTitle>
+            <CardTitle className="text-2xl text-gray-900 font-light tracking-wide">
+              {isSignUp ? t('auth.signup') : t('auth.login')}
+            </CardTitle>
             <CardDescription className="text-gray-600">
-              {t('auth.loginSubtitle')}
+              {isSignUp ? t('auth.signupSubtitle') : t('auth.loginSubtitle')}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <AuthForm />
+            <AuthForm onModeChange={setIsSignUp} />
           </CardContent>
         </Card>
       </div>

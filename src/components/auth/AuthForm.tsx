@@ -9,7 +9,11 @@ import { toast } from 'sonner'
 
 const supabase = createClient()
 
-export function AuthForm() {
+interface AuthFormProps {
+  onModeChange?: (isSignUp: boolean) => void
+}
+
+export function AuthForm({ onModeChange }: AuthFormProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -91,7 +95,11 @@ export function AuthForm() {
         <div className="text-center">
           <button
             type="button"
-            onClick={() => setIsSignUp(!isSignUp)}
+            onClick={() => {
+              const newMode = !isSignUp
+              setIsSignUp(newMode)
+              onModeChange?.(newMode)
+            }}
             className="text-sm text-blue-600 hover:text-blue-800"
           >
             {isSignUp ? '¿Ya tienes una cuenta? Inicia sesión' : '¿No tienes una cuenta? Regístrate'}
