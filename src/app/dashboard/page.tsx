@@ -322,7 +322,7 @@ export default function DashboardPage() {
                           </div>
 
                           <div className="flex items-center justify-between text-sm text-gray-600">
-                            <span>{t('dashboard.currentUnit')}: {item.enrollment.current_unit} {t('dashboard.of')} {item.course.total_units}</span>
+                            <span>{t('dashboard.currentUnit')}: {Math.min(item.enrollment.current_unit, item.course.total_units)} {t('dashboard.of')} {item.course.total_units}</span>
                           </div>
 
                           <div className="flex space-x-3">

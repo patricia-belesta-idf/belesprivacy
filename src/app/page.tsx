@@ -361,6 +361,31 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Privacy Policy Section */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-full shadow-sm mb-6">
+            <Shield className="w-5 h-5 text-blue-600 mr-2" />
+            <span className="text-blue-700 font-medium">{t('privacySection.badge')}</span>
+          </div>
+          
+          <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4">
+            {t('privacySection.title')}
+          </h2>
+          
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            {t('privacySection.description')}
+          </p>
+          
+          <Link href="/privacy">
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200 px-8 py-3">
+              <Shield className="w-5 h-5 mr-2" />
+              {t('privacySection.button')}
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }

@@ -32,8 +32,8 @@
     },
     "legal": {
       "badge": "Requisito Legal",
-      "title": "Proteger los datos personales es crear confianza — Haz que la privacidad sea parte de tu trabajo diario",
-      "description": "En ID Finance, cuidar los datos personales significa proteger a nuestros clientes y compañeros. Este curso te ayuda a entender de forma sencilla qué hacer en cada situación, transformar los requisitos legales en acciones que aportan valor y seguridad a todo el equipo",
+      "title": "Proteger los datos personales es crear confianza — haz que la privacidad sea parte de tu trabajo diario",
+      "description": "En ID Finance, cuidar los datos personales significa proteger a nuestros clientes y compañeros. Este curso te ayuda a entender de forma sencilla qué hacer en cada situación y transformar los requisitos legales en acciones que aportan valor y seguridad a todo el equipo",
       "mandatory": {
         "title": "100% práctica",
         "description": "Ejemplos y soluciones reales para el trabajo en ID Finance"
@@ -373,5 +373,44 @@
     "continue": "Continuar",
     "noEnrolledCourses": "No tienes cursos inscritos",
     "startExploring": "Comienza explorando nuestros cursos y inscríbete en el que más te interese."
+  },
+  "privacySection": {
+    "badge": "Transparencia y Privacidad",
+    "title": "Tu privacidad es nuestra prioridad",
+    "description": "Conoce cómo protegemos y tratamos tus datos personales con total transparencia y cumplimiento normativo.",
+    "button": "Ver Política de Privacidad"
+  },
+  "privacy": {
+    "title": "Política de Privacidad",
+    "subtitle": "Transparente",
+    "description": "En BelesPrivacy, la protección de tus datos personales es nuestra prioridad. Descubre cómo cuidamos tu información con total transparencia y seguridad.",
+    "backToHome": "Volver al Inicio",
+    "needMoreInfo": "¿Necesitas más información?",
+    "teamDescription": "Nuestro equipo de protección de datos está aquí para ayudarte",
+    "lastUpdated": "Última actualización: Septiembre 2025",
+    "sections": {
+      "responsible": "Responsable",
+      "purposes": "Finalidades",
+      "data": "Datos",
+      "legalBasis": "Legitimación",
+      "retention": "Conservación",
+      "recipients": "Destinatarios",
+      "cookies": "Cookies",
+      "rights": "Derechos",
+      "security": "Seguridad",
+      "modifications": "Modificaciones"
+    },
+    "content": {
+      "responsible": "ID Finance Investments S.L.U., con CIF B66862442 y domicilio en Calle Tuset, 5, 3ª planta, 08006 Barcelona (España), es el responsable del tratamiento de los datos personales recabados en la plataforma.",
+      "purposes": "Los datos personales se recaban para gestionar el acceso a la plataforma, registrar la participación y progreso en la formación, atender solicitudes de soporte, remitir comunicaciones relativas a la formación y cumplir con obligaciones legales y de compliance interno. El tratamiento se basa en la ejecución de la relación contractual y en el interés legítimo de formar y sensibilizar al equipo en materia de protección de datos.",
+      "data": "Se recaban datos identificativos (correo electrónico corporativo), datos relativos al uso de la formación (progresos, respuestas y resultados en los módulos y actividades), y datos técnicos del acceso (logs, direcciones IP y cookies estrictamente necesarias para el funcionamiento seguro de la plataforma).",
+      "legalBasis": "La base jurídica para el tratamiento de los datos es la ejecución de la relación profesional y el cumplimiento de obligaciones legales relacionadas con la formación en protección de datos. En algunos casos, también podrá fundamentarse en el interés legítimo de la empresa.",
+      "retention": "Los datos se conservarán mientras sea necesario para las finalidades establecidas o durante el plazo exigido por la normativa vigente, y serán eliminados o anonimizados siguiendo protocolos seguros.",
+      "recipients": "No se comunicarán datos a terceros salvo por obligación legal. En determinados casos, podrán tratarse datos por proveedores tecnológicos esenciales (como Supabase para backend y autenticación). No se realizan transferencias internacionales fuera del Espacio Económico Europeo.",
+      "cookies": "La plataforma utiliza únicamente cookies técnicas y de preferencia estrictamente necesarias para garantizar un funcionamiento correcto y personalizar la experiencia de usuario. Cookies técnicas para gestionar la sesión de autenticación del usuario, basadas en el correo corporativo. Cookies de preferencia para almacenar la selección del idioma. No se usan cookies de terceros, cookies de analítica ni cookies publicitarias.",
+      "rights": "Puedes solicitar en cualquier momento el acceso, rectificación, supresión, limitación, oposición y portabilidad sobre tus datos enviando una solicitud detallada a dpd@moneyman.es o dpd@plazo.es, indicando tu identidad y el derecho que deseas ejercer. Tienes derecho a presentar reclamación ante la Agencia Española de Protección de Datos si consideras que tus derechos no han sido debidamente atendidos.",
+      "security": "Se aplican medidas técnicas y organizativas apropiadas para garantizar la confidencialidad, integridad y disponibilidad de los datos, incluyendo controles de acceso, cifrado y auditorías periódicas.",
+      "modifications": "ID Finance se reserva el derecho a modificar esta política para adaptarla a cambios normativos o técnicos, notificando las actualizaciones relevantes a través de la plataforma."
+    }
   }
 }

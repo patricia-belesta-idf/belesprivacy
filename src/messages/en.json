@@ -373,5 +373,44 @@
     "continue": "Continue",
     "noEnrolledCourses": "You have no enrolled courses",
     "startExploring": "Start by exploring our courses and enroll in the one that interests you most."
+  },
+  "privacySection": {
+    "badge": "Transparency and Privacy",
+    "title": "Your privacy is our priority",
+    "description": "Learn how we protect and handle your personal data with complete transparency and regulatory compliance.",
+    "button": "View Privacy Policy"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "Transparent",
+    "description": "At BelesPrivacy, protecting your personal data is our priority. Discover how we care for your information with complete transparency and security.",
+    "backToHome": "Back to Home",
+    "needMoreInfo": "Need more information?",
+    "teamDescription": "Our data protection team is here to help you",
+    "lastUpdated": "Last updated: September 2025",
+    "sections": {
+      "responsible": "Responsible",
+      "purposes": "Purposes",
+      "data": "Data",
+      "legalBasis": "Legal Basis",
+      "retention": "Retention",
+      "recipients": "Recipients",
+      "cookies": "Cookies",
+      "rights": "Rights",
+      "security": "Security",
+      "modifications": "Modifications"
+    },
+    "content": {
+      "responsible": "ID Finance Investments S.L.U., with CIF B66862442 and address at Calle Tuset, 5, 3rd floor, 08006 Barcelona (Spain), is responsible for the processing of personal data collected on the platform.",
+      "purposes": "Personal data is collected to manage platform access, record participation and progress in training, handle support requests, send training-related communications, and comply with legal obligations and internal compliance. Processing is based on the execution of the contractual relationship and the legitimate interest in training and raising awareness among the team regarding data protection.",
+      "data": "We collect identifying data (corporate email), data related to training use (progress, responses and results in modules and activities), and technical access data (logs, IP addresses and cookies strictly necessary for the secure operation of the platform).",
+      "legalBasis": "The legal basis for data processing is the execution of the professional relationship and compliance with legal obligations related to data protection training. In some cases, it may also be based on the company's legitimate interest.",
+      "retention": "Data will be retained for as long as necessary for the established purposes or during the period required by current regulations, and will be deleted or anonymized following secure protocols.",
+      "recipients": "Data will not be communicated to third parties except by legal obligation. In certain cases, data may be processed by essential technology providers (such as Supabase for backend and authentication). No international transfers are made outside the European Economic Area.",
+      "cookies": "The platform uses only technical and preference cookies strictly necessary to ensure proper operation and personalize the user experience. Technical cookies to manage user authentication session, based on corporate email. Preference cookies to store language selection. No third-party cookies, analytics cookies or advertising cookies are used.",
+      "rights": "You can request at any time access, rectification, deletion, limitation, opposition and portability of your data by sending a detailed request to dpd@moneyman.es or dpd@plazo.es, indicating your identity and the right you wish to exercise. You have the right to file a complaint with the Spanish Data Protection Agency if you consider that your rights have not been properly addressed.",
+      "security": "Appropriate technical and organizational measures are applied to ensure the confidentiality, integrity and availability of data, including access controls, encryption and periodic audits.",
+      "modifications": "ID Finance reserves the right to modify this policy to adapt it to regulatory or technical changes, notifying relevant updates through the platform."
+    }
   }
 }

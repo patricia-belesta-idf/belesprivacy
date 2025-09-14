@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createClient } from '@/lib/supabase'
 import { toast } from 'sonner'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const supabase = createClient()
 
@@ -14,6 +15,7 @@ interface AuthFormProps {
 }
 
 export function AuthForm({ onModeChange }: AuthFormProps) {
+  const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -35,7 +37,7 @@ export function AuthForm({ onModeChange }: AuthFormProps) {
         if (error) {
           toast.error(error.message)
         } else {
-          toast.success('¡Registro exitoso! Revisa tu email para confirmar tu cuenta.')
+          toast.success(t('auth.signupSuccess'))
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({
@@ -45,12 +47,12 @@ export function AuthForm({ onModeChange }: AuthFormProps) {
         if (error) {
           toast.error(error.message)
         } else {
-          toast.success('¡Bienvenido!')
+          toast.success(t('auth.loginSuccess'))
           window.location.href = '/dashboard'
         }
       }
     } catch (error) {
-      toast.error('Ocurrió un error inesperado')
+      toast.error(t('auth.authError'))
     } finally {
       setLoading(false)
     }
@@ -60,7 +62,7 @@ export function AuthForm({ onModeChange }: AuthFormProps) {
     <div className="w-full max-w-md mx-auto">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="email">Correo electrónico</Label>
+          <Label htmlFor="email">{t('auth.email')}</Label>
           <Input
             id="email"
             type="email"
@@ -71,7 +73,7 @@ export function AuthForm({ onModeChange }: AuthFormProps) {
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="password">Contraseña</Label>
+          <Label htmlFor="password">{t('auth.password')}</Label>
           <Input
             id="password"
             type="password"
@@ -85,10 +87,10 @@ export function AuthForm({ onModeChange }: AuthFormProps) {
           {loading ? (
             <>
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-              {isSignUp ? 'Registrando...' : 'Iniciando sesión...'}
+              {isSignUp ? t('auth.signingUp') : t('auth.loggingIn')}
             </>
           ) : (
-            isSignUp ? 'Registrarse' : 'Iniciar Sesión'
+            isSignUp ? t('auth.signup') : t('auth.login')
           )}
         </Button>
 
@@ -102,7 +104,7 @@ export function AuthForm({ onModeChange }: AuthFormProps) {
             }}
             className="text-sm text-blue-600 hover:text-blue-800"
           >
-            {isSignUp ? '¿Ya tienes una cuenta? Inicia sesión' : '¿No tienes una cuenta? Regístrate'}
+            {isSignUp ? t('auth.hasAccount') : t('auth.noAccount')}
           </button>
         </div>
       </form>

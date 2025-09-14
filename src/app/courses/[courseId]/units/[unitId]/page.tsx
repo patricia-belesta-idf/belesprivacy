@@ -300,7 +300,11 @@ export default function UnitPage() {
 
         // Add current unit to completed units
         const updatedCompletedUnits = [...existingCompletedUnits, unit.id]
-        const currentUnit = Math.max(enrollmentData.current_unit || 1, unit.order + 1)
+        // Don't exceed total units - if this is the last unit, keep current_unit as the last unit
+        const currentUnit = Math.min(
+          Math.max(enrollmentData.current_unit || 1, unit.order + 1),
+          course.total_units
+        )
         
         console.log(`Updated completed units: ${updatedCompletedUnits.length}/${course.total_units}`)
         console.log(`Current unit: ${currentUnit}`)
