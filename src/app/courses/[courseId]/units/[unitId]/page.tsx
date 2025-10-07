@@ -910,12 +910,9 @@ export default function UnitPage() {
           isOpen={showCompletionModal}
           onClose={() => setShowCompletionModal(false)}
           courseTitle={course.title}
-          courseName={course.title}
-          userName={user.email?.split('@')[0] || 'Usuario'}
           completionDate={new Date()}
           finalScore={quizScore || 0}
           totalUnits={course.total_units}
-          courseId={course.id}
         />
       )}
     </div>

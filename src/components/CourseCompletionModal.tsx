@@ -11,24 +11,18 @@ interface CourseCompletionModalProps {
   isOpen: boolean
   onClose: () => void
   courseTitle: string
-  courseName: string
-  userName: string
   completionDate: Date
   finalScore: number
   totalUnits: number
-  courseId: string
 }
 
 export function CourseCompletionModal({
   isOpen,
   onClose,
   courseTitle,
-  courseName,
-  userName,
   completionDate,
   finalScore,
-  totalUnits,
-  courseId
+  totalUnits
 }: CourseCompletionModalProps) {
   const { t } = useLanguage()
   const hasTriggeredConfetti = useRef(false)
@@ -152,7 +146,7 @@ export function CourseCompletionModal({
                 {/* Motivational Message */}
                 <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-4 mt-4">
                   <p className="text-sm text-white/90 italic">
-                    "{t('completion.motivationalMessage')}"
+                    &ldquo;{t('completion.motivationalMessage')}&rdquo;
                   </p>
                 </div>
               </div>
