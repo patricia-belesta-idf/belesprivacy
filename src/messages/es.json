@@ -226,7 +226,7 @@
     "videoProgress": "Progreso del Video",
     "completed": "Completado"
   },
-  "dashboard": {
+  "quiz": {
     "welcome": "¡Bienvenido de vuelta!",
     "recentActivity": "Actividad Reciente",
     "courseProgress": "Progreso del Curso",
@@ -411,6 +411,55 @@
       "rights": "Puedes solicitar en cualquier momento el acceso, rectificación, supresión, limitación, oposición y portabilidad sobre tus datos enviando una solicitud detallada a dpd@moneyman.es o dpd@plazo.es, indicando tu identidad y el derecho que deseas ejercer. Tienes derecho a presentar reclamación ante la Agencia Española de Protección de Datos si consideras que tus derechos no han sido debidamente atendidos.",
       "security": "Se aplican medidas técnicas y organizativas apropiadas para garantizar la confidencialidad, integridad y disponibilidad de los datos, incluyendo controles de acceso, cifrado y auditorías periódicas.",
       "modifications": "ID Finance se reserva el derecho a modificar esta política para adaptarla a cambios normativos o técnicos, notificando las actualizaciones relevantes a través de la plataforma."
+    }
+  },
+  "legalSection": {
+    "badge": "Transparencia Legal",
+    "title": "Aviso Legal y Cookies",
+    "description": "Conoce los términos de uso y la política de cookies de nuestra plataforma.",
+    "button": "Ver Aviso Legal"
+  },
+  "legal": {
+    "badge": "Aviso Legal",
+    "title": "Aviso Legal",
+    "subtitle": "y Cookies",
+    "description": "Información sobre el uso de la plataforma BelesPrivacy y política de cookies.",
+    "backToHome": "Volver al Inicio",
+    "lastUpdated": "Última actualización: Septiembre 2025",
+    "badges": {
+      "compliant": "Cumplimiento Legal",
+      "secure": "Acceso Seguro",
+      "transparent": "Transparente"
+    },
+    "sections": {
+      "cookies": "Aviso de Cookies",
+      "legalNotice": "Aviso Legal",
+      "acceptance": "Aceptación",
+      "access": "Acceso y Registro",
+      "modifications": "Modificaciones",
+      "properUse": "Uso Adecuado",
+      "liability": "Limitación de Responsabilidad",
+      "intellectualProperty": "Propiedad Intelectual",
+      "jurisdiction": "Legislación y Jurisdicción"
+    },
+    "content": {
+      "cookies": "Esta aplicación utiliza cookies técnicas y de preferencia estrictamente necesarias para garantizar su correcto funcionamiento y personalizar la experiencia del usuario. No se utilizan cookies de terceros, analíticas ni publicitarias.\n\nLas cookies técnicas son necesarias para gestionar la sesión de autenticación del usuario mediante su correo corporativo, permitiendo el acceso seguro a los servicios.\n\nLas cookies de preferencia almacenan la selección del idioma elegido por el usuario, mejorando su experiencia de navegación.\n\nEsta política de cookies se revisará periódicamente para garantizar el cumplimiento normativo continuo.",
+      "legalNotice": "El presente Aviso Legal regula el acceso y utilización del sitio web y aplicación móvil BelesPrivacy (en adelante, la \"Plataforma\"), gestionada por la entidad titular ID Finance Investments S.L.U. con CIF B66862442, con domicilio social en Calle Tuset, 5, 3ª planta, 08006 Barcelona, España, y con correos electrónicos de contacto info@moneyman.es y info@plazo.es (en adelante, el \"Responsable\").\n\nEl acceso y uso de la Plataforma está estrictamente reservado a empleados autorizados de IDF Investments que deben hacer un uso conforme a las políticas internas y condiciones que se detallan a continuación.",
+      "acceptance": "El acceso y la utilización de la Plataforma requiere la aceptación expresa del presente Aviso Legal y el compromiso de cumplimiento de las políticas internas de la empresa relativas a seguridad, privacidad y uso adecuado.\n\nLa Plataforma no está accesible a usuarios externos ni al público en general.\n\nEl uso indebido o el incumplimiento de estas condiciones puede derivar en restricciones o sanciones conforme a la normativa laboral vigente.",
+      "access": "El acceso a la Plataforma solo será posible mediante credenciales corporativas asignadas a cada empleado. No está permitido compartir estas credenciales ni permitir accesos no autorizados.\n\nEl usuario se compromete a usar la Plataforma únicamente para llevar a cabo las formaciones relacionadas con su actividad laboral.",
+      "modifications": "IDF Investments se reserva el derecho a modificar este Aviso Legal y las condiciones de la Plataforma, notificando a los empleados dichas modificaciones a través de la propia Plataforma.\n\nEl uso continuado implica aceptación de dichas modificaciones.",
+      "properUse": "El empleado se compromete a no realizar actividades ilícitas, manipular o dañar la Plataforma ni interferir en el derecho de otros empleados a realizar las formaciones.\n\nDeberá preservar la confidencialidad de su acceso y notificar incidentes o problemas detectados.",
+      "liability": "IDF Investments se esfuerza por garantizar la disponibilidad y correcto funcionamiento de la Plataforma, pero no responde por fallos, interrupciones o daños derivados de causas ajenas a su control o del uso inadecuado por parte de los usuarios.",
+      "intellectualProperty": "Los contenidos formativos y materiales de la Plataforma son propiedad de IDF Investments o sus licenciantes, y su reproducción o distribución no autorizada está prohibida.",
+      "jurisdiction": "Este Aviso Legal se rige por la legislación española, sometiéndose cualquier controversia a los Juzgados y Tribunales de Barcelona, salvo disposición legal en contrario."
+    },
+    "contact": {
+      "title": "Información de Contacto",
+      "description": "Para consultas sobre este aviso legal",
+      "emailLabel": "Email Principal",
+      "alternativeEmailLabel": "Email Alternativo",
+      "entityLabel": "Entidad",
+      "addressLabel": "Dirección"
     }
   }
 }

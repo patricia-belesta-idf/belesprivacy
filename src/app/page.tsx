@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { BookOpen, Shield, Video, Award, Users, Clock, CheckCircle, Star, Play, ArrowRight, Sparkles, Zap, Target, Globe, Lock } from 'lucide-react'
+import { BookOpen, Shield, Video, Award, Users, Clock, CheckCircle, Star, Play, ArrowRight, Sparkles, Zap, Target, Globe, Lock, FileText } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import SplashCursor from '@/components/ui/SplashCursor'
 
@@ -380,12 +380,21 @@ export default function HomePage() {
             {t('privacySection.description')}
           </p>
           
-          <Link href="/privacy">
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200 px-8 py-3">
-              <Shield className="w-5 h-5 mr-2" />
-              {t('privacySection.button')}
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link href="/privacy">
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200 px-8 py-3">
+                <Shield className="w-5 h-5 mr-2" />
+                {t('privacySection.button')}
+              </Button>
+            </Link>
+            
+            <Link href="/legal">
+              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-md hover:shadow-lg transition-all duration-200 px-8 py-3">
+                <FileText className="w-5 h-5 mr-2" />
+                {t('legalSection.button')}
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>

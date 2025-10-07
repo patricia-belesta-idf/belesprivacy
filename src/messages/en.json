@@ -226,7 +226,7 @@
     "videoProgress": "Video Progress",
     "completed": "Completed"
   },
-  "dashboard": {
+  "quiz": {
     "welcome": "Welcome back!",
     "recentActivity": "Recent Activity",
     "courseProgress": "Course Progress",
@@ -411,6 +411,55 @@
       "rights": "You can request at any time access, rectification, deletion, limitation, opposition and portability of your data by sending a detailed request to dpd@moneyman.es or dpd@plazo.es, indicating your identity and the right you wish to exercise. You have the right to file a complaint with the Spanish Data Protection Agency if you consider that your rights have not been properly addressed.",
       "security": "Appropriate technical and organizational measures are applied to ensure the confidentiality, integrity and availability of data, including access controls, encryption and periodic audits.",
       "modifications": "ID Finance reserves the right to modify this policy to adapt it to regulatory or technical changes, notifying relevant updates through the platform."
+    }
+  },
+  "legalSection": {
+    "badge": "Legal Transparency",
+    "title": "Legal Notice and Cookies",
+    "description": "Learn about the terms of use and cookie policy of our platform.",
+    "button": "View Legal Notice"
+  },
+  "legal": {
+    "badge": "Legal Notice",
+    "title": "Legal Notice",
+    "subtitle": "and Cookies",
+    "description": "Information about the use of the BelesPrivacy platform and cookie policy.",
+    "backToHome": "Back to Home",
+    "lastUpdated": "Last updated: September 2025",
+    "badges": {
+      "compliant": "Legal Compliance",
+      "secure": "Secure Access",
+      "transparent": "Transparent"
+    },
+    "sections": {
+      "cookies": "Cookie Notice",
+      "legalNotice": "Legal Notice",
+      "acceptance": "Acceptance",
+      "access": "Access and Registration",
+      "modifications": "Modifications",
+      "properUse": "Proper Use",
+      "liability": "Limitation of Liability",
+      "intellectualProperty": "Intellectual Property",
+      "jurisdiction": "Legislation and Jurisdiction"
+    },
+    "content": {
+      "cookies": "This application uses technical and preference cookies strictly necessary to ensure its proper functioning and personalize the user experience. No third-party, analytics or advertising cookies are used.\n\nTechnical cookies are necessary to manage user authentication sessions through their corporate email, allowing secure access to services.\n\nPreference cookies store the language selected by the user, improving their browsing experience.\n\nThis cookie policy will be reviewed periodically to ensure continued regulatory compliance.",
+      "legalNotice": "This Legal Notice governs access to and use of the BelesPrivacy website and mobile application (hereinafter, the \"Platform\"), managed by ID Finance Investments S.L.U. with CIF B66862442, with registered office at Calle Tuset, 5, 3rd floor, 08006 Barcelona, Spain, and contact emails info@moneyman.es and info@plazo.es (hereinafter, the \"Controller\").\n\nAccess to and use of the Platform is strictly reserved for authorized employees of IDF Investments who must use it in accordance with internal policies and conditions detailed below.",
+      "acceptance": "Access to and use of the Platform requires express acceptance of this Legal Notice and commitment to comply with company internal policies regarding security, privacy and proper use.\n\nThe Platform is not accessible to external users or the general public.\n\nMisuse or non-compliance with these conditions may result in restrictions or sanctions in accordance with current labor regulations.",
+      "access": "Access to the Platform will only be possible through corporate credentials assigned to each employee. Sharing these credentials or allowing unauthorized access is not permitted.\n\nThe user agrees to use the Platform only to carry out training related to their work activity.",
+      "modifications": "IDF Investments reserves the right to modify this Legal Notice and Platform conditions, notifying employees of such modifications through the Platform itself.\n\nContinued use implies acceptance of such modifications.",
+      "properUse": "The employee agrees not to engage in illegal activities, manipulate or damage the Platform, or interfere with the right of other employees to complete their training.\n\nThey must preserve the confidentiality of their access and report any incidents or problems detected.",
+      "liability": "IDF Investments strives to ensure the availability and proper functioning of the Platform, but is not responsible for failures, interruptions or damages arising from causes beyond its control or improper use by users.",
+      "intellectualProperty": "The training content and materials on the Platform are the property of IDF Investments or its licensors, and unauthorized reproduction or distribution is prohibited.",
+      "jurisdiction": "This Legal Notice is governed by Spanish legislation, with any dispute subject to the Courts and Tribunals of Barcelona, unless otherwise provided by law."
+    },
+    "contact": {
+      "title": "Contact Information",
+      "description": "For inquiries about this legal notice",
+      "emailLabel": "Primary Email",
+      "alternativeEmailLabel": "Alternative Email",
+      "entityLabel": "Entity",
+      "addressLabel": "Address"
     }
   }
 }
