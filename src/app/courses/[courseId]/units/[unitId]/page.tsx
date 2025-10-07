@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BookOpen, ArrowLeft, ArrowRight, Check, Video, RefreshCw, CheckCircle } from 'lucide-react'
 import { AntiCheatVideoPlayer } from "@/components/video/AntiCheatVideoPlayer"
+import { CourseCompletionModal } from '@/components/CourseCompletionModal'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { createClient } from '@/lib/supabase'
@@ -32,6 +33,7 @@ export default function UnitPage() {
   const [videoWatched, setVideoWatched] = useState(false)
   const [submittingQuiz, setSubmittingQuiz] = useState(false)
   const [canRetakeQuiz, setCanRetakeQuiz] = useState(false)
+  const [showCompletionModal, setShowCompletionModal] = useState(false)
 
   useEffect(() => {
     if (params.courseId && params.unitId) {
@@ -208,6 +210,13 @@ export default function UnitPage() {
       if (score >= quiz.passing_score) {
         console.log('Quiz passed, calling markUnitAsCompleted...')
         await markUnitAsCompleted()
+        
+        // Check if this is the last unit and show completion modal
+        if (isLastUnit()) {
+          setTimeout(() => {
+            setShowCompletionModal(true)
+          }, 1000)
+        }
         
         // Debug enrollment status after marking unit as completed
         setTimeout(() => {
@@ -644,11 +653,14 @@ export default function UnitPage() {
                     <p className="text-sm text-blue-800 font-medium">
                       🎯 {getCourseCompletionMessage()}
                     </p>
-                    
+                  </div>
+                )}
 
                 {/* Mensaje especial para la última unidad cuando no has visto el video */}
                 {/* Removido el aviso de "última unidad" para una experiencia más limpia */}
+              </CardHeader>
 
+              <CardContent>
                 {!quiz && (
                   <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <div className="text-center">
@@ -891,6 +903,21 @@ export default function UnitPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Course Completion Modal */}
+      {showCompletionModal && course && user && (
+        <CourseCompletionModal
+          isOpen={showCompletionModal}
+          onClose={() => setShowCompletionModal(false)}
+          courseTitle={course.title}
+          courseName={course.title}
+          userName={user.email?.split('@')[0] || 'Usuario'}
+          completionDate={new Date()}
+          finalScore={quizScore || 0}
+          totalUnits={course.total_units}
+          courseId={course.id}
+        />
+      )}
     </div>
   )
 }

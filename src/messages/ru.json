@@ -354,6 +354,24 @@
     "courseCompletedMessage": "Вы успешно завершили \"{courseTitle}\"",
     "congratulations": "Поздравляем с вашей преданностью и усилиями!"
   },
+  "completion": {
+    "congratulations": "ПОЗДРАВЛЯЕМ!",
+    "subtitle": "Вы успешно завершили курс",
+    "courseCompleted": "Курс Завершен",
+    "unitsCompleted": "Модули Завершены",
+    "finalScore": "Итоговый Балл",
+    "completedOn": "Завершено",
+    "completionDate": "Дата Завершения",
+    "motivationalMessage": "Ваша приверженность защите данных и конфиденциальности имеет значение. Продолжайте!",
+    "viewCertificate": "Посмотреть Сертификат",
+    "downloadCertificate": "Скачать Сертификат",
+    "backToDashboard": "Вернуться к Панели",
+    "yourCertificate": "Ваш Сертификат",
+    "backToSummary": "Вернуться к Резюме",
+    "certificateOfCompletion": "Сертификат о Завершении",
+    "thisIsToCertify": "Этот сертификат подтверждает, что",
+    "hasSuccessfullyCompleted": "успешно завершил курс"
+  },
   "dashboard": {
     "loading": "Загрузка Панели",
     "yourProgress": "Ваш Прогресс",

@@ -354,6 +354,24 @@
     "courseCompletedMessage": "Has completado exitosamente \"{courseTitle}\"",
     "congratulations": "¡Felicitaciones por tu dedicación y esfuerzo!"
   },
+  "completion": {
+    "congratulations": "¡FELICITACIONES!",
+    "subtitle": "Has completado el curso exitosamente",
+    "courseCompleted": "Curso Completado",
+    "unitsCompleted": "Unidades Completadas",
+    "finalScore": "Puntuación Final",
+    "completedOn": "Completado el",
+    "completionDate": "Fecha de Finalización",
+    "motivationalMessage": "Tu compromiso con la protección de datos y la privacidad marca la diferencia. ¡Sigue adelante!",
+    "viewCertificate": "Ver Certificado",
+    "downloadCertificate": "Descargar Certificado",
+    "backToDashboard": "Volver al Dashboard",
+    "yourCertificate": "Tu Certificado",
+    "backToSummary": "Volver al Resumen",
+    "certificateOfCompletion": "Certificado de Finalización",
+    "thisIsToCertify": "Este certificado acredita que",
+    "hasSuccessfullyCompleted": "ha completado exitosamente el curso"
+  },
   "dashboard": {
     "loading": "Cargando Dashboard",
     "yourProgress": "Tu Progreso",
