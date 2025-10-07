@@ -645,30 +645,6 @@ export default function UnitPage() {
                       🎯 {getCourseCompletionMessage()}
                     </p>
                     
-                    {/* Botón de debug temporal */}
-                    <button
-                      onClick={debugEnrollmentStatus}
-                      className="mt-2 px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded border"
-                    >
-                      🔍 Debug Enrollment
-                    </button>
-                  </div>
-                )}
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {!videoWatched && (
-                  <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <Video className="h-5 w-5 text-yellow-600" />
-                      <span className="text-yellow-800 font-medium">
-                        {t('test.firstWatchVideo')}
-                      </span>
-                    </div>
-                    <p className="text-yellow-700 text-sm mt-1">
-                      {t('test.goToVideoTab')}
-                    </p>
-                  </div>
-                )}
 
                 {/* Mensaje especial para la última unidad cuando no has visto el video */}
                 {/* Removido el aviso de "última unidad" para una experiencia más limpia */}
