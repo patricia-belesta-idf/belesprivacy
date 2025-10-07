@@ -415,15 +415,21 @@
   },
   "legalSection": {
     "badge": "Legal Transparency",
-    "title": "Legal Notice and Cookies",
-    "description": "Learn about the terms of use and cookie policy of our platform.",
+    "title": "Legal Notice",
+    "description": "Learn about the terms of use of our platform.",
     "button": "View Legal Notice"
+  },
+  "cookiesSection": {
+    "badge": "Cookie Policy",
+    "title": "Cookie Notice",
+    "description": "Information about cookie usage on our platform.",
+    "button": "View Cookie Policy"
   },
   "legal": {
     "badge": "Legal Notice",
     "title": "Legal Notice",
-    "subtitle": "and Cookies",
-    "description": "Information about the use of the BelesPrivacy platform and cookie policy.",
+    "subtitle": "of the Platform",
+    "description": "Information about the use of the BelesPrivacy platform.",
     "backToHome": "Back to Home",
     "lastUpdated": "Last updated: September 2025",
     "badges": {
@@ -432,7 +438,6 @@
       "transparent": "Transparent"
     },
     "sections": {
-      "cookies": "Cookie Notice",
       "legalNotice": "Legal Notice",
       "acceptance": "Acceptance",
       "access": "Access and Registration",
@@ -443,7 +448,6 @@
       "jurisdiction": "Legislation and Jurisdiction"
     },
     "content": {
-      "cookies": "This application uses technical and preference cookies strictly necessary to ensure its proper functioning and personalize the user experience. No third-party, analytics or advertising cookies are used.\n\nTechnical cookies are necessary to manage user authentication sessions through their corporate email, allowing secure access to services.\n\nPreference cookies store the language selected by the user, improving their browsing experience.\n\nThis cookie policy will be reviewed periodically to ensure continued regulatory compliance.",
       "legalNotice": "This Legal Notice governs access to and use of the BelesPrivacy website and mobile application (hereinafter, the \"Platform\"), managed by ID Finance Investments S.L.U. with CIF B66862442, with registered office at Calle Tuset, 5, 3rd floor, 08006 Barcelona, Spain, and contact emails info@moneyman.es and info@plazo.es (hereinafter, the \"Controller\").\n\nAccess to and use of the Platform is strictly reserved for authorized employees of IDF Investments who must use it in accordance with internal policies and conditions detailed below.",
       "acceptance": "Access to and use of the Platform requires express acceptance of this Legal Notice and commitment to comply with company internal policies regarding security, privacy and proper use.\n\nThe Platform is not accessible to external users or the general public.\n\nMisuse or non-compliance with these conditions may result in restrictions or sanctions in accordance with current labor regulations.",
       "access": "Access to the Platform will only be possible through corporate credentials assigned to each employee. Sharing these credentials or allowing unauthorized access is not permitted.\n\nThe user agrees to use the Platform only to carry out training related to their work activity.",
@@ -460,6 +464,35 @@
       "alternativeEmailLabel": "Alternative Email",
       "entityLabel": "Entity",
       "addressLabel": "Address"
+    }
+  },
+  "cookies": {
+    "badge": "Cookie Policy",
+    "title": "Cookie Notice",
+    "subtitle": "of BelesPrivacy",
+    "description": "Transparent information about cookie usage on our training platform.",
+    "backToHome": "Back to Home",
+    "lastUpdated": "Last updated: September 2025",
+    "badges": {
+      "essential": "Only Essential",
+      "secure": "Secure",
+      "noTracking": "No Tracking"
+    },
+    "sections": {
+      "whatAreCookies": "What are Cookies?",
+      "technicalCookies": "Technical Cookies",
+      "preferenceCookies": "Preference Cookies",
+      "whatWeDontUse": "What we DON'T use",
+      "cookieManagement": "Cookie Management",
+      "policyUpdates": "Policy Updates"
+    },
+    "content": {
+      "whatAreCookies": "Cookies are small text files that are stored on your device when you visit a website. These files allow the website to recognize your device and remember information about your visit.\n\nAt BelesPrivacy, we use cookies responsibly and transparently, complying with all applicable data protection regulations.",
+      "technicalCookies": "Technical cookies are strictly necessary for the platform to function. These cookies:\n\n• Manage user authentication sessions through their corporate email\n• Allow secure access to platform services\n• Guarantee basic system functionality\n• Are essential for data security\n\nWithout these cookies, the platform could not function properly.",
+      "preferenceCookies": "Preference cookies store your choices to improve your experience:\n\n• Save your language selection (Spanish, English or Russian)\n• Maintain your display preferences\n• Personalize your browsing experience\n\nThese cookies help us offer you a more comfortable experience tailored to your needs.",
+      "whatWeDontUse": "At BelesPrivacy we DO NOT use:\n\n❌ Third-party cookies\n❌ Analytics or tracking cookies\n❌ Advertising cookies\n❌ Social media cookies\n❌ Profiling cookies\n\nYour privacy is our priority. We do not share information with third parties nor track your activity outside our platform.",
+      "cookieManagement": "You can manage cookies from your browser settings:\n\n• Chrome: Settings > Privacy and security > Cookies\n• Firefox: Options > Privacy and security\n• Safari: Preferences > Privacy\n• Edge: Settings > Cookies and permissions\n\nPlease note that disabling technical cookies may affect platform functionality.",
+      "policyUpdates": "This cookie policy is reviewed periodically to ensure continued regulatory compliance.\n\nAny significant changes will be notified through the platform and the last modification date will be updated.\n\nIf you have questions about our cookie policy, contact our data protection team."
     }
   }
 }

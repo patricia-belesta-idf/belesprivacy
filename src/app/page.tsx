@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { BookOpen, Shield, Video, Award, Users, Clock, CheckCircle, Star, Play, ArrowRight, Sparkles, Zap, Target, Globe, Lock, FileText } from 'lucide-react'
+import { BookOpen, Shield, Video, Award, Users, Clock, CheckCircle, Star, Play, ArrowRight, Sparkles, Zap, Target, Globe, Lock, FileText, Cookie } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 import SplashCursor from '@/components/ui/SplashCursor'
 
@@ -392,6 +392,13 @@ export default function HomePage() {
               <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-md hover:shadow-lg transition-all duration-200 px-8 py-3">
                 <FileText className="w-5 h-5 mr-2" />
                 {t('legalSection.button')}
+              </Button>
+            </Link>
+            
+            <Link href="/cookies">
+              <Button className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-md hover:shadow-lg transition-all duration-200 px-8 py-3">
+                <Cookie className="w-5 h-5 mr-2" />
+                {t('cookiesSection.button')}
               </Button>
             </Link>
           </div>

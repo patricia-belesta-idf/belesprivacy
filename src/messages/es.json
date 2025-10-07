@@ -415,15 +415,21 @@
   },
   "legalSection": {
     "badge": "Transparencia Legal",
-    "title": "Aviso Legal y Cookies",
-    "description": "Conoce los términos de uso y la política de cookies de nuestra plataforma.",
+    "title": "Aviso Legal",
+    "description": "Conoce los términos de uso de nuestra plataforma.",
     "button": "Ver Aviso Legal"
+  },
+  "cookiesSection": {
+    "badge": "Política de Cookies",
+    "title": "Aviso de Cookies",
+    "description": "Información sobre el uso de cookies en nuestra plataforma.",
+    "button": "Ver Política de Cookies"
   },
   "legal": {
     "badge": "Aviso Legal",
     "title": "Aviso Legal",
-    "subtitle": "y Cookies",
-    "description": "Información sobre el uso de la plataforma BelesPrivacy y política de cookies.",
+    "subtitle": "de la Plataforma",
+    "description": "Información sobre el uso de la plataforma BelesPrivacy.",
     "backToHome": "Volver al Inicio",
     "lastUpdated": "Última actualización: Septiembre 2025",
     "badges": {
@@ -432,7 +438,6 @@
       "transparent": "Transparente"
     },
     "sections": {
-      "cookies": "Aviso de Cookies",
       "legalNotice": "Aviso Legal",
       "acceptance": "Aceptación",
       "access": "Acceso y Registro",
@@ -443,7 +448,6 @@
       "jurisdiction": "Legislación y Jurisdicción"
     },
     "content": {
-      "cookies": "Esta aplicación utiliza cookies técnicas y de preferencia estrictamente necesarias para garantizar su correcto funcionamiento y personalizar la experiencia del usuario. No se utilizan cookies de terceros, analíticas ni publicitarias.\n\nLas cookies técnicas son necesarias para gestionar la sesión de autenticación del usuario mediante su correo corporativo, permitiendo el acceso seguro a los servicios.\n\nLas cookies de preferencia almacenan la selección del idioma elegido por el usuario, mejorando su experiencia de navegación.\n\nEsta política de cookies se revisará periódicamente para garantizar el cumplimiento normativo continuo.",
       "legalNotice": "El presente Aviso Legal regula el acceso y utilización del sitio web y aplicación móvil BelesPrivacy (en adelante, la \"Plataforma\"), gestionada por la entidad titular ID Finance Investments S.L.U. con CIF B66862442, con domicilio social en Calle Tuset, 5, 3ª planta, 08006 Barcelona, España, y con correos electrónicos de contacto info@moneyman.es y info@plazo.es (en adelante, el \"Responsable\").\n\nEl acceso y uso de la Plataforma está estrictamente reservado a empleados autorizados de IDF Investments que deben hacer un uso conforme a las políticas internas y condiciones que se detallan a continuación.",
       "acceptance": "El acceso y la utilización de la Plataforma requiere la aceptación expresa del presente Aviso Legal y el compromiso de cumplimiento de las políticas internas de la empresa relativas a seguridad, privacidad y uso adecuado.\n\nLa Plataforma no está accesible a usuarios externos ni al público en general.\n\nEl uso indebido o el incumplimiento de estas condiciones puede derivar en restricciones o sanciones conforme a la normativa laboral vigente.",
       "access": "El acceso a la Plataforma solo será posible mediante credenciales corporativas asignadas a cada empleado. No está permitido compartir estas credenciales ni permitir accesos no autorizados.\n\nEl usuario se compromete a usar la Plataforma únicamente para llevar a cabo las formaciones relacionadas con su actividad laboral.",
@@ -460,6 +464,35 @@
       "alternativeEmailLabel": "Email Alternativo",
       "entityLabel": "Entidad",
       "addressLabel": "Dirección"
+    }
+  },
+  "cookies": {
+    "badge": "Política de Cookies",
+    "title": "Aviso de Cookies",
+    "subtitle": "de BelesPrivacy",
+    "description": "Información transparente sobre el uso de cookies en nuestra plataforma de formación.",
+    "backToHome": "Volver al Inicio",
+    "lastUpdated": "Última actualización: Septiembre 2025",
+    "badges": {
+      "essential": "Solo Esenciales",
+      "secure": "Seguras",
+      "noTracking": "Sin Rastreo"
+    },
+    "sections": {
+      "whatAreCookies": "¿Qué son las Cookies?",
+      "technicalCookies": "Cookies Técnicas",
+      "preferenceCookies": "Cookies de Preferencia",
+      "whatWeDontUse": "Lo que NO usamos",
+      "cookieManagement": "Gestión de Cookies",
+      "policyUpdates": "Actualizaciones"
+    },
+    "content": {
+      "whatAreCookies": "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Estos archivos permiten que el sitio web reconozca tu dispositivo y recuerde información sobre tu visita.\n\nEn BelesPrivacy, utilizamos cookies de manera responsable y transparente, cumpliendo con todas las normativas aplicables de protección de datos.",
+      "technicalCookies": "Las cookies técnicas son estrictamente necesarias para el funcionamiento de la plataforma. Estas cookies:\n\n• Gestionan la sesión de autenticación del usuario mediante su correo corporativo\n• Permiten el acceso seguro a los servicios de la plataforma\n• Garantizan la funcionalidad básica del sistema\n• Son esenciales para la seguridad de tus datos\n\nSin estas cookies, la plataforma no podría funcionar correctamente.",
+      "preferenceCookies": "Las cookies de preferencia almacenan tus elecciones para mejorar tu experiencia:\n\n• Guardan tu selección de idioma (Español, Inglés o Ruso)\n• Mantienen tus preferencias de visualización\n• Personalizan tu experiencia de navegación\n\nEstas cookies nos ayudan a ofrecerte una experiencia más cómoda y adaptada a tus necesidades.",
+      "whatWeDontUse": "En BelesPrivacy NO utilizamos:\n\n❌ Cookies de terceros\n❌ Cookies analíticas o de seguimiento\n❌ Cookies publicitarias\n❌ Cookies de redes sociales\n❌ Cookies de perfilado\n\nTu privacidad es nuestra prioridad. No compartimos información con terceros ni rastreamos tu actividad fuera de nuestra plataforma.",
+      "cookieManagement": "Puedes gestionar las cookies desde la configuración de tu navegador:\n\n• Chrome: Configuración > Privacidad y seguridad > Cookies\n• Firefox: Opciones > Privacidad y seguridad\n• Safari: Preferencias > Privacidad\n• Edge: Configuración > Cookies y permisos\n\nTen en cuenta que deshabilitar las cookies técnicas puede afectar el funcionamiento de la plataforma.",
+      "policyUpdates": "Esta política de cookies se revisa periódicamente para garantizar el cumplimiento normativo continuo.\n\nCualquier cambio significativo será notificado a través de la plataforma y se actualizará la fecha de última modificación.\n\nSi tienes dudas sobre nuestra política de cookies, contacta con nuestro equipo de protección de datos."
     }
   }
 }

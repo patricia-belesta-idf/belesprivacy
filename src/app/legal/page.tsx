@@ -18,12 +18,6 @@ export default function LegalNoticePage() {
 
   const sections = [
     {
-      id: 'cookies',
-      title: t('legal.sections.cookies'),
-      icon: <Eye className="w-6 h-6" />,
-      content: t('legal.content.cookies')
-    },
-    {
       id: 'legal-notice',
       title: t('legal.sections.legalNotice'),
       icon: <Scale className="w-6 h-6" />,
@@ -138,7 +132,7 @@ export default function LegalNoticePage() {
 
           {/* Interactive Navigation */}
           <div className="mb-12">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {sections.map((section, index) => (
                 <button
                   key={section.id}
