@@ -514,5 +514,23 @@
       "cookieManagement": "Puedes gestionar las cookies desde la configuración de tu navegador:\n\n• Chrome: Configuración > Privacidad y seguridad > Cookies\n• Firefox: Opciones > Privacidad y seguridad\n• Safari: Preferencias > Privacidad\n• Edge: Configuración > Cookies y permisos\n\nTen en cuenta que deshabilitar las cookies técnicas puede afectar el funcionamiento de la plataforma.",
       "policyUpdates": "Esta política de cookies se revisa periódicamente para garantizar el cumplimiento normativo continuo.\n\nCualquier cambio significativo será notificado a través de la plataforma y se actualizará la fecha de última modificación.\n\nSi tienes dudas sobre nuestra política de cookies, contacta con nuestro equipo de protección de datos."
     }
+  },
+  "author": {
+    "badge": "Sobre la autora",
+    "name": "Patricia Belesta",
+    "subtitle": "Regulatory Expert • Data Privacy Advocate • Course Creator",
+    "intro": "Hola, soy Patricia Belesta, del equipo de Regulatory.",
+    "paragraph1": "Creé este curso con una idea muy clara: aprender sobre protección de datos no tiene por qué ser aburrido.",
+    "paragraph1Highlight": "aprender sobre protección de datos no tiene por qué ser aburrido",
+    "paragraph2": "Vivimos en una era donde los datos hablan más de nosotros que nuestras propias palabras. Cada clic, cada búsqueda, cada formulario que completamos deja una huella. Y mientras la inteligencia artificial se vuelve más poderosa, nuestra responsabilidad sobre cómo tratamos esa información también crece.",
+    "paragraph3": "Por eso, este curso no es "una capacitación más". Es una invitación a mirar la privacidad desde otro lugar: desde la curiosidad, desde la empatía y desde la conciencia de que detrás de cada dato hay una persona.",
+    "paragraph3Highlight": "invitación a mirar la privacidad desde otro lugar",
+    "paragraph4": "Mi deseo es que disfrutes este recorrido, que te sorprendas, que aprendas algo nuevo y que, al final, veas la protección de datos no como una obligación… sino como una forma de cuidar la confianza que otros depositan en nosotros.",
+    "paragraph4Highlight": "una forma de cuidar la confianza que otros depositan en nosotros",
+    "thanks": "Gracias por estar acá.",
+    "letsStart": "Empecemos.",
+    "linkedInText": "Conéctate conmigo en LinkedIn",
+    "linkedInButton": "Visitar perfil de LinkedIn",
+    "ctaButton": "Comenzar el curso"
   }
 }

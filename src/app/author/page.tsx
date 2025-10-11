@@ -39,16 +39,16 @@ export default function AuthorPage() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#005eb8]/20 to-[#0077e6]/20 backdrop-blur-sm border border-white/20 rounded-full shadow-lg mb-8">
               <Sparkles className="w-5 h-5 text-blue-300 mr-2" />
-              <span className="text-blue-200 font-medium">Sobre la autora</span>
+              <span className="text-blue-200 font-medium">{t('author.badge')}</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-light mb-6 leading-tight tracking-wide">
               <span className="bg-gradient-to-r from-blue-400 via-[#0077e6] to-[#0091ff] bg-clip-text text-transparent animate-pulse">
-                Patricia Belesta
+                {t('author.name')}
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Regulatory Expert • Data Privacy Advocate • Course Creator
+              {t('author.subtitle')}
             </p>
           </div>
 
@@ -86,28 +86,56 @@ export default function AuthorPage() {
                 <div className="flex flex-col justify-center space-y-6">
                   <div className="prose prose-invert prose-lg max-w-none">
                     <p className="text-white/90 text-lg leading-relaxed">
-                      Hola, soy <span className="text-[#0091ff] font-semibold">Patricia Belesta</span>, del equipo de Regulatory.
+                      {t('author.intro').split(t('author.name')).map((part, i, arr) => (
+                        i < arr.length - 1 ? (
+                          <span key={i}>
+                            {part}
+                            <span className="text-[#0091ff] font-semibold">{t('author.name')}</span>
+                          </span>
+                        ) : part
+                      ))}
                     </p>
                     <p className="text-white/90 text-lg leading-relaxed">
-                      Creé este curso con una idea muy clara: <span className="text-blue-300 font-medium">aprender sobre protección de datos no tiene por qué ser aburrido</span>.
+                      {t('author.paragraph1').split(t('author.paragraph1Highlight')).map((part, i, arr) => (
+                        i < arr.length - 1 ? (
+                          <span key={i}>
+                            {part}
+                            <span className="text-blue-300 font-medium">{t('author.paragraph1Highlight')}</span>
+                          </span>
+                        ) : part
+                      ))}
                     </p>
                     <p className="text-white/80 leading-relaxed">
-                      Vivimos en una era donde los datos hablan más de nosotros que nuestras propias palabras. Cada clic, cada búsqueda, cada formulario que completamos deja una huella. Y mientras la inteligencia artificial se vuelve más poderosa, nuestra responsabilidad sobre cómo tratamos esa información también crece.
+                      {t('author.paragraph2')}
                     </p>
                     <p className="text-white/80 leading-relaxed">
-                      Por eso, este curso no es &ldquo;una capacitación más&rdquo;. Es una <span className="text-[#0091ff] font-medium">invitación a mirar la privacidad desde otro lugar</span>: desde la curiosidad, desde la empatía y desde la conciencia de que detrás de cada dato hay una persona.
+                      {t('author.paragraph3').split(t('author.paragraph3Highlight')).map((part, i, arr) => (
+                        i < arr.length - 1 ? (
+                          <span key={i}>
+                            {part}
+                            <span className="text-[#0091ff] font-medium">{t('author.paragraph3Highlight')}</span>
+                          </span>
+                        ) : part
+                      ))}
                     </p>
                     <p className="text-white/80 leading-relaxed">
-                      Mi deseo es que disfrutes este recorrido, que te sorprendas, que aprendas algo nuevo y que, al final, veas la protección de datos no como una obligación… sino como <span className="text-blue-300 font-medium">una forma de cuidar la confianza que otros depositan en nosotros</span>.
+                      {t('author.paragraph4').split(t('author.paragraph4Highlight')).map((part, i, arr) => (
+                        i < arr.length - 1 ? (
+                          <span key={i}>
+                            {part}
+                            <span className="text-blue-300 font-medium">{t('author.paragraph4Highlight')}</span>
+                          </span>
+                        ) : part
+                      ))}
                     </p>
                     <div className="pt-4 border-t border-white/20 mt-6">
                       <p className="text-white/90 text-lg italic">
-                        Gracias por estar acá.<br />
-                        Empecemos.
+                        {t('author.thanks')}<br />
+                        {t('author.letsStart')}
                       </p>
                       <p className="text-[#0091ff] font-semibold text-xl mt-4 flex items-center">
                         <Heart className="w-5 h-5 mr-2 fill-current" />
-                        — Patricia Belesta
+                        — {t('author.name')}
                       </p>
                     </div>
                   </div>
@@ -117,7 +145,7 @@ export default function AuthorPage() {
               {/* LinkedIn Button Section */}
               <div className="border-t border-white/20 bg-gradient-to-r from-[#005eb8]/10 to-[#0077e6]/10 p-8">
                 <div className="text-center">
-                  <p className="text-white/80 mb-4">Conéctate conmigo en LinkedIn</p>
+                  <p className="text-white/80 mb-4">{t('author.linkedInText')}</p>
                   <a 
                     href="https://www.linkedin.com/in/patriciabeles/" 
                     target="_blank" 
@@ -126,7 +154,7 @@ export default function AuthorPage() {
                   >
                     <Button className="bg-gradient-to-r from-[#0077e6] to-[#0091ff] hover:from-[#0091ff] hover:to-[#00a8ff] text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 px-8 py-6 text-lg">
                       <Linkedin className="w-6 h-6 mr-3" />
-                      Visitar perfil de LinkedIn
+                      {t('author.linkedInButton')}
                     </Button>
                   </a>
                 </div>
@@ -139,7 +167,7 @@ export default function AuthorPage() {
             <Link href="/courses">
               <Button className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 px-10 py-6 text-lg">
                 <Sparkles className="w-5 h-5 mr-2" />
-                Comenzar el curso
+                {t('author.ctaButton')}
               </Button>
             </Link>
           </div>
