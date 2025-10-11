@@ -12,14 +12,15 @@ const supabase = createClient()
 
 interface AuthFormProps {
   onModeChange?: (isSignUp: boolean) => void
+  initialMode?: 'signup' | 'login'
 }
 
-export function AuthForm({ onModeChange }: AuthFormProps) {
+export function AuthForm({ onModeChange, initialMode = 'login' }: AuthFormProps) {
   const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [isSignUp, setIsSignUp] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(initialMode === 'signup')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
