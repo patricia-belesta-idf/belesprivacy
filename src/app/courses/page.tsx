@@ -386,7 +386,7 @@ export default function CoursesPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="mailto:patricia.belesta@idefinance.com?subject=Consulta sobre cursos de privacidad">
+              <a href="mailto:patricia.belesta@idfinance.com?subject=Consulta sobre cursos de privacidad">
                 <Button className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-md hover:shadow-lg transition-all duration-200">
                   <Sparkles className="w-4 h-4 mr-2" />
                   {t('courses.contactTeam')}

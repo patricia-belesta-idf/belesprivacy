@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -13,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { BookOpen, User, LogOut, Menu, X, ChevronDown, Lock } from 'lucide-react'
+import { BookOpen, User, LogOut, Menu, X, ChevronDown } from 'lucide-react'
 import { LanguageSelector } from '@/components/ui/LanguageSelector'
 import { useLanguage } from '@/contexts/LanguageContext'
 
@@ -31,15 +32,17 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative">
-              <div className="w-6 h-6 bg-gradient-to-br from-[#005eb8] to-[#0077e6] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Lock className="h-4 w-4 text-white" />
-              </div>
+          <Link href="/" className="flex items-center group">
+            <div className="relative h-4 w-auto group-hover:scale-105 transition-transform duration-300">
+              <Image 
+                src="/ID Finance.webp" 
+                alt="ID Finance Logo" 
+                width={90}
+                height={16}
+                className="h-4 w-auto object-contain"
+                priority
+              />
             </div>
-            <span className="text-xl bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
-              <span className="font-bold">ID</span><span className="font-normal">Finance</span>
-            </span>
           </Link>
 
 

@@ -1045,9 +1045,10 @@ export default function SplashCursor({
 
     function clickSplat(pointer: Pointer) {
       const color = generateColor();
-      color.r *= 10;
-      color.g *= 10;
-      color.b *= 10;
+      // Intensificamos el color para el splash de clic
+      color.r *= 12;
+      color.g *= 12;
+      color.b *= 12;
       const dx = 10 * (Math.random() - 0.5);
       const dy = 30 * (Math.random() - 0.5);
       splat(pointer.texcoordX, pointer.texcoordY, dx, dy, color);
@@ -1130,7 +1131,14 @@ export default function SplashCursor({
     }
 
     function generateColor(): ColorRGB {
-      const c = HSVtoRGB(Math.random(), 1.0, 1.0);
+      // #005eb8 en HSV es aproximadamente H=210° (0.583), S=100%, V=72%
+      // Generamos variaciones del azul #005eb8 con algo de variación en el hue
+      const hueBase = 0.583; // 210° en el espectro de color (azul)
+      const hueVariation = 0.05; // Pequeña variación para tonos similares
+      const h = hueBase + (Math.random() - 0.5) * hueVariation; // Variación entre azul claro y azul oscuro
+      const s = 0.8 + Math.random() * 0.2; // Saturación alta (80-100%)
+      const v = 0.6 + Math.random() * 0.3; // Brillo variable (60-90%)
+      const c = HSVtoRGB(h, s, v);
       c.r *= 0.15;
       c.g *= 0.15;
       c.b *= 0.15;
