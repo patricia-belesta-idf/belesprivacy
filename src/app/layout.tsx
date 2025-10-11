@@ -9,7 +9,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BelesPrivacy - Cursos de Protección de Datos",
+  title: "ID Finance - Curso de Protección de Datos",
   description: "Plataforma de aprendizaje especializada en protección de datos personales, privacidad y cumplimiento normativo.",
   icons: {
     icon: '/icon.png',

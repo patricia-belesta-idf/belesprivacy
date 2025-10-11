@@ -33,12 +33,12 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
-              <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="w-6 h-6 bg-gradient-to-br from-[#005eb8] to-[#0077e6] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Lock className="h-4 w-4 text-white" />
               </div>
             </div>
             <span className="text-xl bg-gradient-to-r from-gray-900 to-blue-700 bg-clip-text text-transparent">
-              <span className="font-bold">beles</span><span className="font-normal">privacy</span>
+              <span className="font-bold">ID</span><span className="font-normal">Finance</span>
             </span>
           </Link>
 
@@ -53,7 +53,7 @@ export function Navbar() {
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
               >
                 {t('navigation.courses')}
-                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#005eb8] to-[#0077e6] group-hover:w-full transition-all duration-300"></div>
               </Link>
               {user && (
                 <Link 
@@ -61,7 +61,7 @@ export function Navbar() {
                   className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
                 >
                   {t('navigation.dashboard')}
-                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></div>
+                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#005eb8] to-[#0077e6] group-hover:w-full transition-all duration-300"></div>
                 </Link>
               )}
             </div>
@@ -74,7 +74,7 @@ export function Navbar() {
                   <Button variant="ghost" className="relative h-9 w-9 rounded-full hover:bg-gray-100 transition-colors duration-200">
                     <Avatar className="h-8 w-8 ring-2 ring-gray-200/50">
                       <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || ''} />
-                      <AvatarFallback className="bg-gradient-to-br from-blue-100 to-purple-100 text-blue-700 font-medium">
+                      <AvatarFallback className="bg-gradient-to-br from-blue-100 to-blue-200 text-[#005eb8] font-medium">
                         {user.user_metadata?.full_name?.[0] || user.email?.[0] || 'U'}
                       </AvatarFallback>
                     </Avatar>
@@ -89,7 +89,7 @@ export function Navbar() {
                       <p className="text-xs leading-none text-gray-500">{user.email}</p>
                       <div className="pt-2">
                         <div className="w-full bg-gray-100 rounded-full h-2">
-                          <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full" style={{ width: '65%' }}></div>
+                          <div className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] h-2 rounded-full" style={{ width: '65%' }}></div>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">65% completado</p>
                       </div>
@@ -123,7 +123,7 @@ export function Navbar() {
                   </Button>
                 </Link>
                 <Link href="/signup">
-                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                  <Button className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-md hover:shadow-lg transition-all duration-200">
                     {t('navigation.signUp')}
                   </Button>
                 </Link>
@@ -177,7 +177,7 @@ export function Navbar() {
                   </Link>
                   <Link 
                     href="/signup" 
-                    className="block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all duration-200 font-medium px-4 py-2 rounded-lg shadow-md hover:shadow-lg mx-3"
+                    className="block bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white transition-all duration-200 font-medium px-4 py-2 rounded-lg shadow-md hover:shadow-lg mx-3"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Registrarse

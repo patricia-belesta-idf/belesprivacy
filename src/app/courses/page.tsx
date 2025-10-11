@@ -212,10 +212,10 @@ export default function CoursesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-blue-200 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
               <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
               <span className="text-blue-700 font-medium">{t('courses.loading')}</span>
             </div>
@@ -235,8 +235,8 @@ export default function CoursesPage() {
       <section className="relative py-8 px-4 sm:px-6 lg:px-8">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-indigo-200/30 to-blue-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-blue-300/30 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-[#005eb8]/20 to-blue-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto text-center">
@@ -275,10 +275,10 @@ export default function CoursesPage() {
 
               return (
                 <Card key={course.id} className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 min-w-[400px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-blue-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <CardHeader className="relative z-10">
-                    <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-4 flex items-center justify-center">
+                    <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg mb-4 flex items-center justify-center">
                       <Lock className="w-16 h-16 text-blue-600" />
                     </div>
                     
@@ -308,7 +308,7 @@ export default function CoursesPage() {
                         <span className="text-xs text-gray-500">{t('courseDetail.duration')}</span>
                       </div>
                       <div className="flex flex-col items-center">
-                        <BookOpen className="w-5 h-5 text-purple-600 mb-1" />
+                        <BookOpen className="w-5 h-5 text-[#005eb8] mb-1" />
                         <span className="text-sm font-medium text-gray-900">{course.total_units}</span>
                         <span className="text-xs text-gray-500">{t('courseDetail.units')}</span>
                       </div>
@@ -323,7 +323,7 @@ export default function CoursesPage() {
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
-                            className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                            className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] h-2 rounded-full transition-all duration-300"
                             style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
                           ></div>
                         </div>
@@ -337,7 +337,7 @@ export default function CoursesPage() {
                     <div className="flex flex-col space-y-3">
                       {enrolled ? (
                         <Link href={`/courses/${course.id}`}>
-                          <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                          <Button className="w-full bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-md hover:shadow-lg transition-all duration-200">
                             <Play className="w-4 h-4 mr-2" />
                             {t('courses.continueLearning')}
                             <ArrowRight className="w-4 h-4 ml-2" />
@@ -372,9 +372,9 @@ export default function CoursesPage() {
 
           {/* Call to Action */}
           <div className="text-center mt-16">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-100 to-blue-100 border border-purple-200/50 rounded-full backdrop-blur-sm mb-8">
-              <Star className="w-5 h-5 text-purple-600 mr-2" />
-              <span className="text-purple-700 font-medium">{t('common.help')}</span>
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-blue-200 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
+              <Star className="w-5 h-5 text-[#005eb8] mr-2" />
+              <span className="text-[#005eb8] font-medium">{t('common.help')}</span>
             </div>
             
             <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-4 tracking-wide">
@@ -387,7 +387,7 @@ export default function CoursesPage() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="mailto:patricia.belesta@idefinance.com?subject=Consulta sobre cursos de privacidad">
-                <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                <Button className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-md hover:shadow-lg transition-all duration-200">
                   <Sparkles className="w-4 h-4 mr-2" />
                   {t('courses.contactTeam')}
                 </Button>

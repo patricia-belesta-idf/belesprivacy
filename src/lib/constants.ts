@@ -47,24 +47,24 @@ export const TYPOGRAPHY_CONSTANTS = {
   BODY_LINE_HEIGHT: 'leading-relaxed'
 }
 
-// Color constants for consistent gradients
+// Color constants for consistent gradients (azul #005eb8)
 export const COLOR_CONSTANTS = {
   // Primary gradients
-  PRIMARY_GRADIENT: 'from-blue-600 to-purple-600',
-  PRIMARY_GRADIENT_HOVER: 'from-blue-500 to-purple-500',
+  PRIMARY_GRADIENT: 'from-[#005eb8] to-[#0077e6]',
+  PRIMARY_GRADIENT_HOVER: 'from-[#0077e6] to-[#0091ff]',
   
   // Secondary gradients
-  SECONDARY_GRADIENT: 'from-green-600 to-emerald-600',
-  SECONDARY_GRADIENT_HOVER: 'from-green-500 to-emerald-500',
+  SECONDARY_GRADIENT: 'from-[#003d7a] to-[#005eb8]',
+  SECONDARY_GRADIENT_HOVER: 'from-[#005eb8] to-[#0077e6]',
   
   // Accent gradients
-  ACCENT_GRADIENT: 'from-purple-600 to-indigo-600',
-  ACCENT_GRADIENT_HOVER: 'from-purple-500 to-indigo-500',
+  ACCENT_GRADIENT: 'from-[#005eb8] to-[#0091ff]',
+  ACCENT_GRADIENT_HOVER: 'from-[#0077e6] to-[#00a8ff]',
   
   // Background gradients
-  BACKGROUND_GRADIENT: 'from-slate-50 via-blue-50 to-indigo-50',
+  BACKGROUND_GRADIENT: 'from-white via-blue-50 to-blue-100',
   
   // Text gradients
-  TITLE_TEXT_GRADIENT: 'from-gray-900 via-blue-800 to-purple-800',
-  SUBTITLE_TEXT_GRADIENT: 'from-blue-600 via-purple-600 to-indigo-600'
+  TITLE_TEXT_GRADIENT: 'from-gray-900 via-[#005eb8] to-[#003d7a]',
+  SUBTITLE_TEXT_GRADIENT: 'from-[#005eb8] via-[#0077e6] to-[#0091ff]'
 }

@@ -68,16 +68,16 @@ export default function LegalNoticePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#003d7a] to-[#005eb8] text-white overflow-hidden">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.05%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-60"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-gradient-to-br from-violet-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
-        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-gradient-to-br from-fuchsia-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse delay-3000"></div>
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-[#005eb8]/20 to-[#0077e6]/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-br from-[#0077e6]/20 to-[#0091ff]/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/4 w-72 h-72 bg-gradient-to-br from-blue-500/20 to-[#005eb8]/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-gradient-to-br from-[#0091ff]/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-3000"></div>
       </div>
 
       {/* Header */}
@@ -95,13 +95,13 @@ export default function LegalNoticePage() {
 
           {/* Hero Section */}
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-white/20 rounded-full shadow-lg mb-8">
-              <Scale className="w-5 h-5 text-purple-300 mr-2" />
-              <span className="text-purple-200 font-medium">{t('legal.badge')}</span>
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#005eb8]/20 to-[#0077e6]/20 backdrop-blur-sm border border-white/20 rounded-full shadow-lg mb-8">
+              <Scale className="w-5 h-5 text-blue-300 mr-2" />
+              <span className="text-blue-200 font-medium">{t('legal.badge')}</span>
             </div>
 
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-light mb-6 leading-tight tracking-wide">
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-violet-400 bg-clip-text text-transparent animate-pulse">
+              <span className="bg-gradient-to-r from-blue-400 via-[#0077e6] to-[#0091ff] bg-clip-text text-transparent animate-pulse">
                 {t('legal.title')}
               </span>
               <br />
@@ -116,15 +116,15 @@ export default function LegalNoticePage() {
 
             <div className="flex items-center justify-center mt-8 space-x-8 text-sm text-white/60">
               <div className="flex items-center">
-                <Shield className="w-4 h-4 mr-2 text-purple-400" />
+                <Shield className="w-4 h-4 mr-2 text-blue-400" />
                 {t('legal.badges.compliant')}
               </div>
               <div className="flex items-center">
-                <Lock className="w-4 h-4 mr-2 text-pink-400" />
+                <Lock className="w-4 h-4 mr-2 text-blue-300" />
                 {t('legal.badges.secure')}
               </div>
               <div className="flex items-center">
-                <FileText className="w-4 h-4 mr-2 text-violet-400" />
+                <FileText className="w-4 h-4 mr-2 text-blue-400" />
                 {t('legal.badges.transparent')}
               </div>
             </div>
@@ -139,13 +139,13 @@ export default function LegalNoticePage() {
                   onClick={() => setActiveSection(index)}
                   className={`p-3 rounded-xl backdrop-blur-sm border transition-all duration-300 ${
                     activeSection === index
-                      ? 'bg-gradient-to-r from-purple-500/30 to-pink-500/30 border-white/30 shadow-lg scale-105'
+                      ? 'bg-gradient-to-r from-[#005eb8]/30 to-[#0077e6]/30 border-white/30 shadow-lg scale-105'
                       : 'bg-white/5 border-white/10 hover:bg-white/10 hover:scale-105'
                   }`}
                 >
                   <div className="flex flex-col items-center text-center">
                     <div className={`mb-2 transition-colors duration-300 ${
-                      activeSection === index ? 'text-purple-300' : 'text-white/60'
+                      activeSection === index ? 'text-blue-300' : 'text-white/60'
                     }`}>
                       {section.icon}
                     </div>
@@ -165,14 +165,14 @@ export default function LegalNoticePage() {
             <Card className="bg-white/10 backdrop-blur-sm border-white/20 shadow-2xl">
               <CardContent className="p-8">
                 <div className="flex items-start space-x-4 mb-6">
-                  <div className="p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl">
+                  <div className="p-3 bg-gradient-to-r from-[#005eb8]/20 to-[#0077e6]/20 rounded-xl">
                     {sections[activeSection].icon}
                   </div>
                   <div>
                     <h2 className="text-2xl md:text-3xl font-light text-white mb-4">
                       {sections[activeSection].title}
                     </h2>
-                    <div className="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"></div>
+                    <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-[#0077e6] rounded-full"></div>
                   </div>
                 </div>
                 
@@ -185,7 +185,7 @@ export default function LegalNoticePage() {
 
           {/* Contact Information */}
           <div className="mt-16 max-w-4xl mx-auto">
-            <Card className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 backdrop-blur-sm border-white/20 shadow-2xl">
+            <Card className="bg-gradient-to-r from-[#005eb8]/20 to-[#0077e6]/20 backdrop-blur-sm border-white/20 shadow-2xl">
               <CardContent className="p-8">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-light text-white mb-4">
@@ -199,14 +199,14 @@ export default function LegalNoticePage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
-                      <Mail className="w-5 h-5 text-purple-400" />
+                      <Mail className="w-5 h-5 text-blue-400" />
                       <div>
                         <p className="text-white/60 text-sm">{t('legal.contact.emailLabel')}</p>
                         <p className="text-white font-medium">info@moneyman.es</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <Mail className="w-5 h-5 text-pink-400" />
+                      <Mail className="w-5 h-5 text-blue-300" />
                       <div>
                         <p className="text-white/60 text-sm">{t('legal.contact.alternativeEmailLabel')}</p>
                         <p className="text-white font-medium">info@plazo.es</p>

@@ -132,9 +132,9 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-purple-100 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
+          <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-100 to-blue-200 border border-blue-200/50 rounded-full backdrop-blur-sm mb-8">
             <TrendingUp className="w-5 h-5 text-blue-600 mr-2" />
             <span className="text-blue-700 font-medium">{t('dashboard.loading')}</span>
           </div>
@@ -146,13 +146,13 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100">
       {/* Hero Section */}
       <section className="relative py-8 px-4 sm:px-6 lg:px-8">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-indigo-200/30 to-blue-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-blue-300/30 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-[#005eb8]/20 to-blue-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
@@ -168,7 +168,7 @@ export default function DashboardPage() {
               <p className="text-xl text-gray-600">{t('dashboard.welcomeBack')}, {user?.user_metadata?.full_name || user?.email}</p>
             </div>
             <Link href="/courses">
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+              <Button className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-md hover:shadow-lg transition-all duration-200">
                 <BookOpen className="h-4 w-4 mr-2" />
                 {t('dashboard.exploreCourses')}
               </Button>
@@ -183,10 +183,10 @@ export default function DashboardPage() {
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-purple-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-blue-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-light text-gray-900 tracking-wide">{t('dashboard.enrolledCourses')}</CardTitle>
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
                   <BookOpen className="h-4 w-4 text-blue-600" />
                 </div>
               </CardHeader>
@@ -215,11 +215,11 @@ export default function DashboardPage() {
             </Card>
 
             <Card className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-100/20 to-pink-100/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 to-blue-200/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <CardHeader className="relative z-10 flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-light text-gray-900 tracking-wide">{t('dashboard.completedUnits')}</CardTitle>
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg flex items-center justify-center">
-                  <CheckCircle className="h-4 w-4 text-purple-600" />
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
+                  <CheckCircle className="h-4 w-4 text-[#005eb8]" />
                 </div>
               </CardHeader>
               <CardContent className="relative z-10">
@@ -241,11 +241,11 @@ export default function DashboardPage() {
             <div className="grid gap-6">
               {enrolledCourses.map((item) => (
                 <Card key={item.id} className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-sm hover:shadow-lg transition-all duration-500 transform hover:scale-105">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/10 to-purple-100/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-100/10 to-blue-200/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative z-10 p-6">
                     <div className="flex items-start space-x-4">
                       <div className="flex-shrink-0">
-                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                           <Lock className="h-8 w-8 text-blue-600" />
                         </div>
                       </div>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-2">
                               <div 
-                                className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-300"
+                                className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] h-2 rounded-full transition-all duration-300"
                                 style={{ width: `${(() => {
                                   // Calcular progreso real basado en completed_units o current_unit
                                   if (item.enrollment.completed_units && Array.isArray(item.enrollment.completed_units)) {
@@ -358,7 +358,7 @@ export default function DashboardPage() {
                     {t('dashboard.startExploring')}
                   </p>
                   <Link href="/courses">
-                    <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-md hover:shadow-lg transition-all duration-200">
+                    <Button className="bg-gradient-to-r from-[#005eb8] to-[#0077e6] hover:from-[#0077e6] hover:to-[#0091ff] text-white shadow-md hover:shadow-lg transition-all duration-200">
                       {t('dashboard.exploreCourses')}
                     </Button>
                   </Link>
