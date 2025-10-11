@@ -5,7 +5,8 @@
     "profile": "Perfil",
     "signOut": "Cerrar Sesión",
     "signIn": "Iniciar Sesión",
-    "signUp": "Registrarse"
+    "signUp": "Registrarse",
+    "aboutAuthor": "Sobre la autora"
   },
   "homepage": {
     "hero": {
@@ -296,6 +297,7 @@
     "edit": "Editar",
     "close": "Cerrar",
     "back": "Atrás",
+    "backToHome": "Volver al inicio",
     "next": "Siguiente",
     "previous": "Anterior",
     "submit": "Enviar",

@@ -5,7 +5,8 @@
     "profile": "Profile",
     "signOut": "Sign Out",
     "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "aboutAuthor": "About the author"
   },
   "homepage": {
     "hero": {
@@ -296,6 +297,7 @@
     "edit": "Edit",
     "close": "Close",
     "back": "Back",
+    "backToHome": "Back to home",
     "next": "Next",
     "previous": "Previous",
     "submit": "Submit",

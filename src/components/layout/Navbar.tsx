@@ -58,6 +58,13 @@ export function Navbar() {
                 {t('navigation.courses')}
                 <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#005eb8] to-[#0077e6] group-hover:w-full transition-all duration-300"></div>
               </Link>
+              <Link 
+                href="/author" 
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium relative group"
+              >
+                {t('navigation.aboutAuthor')}
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#005eb8] to-[#0077e6] group-hover:w-full transition-all duration-300"></div>
+              </Link>
               {user && (
                 <Link 
                   href="/dashboard" 
@@ -158,7 +165,14 @@ export function Navbar() {
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-gray-50"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Cursos
+                {t('navigation.courses')}
+              </Link>
+              <Link 
+                href="/author" 
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-gray-50"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {t('navigation.aboutAuthor')}
               </Link>
               {user && (
                 <Link 
@@ -166,7 +180,7 @@ export function Navbar() {
                   className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium px-3 py-2 rounded-lg hover:bg-gray-50"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Mi Dashboard
+                  {t('navigation.dashboard')}
                 </Link>
               )}
               {!user && (
