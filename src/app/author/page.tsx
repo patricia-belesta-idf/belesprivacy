@@ -95,7 +95,7 @@ export default function AuthorPage() {
                       Vivimos en una era donde los datos hablan más de nosotros que nuestras propias palabras. Cada clic, cada búsqueda, cada formulario que completamos deja una huella. Y mientras la inteligencia artificial se vuelve más poderosa, nuestra responsabilidad sobre cómo tratamos esa información también crece.
                     </p>
                     <p className="text-white/80 leading-relaxed">
-                      Por eso, este curso no es "una capacitación más". Es una <span className="text-[#0091ff] font-medium">invitación a mirar la privacidad desde otro lugar</span>: desde la curiosidad, desde la empatía y desde la conciencia de que detrás de cada dato hay una persona.
+                      Por eso, este curso no es &ldquo;una capacitación más&rdquo;. Es una <span className="text-[#0091ff] font-medium">invitación a mirar la privacidad desde otro lugar</span>: desde la curiosidad, desde la empatía y desde la conciencia de que detrás de cada dato hay una persona.
                     </p>
                     <p className="text-white/80 leading-relaxed">
                       Mi deseo es que disfrutes este recorrido, que te sorprendas, que aprendas algo nuevo y que, al final, veas la protección de datos no como una obligación… sino como <span className="text-blue-300 font-medium">una forma de cuidar la confianza que otros depositan en nosotros</span>.
