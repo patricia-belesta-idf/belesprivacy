@@ -65,8 +65,8 @@ export default function AuthorPage() {
                     {/* Image container */}
                     <div className="relative rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl transform group-hover:scale-105 transition-transform duration-500">
                       <Image 
-                        src="/patribelesta.jpeg" 
-                        alt="Patricia Belesta" 
+                        src="/patriciabelestaphoto.jpg" 
+                        alt="Patricia Belestá" 
                         width={500}
                         height={500}
                         className="w-full h-auto object-cover"
@@ -85,57 +85,26 @@ export default function AuthorPage() {
                 {/* Text Section */}
                 <div className="flex flex-col justify-center space-y-6">
                   <div className="prose prose-invert prose-lg max-w-none">
-                    <p className="text-white/90 text-lg leading-relaxed">
-                      {t('author.intro').split(t('author.name')).map((part, i, arr) => (
-                        i < arr.length - 1 ? (
-                          <span key={i}>
-                            {part}
-                            <span className="text-[#0091ff] font-semibold">{t('author.name')}</span>
-                          </span>
-                        ) : part
-                      ))}
+                    <p className="text-white/90 leading-relaxed italic">
+                      {t('author.intro')}
                     </p>
-                    <p className="text-white/90 text-lg leading-relaxed">
-                      {t('author.paragraph1').split(t('author.paragraph1Highlight')).map((part, i, arr) => (
-                        i < arr.length - 1 ? (
-                          <span key={i}>
-                            {part}
-                            <span className="text-blue-300 font-medium">{t('author.paragraph1Highlight')}</span>
-                          </span>
-                        ) : part
-                      ))}
-                    </p>
-                    <p className="text-white/80 leading-relaxed">
-                      {t('author.paragraph2')}
-                    </p>
-                    <p className="text-white/80 leading-relaxed">
-                      {t('author.paragraph3').split(t('author.paragraph3Highlight')).map((part, i, arr) => (
-                        i < arr.length - 1 ? (
-                          <span key={i}>
-                            {part}
-                            <span className="text-[#0091ff] font-medium">{t('author.paragraph3Highlight')}</span>
-                          </span>
-                        ) : part
-                      ))}
-                    </p>
-                    <p className="text-white/80 leading-relaxed">
-                      {t('author.paragraph4').split(t('author.paragraph4Highlight')).map((part, i, arr) => (
-                        i < arr.length - 1 ? (
-                          <span key={i}>
-                            {part}
-                            <span className="text-blue-300 font-medium">{t('author.paragraph4Highlight')}</span>
-                          </span>
-                        ) : part
-                      ))}
-                    </p>
+                    
+                    <p className="text-white/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('author.paragraph1') }} />
+
+                    <p className="text-white/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('author.paragraph2') }} />
+
+                    <p className="text-white/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('author.paragraph3') }} />
+
+                    <p className="text-white/90 leading-relaxed" dangerouslySetInnerHTML={{ __html: t('author.paragraph4') }} />
+
                     <div className="pt-4 border-t border-white/20 mt-6">
-                      <p className="text-white/90 text-lg italic">
-                        {t('author.thanks')}<br />
-                        {t('author.letsStart')}
+                      <p className="text-[#0091ff] font-semibold leading-relaxed flex items-start gap-2">
+                        <Sparkles className="w-5 h-5 mt-1 flex-shrink-0" />
+                        <span>{t('author.closing')}</span>
                       </p>
-                      <p className="text-[#0091ff] font-semibold text-xl mt-4 flex items-center">
-                        <Heart className="w-5 h-5 mr-2 fill-current" />
-                        — {t('author.name')}
+                      <p className="text-white/70 mt-4 flex items-center gap-2">
+                        <Heart className="w-5 h-5 fill-current text-blue-300" />
+                        <span>— {t('author.name')}</span>
                       </p>
                     </div>
                   </div>
