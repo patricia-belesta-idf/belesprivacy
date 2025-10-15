@@ -202,14 +202,7 @@ export default function LegalNoticePage() {
                       <Mail className="w-5 h-5 text-blue-400" />
                       <div>
                         <p className="text-white/60 text-sm">{t('legal.contact.emailLabel')}</p>
-                        <p className="text-white font-medium">info@moneyman.es</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <Mail className="w-5 h-5 text-blue-300" />
-                      <div>
-                        <p className="text-white/60 text-sm">{t('legal.contact.alternativeEmailLabel')}</p>
-                        <p className="text-white font-medium">info@plazo.es</p>
+                        <p className="text-white font-medium">info@idfinance.com</p>
                       </div>
                     </div>
                   </div>

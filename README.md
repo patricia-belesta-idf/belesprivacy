@@ -1,6 +1,6 @@
-# BelesPrivacy - Plataforma de Cursos de Protección de Datos
+# RgpdEducation - Plataforma de Cursos de Protección de Datos
 
-BelesPrivacy es una plataforma de aprendizaje especializada en protección de datos personales, privacidad y cumplimiento normativo. La aplicación permite a los usuarios inscribirse en cursos, ver videos educativos y tomar evaluaciones para medir su progreso.
+RgpdEducation es una plataforma de aprendizaje especializada en protección de datos personales, privacidad y cumplimiento normativo. La aplicación permite a los usuarios inscribirse en cursos, ver videos educativos y tomar evaluaciones para medir su progreso.
 
 ## 🚀 Características Principales
 
@@ -38,12 +38,12 @@ BelesPrivacy es una plataforma de aprendizaje especializada en protección de da
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tu-usuario/belesprivacy.git
-cd belesprivacy
+git clone https://github.com/tu-usuario/rgpd-education.git
+cd rgpd-education
 
 # O si es un fork empresarial
-git clone https://github.com/empresa/belesprivacy.git
-cd belesprivacy
+git clone https://github.com/empresa/rgpd-education.git
+cd rgpd-education
 ```
 
 ### 2. 📦 Instalar Dependencias
@@ -63,7 +63,7 @@ npm run build
 1. **Ve a [supabase.com](https://supabase.com)**
 2. **Crea una cuenta** o inicia sesión
 3. **"New Project"**:
-   - **Name**: `belesprivacy-empresa` (o el nombre que prefieras)
+   - **Name**: `rgpd-education-empresa` (o el nombre que prefieras)
    - **Database Password**: Genera una contraseña segura y guárdala
    - **Region**: Elige la más cercana a tus usuarios
 4. **Espera** a que se complete la creación (2-3 minutos)
@@ -208,7 +208,7 @@ git push origin main
 2. **"New Project"**
 3. **Import from GitHub** → Selecciona tu repositorio
 4. **Configure**:
-   - **Project Name**: `belesprivacy-empresa`
+   - **Project Name**: `rgpd-education-empresa`
    - **Framework Preset**: Next.js
    - **Root Directory**: `./` (por defecto)
 
@@ -292,7 +292,7 @@ nslookup curso.empresa.com
 ## 📊 Estructura del Proyecto
 
 ```
-belesprivacy/
+rgpd-education/
 ├── src/
 │   ├── app/                    # App Router de Next.js
 │   │   ├── (auth)/            # Rutas de autenticación
@@ -576,7 +576,7 @@ Si tienes problemas o preguntas:
 
 ---
 
-**BelesPrivacy** - Transformando la educación en protección de datos, una unidad a la vez. 🚀
+**RgpdEducation** - Transformando la educación en protección de datos, una unidad a la vez. 🚀
 
 ---
 
@@ -586,4 +586,4 @@ Para soporte técnico o consultas sobre la implementación:
 
 - **Email**: soporte@empresa.com
 - **Documentación**: [Enlace a docs internas]
-- **Slack**: #belesprivacy-support
+- **Slack**: #rgpd-education-support

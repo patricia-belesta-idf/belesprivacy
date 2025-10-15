@@ -5,8 +5,7 @@
     "profile": "Perfil",
     "signOut": "Cerrar Sesión",
     "signIn": "Iniciar Sesión",
-    "signUp": "Registrarse",
-    "aboutAuthor": "Sobre la autora"
+    "signUp": "Registrarse"
   },
   "homepage": {
     "hero": {
@@ -268,7 +267,7 @@
     "continue": "Continuar",
     "loginTitle": "Bienvenido de vuelta",
     "loginSubtitle": "Inicia sesión en tu cuenta para continuar",
-    "signupTitle": "Únete a BelesPrivacy",
+    "signupTitle": "Únete a RgpdEducation",
     "signupSubtitle": "Crea tu cuenta y comienza a aprender",
     "secureAccess": "Acceso Seguro",
     "newUser": "Nuevo Usuario",
@@ -403,7 +402,7 @@
   "privacy": {
     "title": "Política de Privacidad",
     "subtitle": "Transparente",
-    "description": "En BelesPrivacy, la protección de tus datos personales es nuestra prioridad. Descubre cómo cuidamos tu información con total transparencia y seguridad.",
+    "description": "En RgpdEducation, la protección de tus datos personales es nuestra prioridad. Descubre cómo cuidamos tu información con total transparencia y seguridad.",
     "backToHome": "Volver al Inicio",
     "needMoreInfo": "¿Necesitas más información?",
     "teamDescription": "Nuestro equipo de protección de datos está aquí para ayudarte",
@@ -428,7 +427,7 @@
       "retention": "Los datos se conservarán mientras sea necesario para las finalidades establecidas o durante el plazo exigido por la normativa vigente, y serán eliminados o anonimizados siguiendo protocolos seguros.",
       "recipients": "No se comunicarán datos a terceros salvo por obligación legal. En determinados casos, podrán tratarse datos por proveedores tecnológicos esenciales (como Supabase para backend y autenticación). No se realizan transferencias internacionales fuera del Espacio Económico Europeo.",
       "cookies": "La plataforma utiliza únicamente cookies técnicas y de preferencia estrictamente necesarias para garantizar un funcionamiento correcto y personalizar la experiencia de usuario. Cookies técnicas para gestionar la sesión de autenticación del usuario, basadas en el correo corporativo. Cookies de preferencia para almacenar la selección del idioma. No se usan cookies de terceros, cookies de analítica ni cookies publicitarias.",
-      "rights": "Puedes solicitar en cualquier momento el acceso, rectificación, supresión, limitación, oposición y portabilidad sobre tus datos enviando una solicitud detallada a dpd@moneyman.es o dpd@plazo.es, indicando tu identidad y el derecho que deseas ejercer. Tienes derecho a presentar reclamación ante la Agencia Española de Protección de Datos si consideras que tus derechos no han sido debidamente atendidos.",
+      "rights": "Puedes solicitar en cualquier momento el acceso, rectificación, supresión, limitación, oposición y portabilidad sobre tus datos enviando una solicitud detallada a dpd@idfinance.com, indicando tu identidad y el derecho que deseas ejercer. Tienes derecho a presentar reclamación ante la Agencia Española de Protección de Datos si consideras que tus derechos no han sido debidamente atendidos.",
       "security": "Se aplican medidas técnicas y organizativas apropiadas para garantizar la confidencialidad, integridad y disponibilidad de los datos, incluyendo controles de acceso, cifrado y auditorías periódicas.",
       "modifications": "ID Finance se reserva el derecho a modificar esta política para adaptarla a cambios normativos o técnicos, notificando las actualizaciones relevantes a través de la plataforma."
     }
@@ -449,7 +448,7 @@
     "badge": "Aviso Legal",
     "title": "Aviso Legal",
     "subtitle": "de la Plataforma",
-    "description": "Información sobre el uso de la plataforma BelesPrivacy.",
+    "description": "Información sobre el uso de la plataforma RgpdEducation.",
     "backToHome": "Volver al Inicio",
     "lastUpdated": "Última actualización: Septiembre 2025",
     "badges": {
@@ -468,7 +467,7 @@
       "jurisdiction": "Legislación y Jurisdicción"
     },
     "content": {
-      "legalNotice": "El presente Aviso Legal regula el acceso y utilización del sitio web y aplicación móvil BelesPrivacy (en adelante, la \"Plataforma\"), gestionada por la entidad titular ID Finance Investments S.L.U. con CIF B66862442, con domicilio social en Calle Tuset, 5, 3ª planta, 08006 Barcelona, España, y con correos electrónicos de contacto info@moneyman.es y info@plazo.es (en adelante, el \"Responsable\").\n\nEl acceso y uso de la Plataforma está estrictamente reservado a empleados autorizados de IDF Investments que deben hacer un uso conforme a las políticas internas y condiciones que se detallan a continuación.",
+      "legalNotice": "El presente Aviso Legal regula el acceso y utilización del sitio web y aplicación móvil RgpdEducation (en adelante, la \"Plataforma\"), gestionada por la entidad titular ID Finance Investments S.L.U. con CIF B66862442, con domicilio social en Calle Tuset, 5, 3ª planta, 08006 Barcelona, España, y con correo electrónico de contacto info@idfinance.com (en adelante, el \"Responsable\").\n\nEl acceso y uso de la Plataforma está estrictamente reservado a empleados autorizados de IDF Investments que deben hacer un uso conforme a las políticas internas y condiciones que se detallan a continuación.",
       "acceptance": "El acceso y la utilización de la Plataforma requiere la aceptación expresa del presente Aviso Legal y el compromiso de cumplimiento de las políticas internas de la empresa relativas a seguridad, privacidad y uso adecuado.\n\nLa Plataforma no está accesible a usuarios externos ni al público en general.\n\nEl uso indebido o el incumplimiento de estas condiciones puede derivar en restricciones o sanciones conforme a la normativa laboral vigente.",
       "access": "El acceso a la Plataforma solo será posible mediante credenciales corporativas asignadas a cada empleado. No está permitido compartir estas credenciales ni permitir accesos no autorizados.\n\nEl usuario se compromete a usar la Plataforma únicamente para llevar a cabo las formaciones relacionadas con su actividad laboral.",
       "modifications": "IDF Investments se reserva el derecho a modificar este Aviso Legal y las condiciones de la Plataforma, notificando a los empleados dichas modificaciones a través de la propia Plataforma.\n\nEl uso continuado implica aceptación de dichas modificaciones.",
@@ -489,7 +488,7 @@
   "cookies": {
     "badge": "Política de Cookies",
     "title": "Aviso de Cookies",
-    "subtitle": "de BelesPrivacy",
+    "subtitle": "de RgpdEducation",
     "description": "Información transparente sobre el uso de cookies en nuestra plataforma de formación.",
     "backToHome": "Volver al Inicio",
     "lastUpdated": "Última actualización: Septiembre 2025",
@@ -507,26 +506,12 @@
       "policyUpdates": "Actualizaciones"
     },
     "content": {
-      "whatAreCookies": "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Estos archivos permiten que el sitio web reconozca tu dispositivo y recuerde información sobre tu visita.\n\nEn BelesPrivacy, utilizamos cookies de manera responsable y transparente, cumpliendo con todas las normativas aplicables de protección de datos.",
+      "whatAreCookies": "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Estos archivos permiten que el sitio web reconozca tu dispositivo y recuerde información sobre tu visita.\n\nEn RgpdEducation, utilizamos cookies de manera responsable y transparente, cumpliendo con todas las normativas aplicables de protección de datos.",
       "technicalCookies": "Las cookies técnicas son estrictamente necesarias para el funcionamiento de la plataforma. Estas cookies:\n\n• Gestionan la sesión de autenticación del usuario mediante su correo corporativo\n• Permiten el acceso seguro a los servicios de la plataforma\n• Garantizan la funcionalidad básica del sistema\n• Son esenciales para la seguridad de tus datos\n\nSin estas cookies, la plataforma no podría funcionar correctamente.",
       "preferenceCookies": "Las cookies de preferencia almacenan tus elecciones para mejorar tu experiencia:\n\n• Guardan tu selección de idioma (Español, Inglés o Ruso)\n• Mantienen tus preferencias de visualización\n• Personalizan tu experiencia de navegación\n\nEstas cookies nos ayudan a ofrecerte una experiencia más cómoda y adaptada a tus necesidades.",
-      "whatWeDontUse": "En BelesPrivacy NO utilizamos:\n\n❌ Cookies de terceros\n❌ Cookies analíticas o de seguimiento\n❌ Cookies publicitarias\n❌ Cookies de redes sociales\n❌ Cookies de perfilado\n\nTu privacidad es nuestra prioridad. No compartimos información con terceros ni rastreamos tu actividad fuera de nuestra plataforma.",
+      "whatWeDontUse": "En RgpdEducation NO utilizamos:\n\n❌ Cookies de terceros\n❌ Cookies analíticas o de seguimiento\n❌ Cookies publicitarias\n❌ Cookies de redes sociales\n❌ Cookies de perfilado\n\nTu privacidad es nuestra prioridad. No compartimos información con terceros ni rastreamos tu actividad fuera de nuestra plataforma.",
       "cookieManagement": "Puedes gestionar las cookies desde la configuración de tu navegador:\n\n• Chrome: Configuración > Privacidad y seguridad > Cookies\n• Firefox: Opciones > Privacidad y seguridad\n• Safari: Preferencias > Privacidad\n• Edge: Configuración > Cookies y permisos\n\nTen en cuenta que deshabilitar las cookies técnicas puede afectar el funcionamiento de la plataforma.",
       "policyUpdates": "Esta política de cookies se revisa periódicamente para garantizar el cumplimiento normativo continuo.\n\nCualquier cambio significativo será notificado a través de la plataforma y se actualizará la fecha de última modificación.\n\nSi tienes dudas sobre nuestra política de cookies, contacta con nuestro equipo de protección de datos."
     }
-  },
-  "author": {
-    "badge": "Sobre la autora",
-    "name": "Patricia Belestá",
-    "subtitle": "Legal Counsel • Especialista en Regulatory • Creadora de Cursos",
-    "intro": "¿Cansado de las formaciones obligatorias que nadie recuerda? Yo también.",
-    "paragraph1": "Soy <span class=\"text-[#0091ff] font-semibold\">Patricia Belestá</span>, Legal Counsel y especialista en Regulatory pero, sobre todo, una <span class=\"text-[#0091ff]\">rebelde con causa</span>: romper con la idea de que los abogados no entienden de tecnología y demostrar que las formaciones pueden ser todo menos aburridas o irrelevantes.",
-    "paragraph2": "<span class=\"text-blue-300\">Mi misión es simple:</span> que nadie vuelva a bostezar delante de un PowerPoint sobre el RGPD. Porque la protección de datos no puede ser un sello invisible en la empresa ni un simple trámite para \"tachar en la lista\".",
-    "paragraph3": "<span class=\"text-[#0091ff]\">Este curso es distinto.</span> Aquí la privacidad es <span class=\"text-blue-300\">storytelling</span>, son <span class=\"text-blue-300\">decisiones reales</span>, son <span class=\"text-blue-300\">dilemas</span> que todos enfrentamos sin apenas darnos cuenta.",
-    "paragraph4": "Vivimos en un mundo donde <span class=\"text-white font-medium\">tus datos son la nueva moneda</span> y cada clic que das habla más fuerte que tus palabras. La inteligencia artificial avanza sin freno, y nuestra responsabilidad sobre la privacidad no puede diluirse en diapositivas aburridas ni charlas interminables.",
-    "closing": "Prepárate, porque la revolución en la formación de protección de datos comienza aquí.",
-    "linkedInText": "Conéctate conmigo en LinkedIn",
-    "linkedInButton": "Visitar perfil de LinkedIn",
-    "ctaButton": "Comenzar el curso"
   }
 }

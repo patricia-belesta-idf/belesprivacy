@@ -5,8 +5,7 @@
     "profile": "Profile",
     "signOut": "Sign Out",
     "signIn": "Sign In",
-    "signUp": "Sign Up",
-    "aboutAuthor": "About the author"
+    "signUp": "Sign Up"
   },
   "homepage": {
     "hero": {
@@ -268,7 +267,7 @@
     "continue": "Continue",
     "loginTitle": "Welcome back",
     "loginSubtitle": "Sign in to your account to continue",
-    "signupTitle": "Join BelesPrivacy",
+    "signupTitle": "Join RgpdEducation",
     "signupSubtitle": "Create your account and start learning",
     "secureAccess": "Secure Access",
     "newUser": "New User",
@@ -403,7 +402,7 @@
   "privacy": {
     "title": "Privacy Policy",
     "subtitle": "Transparent",
-    "description": "At BelesPrivacy, protecting your personal data is our priority. Discover how we care for your information with complete transparency and security.",
+    "description": "At RgpdEducation, protecting your personal data is our priority. Discover how we care for your information with complete transparency and security.",
     "backToHome": "Back to Home",
     "needMoreInfo": "Need more information?",
     "teamDescription": "Our data protection team is here to help you",
@@ -428,7 +427,7 @@
       "retention": "Data will be retained for as long as necessary for the established purposes or during the period required by current regulations, and will be deleted or anonymized following secure protocols.",
       "recipients": "Data will not be communicated to third parties except by legal obligation. In certain cases, data may be processed by essential technology providers (such as Supabase for backend and authentication). No international transfers are made outside the European Economic Area.",
       "cookies": "The platform uses only technical and preference cookies strictly necessary to ensure proper operation and personalize the user experience. Technical cookies to manage user authentication session, based on corporate email. Preference cookies to store language selection. No third-party cookies, analytics cookies or advertising cookies are used.",
-      "rights": "You can request at any time access, rectification, deletion, limitation, opposition and portability of your data by sending a detailed request to dpd@moneyman.es or dpd@plazo.es, indicating your identity and the right you wish to exercise. You have the right to file a complaint with the Spanish Data Protection Agency if you consider that your rights have not been properly addressed.",
+      "rights": "You can request at any time access, rectification, deletion, limitation, opposition and portability of your data by sending a detailed request to dpd@idfinance.com, indicating your identity and the right you wish to exercise. You have the right to file a complaint with the Spanish Data Protection Agency if you consider that your rights have not been properly addressed.",
       "security": "Appropriate technical and organizational measures are applied to ensure the confidentiality, integrity and availability of data, including access controls, encryption and periodic audits.",
       "modifications": "ID Finance reserves the right to modify this policy to adapt it to regulatory or technical changes, notifying relevant updates through the platform."
     }
@@ -449,7 +448,7 @@
     "badge": "Legal Notice",
     "title": "Legal Notice",
     "subtitle": "of the Platform",
-    "description": "Information about the use of the BelesPrivacy platform.",
+    "description": "Information about the use of the RgpdEducation platform.",
     "backToHome": "Back to Home",
     "lastUpdated": "Last updated: September 2025",
     "badges": {
@@ -468,7 +467,7 @@
       "jurisdiction": "Legislation and Jurisdiction"
     },
     "content": {
-      "legalNotice": "This Legal Notice governs access to and use of the BelesPrivacy website and mobile application (hereinafter, the \"Platform\"), managed by ID Finance Investments S.L.U. with CIF B66862442, with registered office at Calle Tuset, 5, 3rd floor, 08006 Barcelona, Spain, and contact emails info@moneyman.es and info@plazo.es (hereinafter, the \"Controller\").\n\nAccess to and use of the Platform is strictly reserved for authorized employees of IDF Investments who must use it in accordance with internal policies and conditions detailed below.",
+      "legalNotice": "This Legal Notice governs access to and use of the RgpdEducation website and mobile application (hereinafter, the \"Platform\"), managed by ID Finance Investments S.L.U. with CIF B66862442, with registered office at Calle Tuset, 5, 3rd floor, 08006 Barcelona, Spain, and contact email info@idfinance.com (hereinafter, the \"Controller\").\n\nAccess to and use of the Platform is strictly reserved for authorized employees of IDF Investments who must use it in accordance with internal policies and conditions detailed below.",
       "acceptance": "Access to and use of the Platform requires express acceptance of this Legal Notice and commitment to comply with company internal policies regarding security, privacy and proper use.\n\nThe Platform is not accessible to external users or the general public.\n\nMisuse or non-compliance with these conditions may result in restrictions or sanctions in accordance with current labor regulations.",
       "access": "Access to the Platform will only be possible through corporate credentials assigned to each employee. Sharing these credentials or allowing unauthorized access is not permitted.\n\nThe user agrees to use the Platform only to carry out training related to their work activity.",
       "modifications": "IDF Investments reserves the right to modify this Legal Notice and Platform conditions, notifying employees of such modifications through the Platform itself.\n\nContinued use implies acceptance of such modifications.",
@@ -489,7 +488,7 @@
   "cookies": {
     "badge": "Cookie Policy",
     "title": "Cookie Notice",
-    "subtitle": "of BelesPrivacy",
+    "subtitle": "of RgpdEducation",
     "description": "Transparent information about cookie usage on our training platform.",
     "backToHome": "Back to Home",
     "lastUpdated": "Last updated: September 2025",
@@ -507,26 +506,12 @@
       "policyUpdates": "Policy Updates"
     },
     "content": {
-      "whatAreCookies": "Cookies are small text files that are stored on your device when you visit a website. These files allow the website to recognize your device and remember information about your visit.\n\nAt BelesPrivacy, we use cookies responsibly and transparently, complying with all applicable data protection regulations.",
+      "whatAreCookies": "Cookies are small text files that are stored on your device when you visit a website. These files allow the website to recognize your device and remember information about your visit.\n\nAt RgpdEducation, we use cookies responsibly and transparently, complying with all applicable data protection regulations.",
       "technicalCookies": "Technical cookies are strictly necessary for the platform to function. These cookies:\n\n• Manage user authentication sessions through their corporate email\n• Allow secure access to platform services\n• Guarantee basic system functionality\n• Are essential for data security\n\nWithout these cookies, the platform could not function properly.",
       "preferenceCookies": "Preference cookies store your choices to improve your experience:\n\n• Save your language selection (Spanish, English or Russian)\n• Maintain your display preferences\n• Personalize your browsing experience\n\nThese cookies help us offer you a more comfortable experience tailored to your needs.",
-      "whatWeDontUse": "At BelesPrivacy we DO NOT use:\n\n❌ Third-party cookies\n❌ Analytics or tracking cookies\n❌ Advertising cookies\n❌ Social media cookies\n❌ Profiling cookies\n\nYour privacy is our priority. We do not share information with third parties nor track your activity outside our platform.",
+      "whatWeDontUse": "At RgpdEducation we DO NOT use:\n\n❌ Third-party cookies\n❌ Analytics or tracking cookies\n❌ Advertising cookies\n❌ Social media cookies\n❌ Profiling cookies\n\nYour privacy is our priority. We do not share information with third parties nor track your activity outside our platform.",
       "cookieManagement": "You can manage cookies from your browser settings:\n\n• Chrome: Settings > Privacy and security > Cookies\n• Firefox: Options > Privacy and security\n• Safari: Preferences > Privacy\n• Edge: Settings > Cookies and permissions\n\nPlease note that disabling technical cookies may affect platform functionality.",
       "policyUpdates": "This cookie policy is reviewed periodically to ensure continued regulatory compliance.\n\nAny significant changes will be notified through the platform and the last modification date will be updated.\n\nIf you have questions about our cookie policy, contact our data protection team."
     }
-  },
-  "author": {
-    "badge": "About the author",
-    "name": "Patricia Belestá",
-    "subtitle": "Legal Counsel • Regulatory Specialist • Course Creator",
-    "intro": "Tired of mandatory training that nobody remembers? Me too.",
-    "paragraph1": "I'm <span class=\"text-[#0091ff] font-semibold\">Patricia Belestá</span>, Legal Counsel and Regulatory specialist but, above all, a <span class=\"text-[#0091ff]\">rebel with a cause</span>: breaking the idea that lawyers don't understand technology and proving that training can be anything but boring or irrelevant.",
-    "paragraph2": "<span class=\"text-blue-300\">My mission is simple:</span> no one should ever yawn in front of a PowerPoint about GDPR again. Because data protection cannot be an invisible stamp in the company or a simple task to \"check off the list\".",
-    "paragraph3": "<span class=\"text-[#0091ff]\">This course is different.</span> Here privacy is <span class=\"text-blue-300\">storytelling</span>, <span class=\"text-blue-300\">real decisions</span>, <span class=\"text-blue-300\">dilemmas</span> we all face without even realizing it.",
-    "paragraph4": "We live in a world where <span class=\"text-white font-medium\">your data is the new currency</span> and every click you make speaks louder than your words. Artificial intelligence advances relentlessly, and our responsibility for privacy cannot be diluted in boring slides or endless talks.",
-    "closing": "Get ready, because the revolution in data protection training begins here.",
-    "linkedInText": "Connect with me on LinkedIn",
-    "linkedInButton": "Visit LinkedIn profile",
-    "ctaButton": "Start the course"
   }
 }

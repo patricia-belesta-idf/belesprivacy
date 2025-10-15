@@ -214,16 +214,10 @@ export default function PrivacyPolicyPage() {
                       <Mail className="w-5 h-5 text-blue-400" />
                       <div>
                         <p className="text-white/60 text-sm">Email Principal</p>
-                        <p className="text-white font-medium">dpd@moneyman.es</p>
+                        <p className="text-white font-medium">dpd@idfinance.com</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <Mail className="w-5 h-5 text-blue-400" />
-                      <div>
-                        <p className="text-white/60 text-sm">Email Alternativo</p>
-                        <p className="text-white font-medium">dpd@plazo.es</p>
-                      </div>
-                    </div>
+
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">

@@ -1,4 +1,4 @@
-# 🎥 Guía para Subir Videos - BelesPrivacy
+# 🎥 Guía para Subir Videos - RgpdEducation
 
 ## **📋 Resumen de Funcionalidades**
 

@@ -1,4 +1,4 @@
--- BelesPrivacy Database Schema
+-- RgpdEducation Database Schema
 -- This file contains the SQL schema for the course platform
 
 -- Enable necessary extensions
